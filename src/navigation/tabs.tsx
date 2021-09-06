@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
 import MarkedScreen from '../screens/MarkedScreen';
-import LocationScreen from '../screens/LocationScreen';
+import MapScreen from '../screens/MapScreen';
 import AccountScreen from '../screens/AccountScreen';
 
 const Tab = createBottomTabNavigator();
@@ -84,8 +84,8 @@ const Tabs = () => {
         }}
       />
       <Tab.Screen
-        name="Location"
-        component={LocationScreen}
+        name="Map"
+        component={MapScreen}
         options={{
           tabBarIcon: ({focused}) => (
             <View>
