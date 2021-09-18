@@ -5,24 +5,20 @@ import {
   View,
   Text,
   StyleSheet,
+  Image,
   TouchableOpacity,
-  TextInput,
+  Dimensions,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import axios from '../core/api/api';
-import Tabs from '../navigation/tabs';
-import filter from 'lodash.filter';
+import axios from '../../core/api/api';
 
-const numColumns = 1;
+const numColumns = 2;
 
 type MyState = {
   isLoading: boolean;
   items: Array<Object>;
-  search: any;
-  itemsSearch: Array<Object>;
 }
 
-export default class SearchScreen extends Component<{}, MyState> {
+export default class HomeComponent extends Component<{}, MyState> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -31,13 +27,11 @@ export default class SearchScreen extends Component<{}, MyState> {
         id: Number,
         name: String,
         typical: String,
+        price: Number,
+        discount: Number,
+        status: String,
+        image: Array,
       }),
-      itemsSearch: Array({
-        id: Number,
-        name: String,
-        typical: String,
-      }),
-      search: "",
     };
   }
 
@@ -49,14 +43,14 @@ export default class SearchScreen extends Component<{}, MyState> {
     this.setState({isLoading: true});
     await axios
       .get('http://192.168.1.169:3000/api/v1/items')
-      .then(res => {
+      .then((res: { data: { data: { items: any; }; }; }) => {
         this.setState({
           items: res.data.data.items,
           isLoading: false,
         });
       })
-      .catch(e => {
-        console.log(e);
+      .catch(() => {
+        console.log("error");
       });
   }
 
@@ -70,60 +64,38 @@ export default class SearchScreen extends Component<{}, MyState> {
         key={index}
         onPress={() => {}}
       >
-        <Text style={styles.itemText}>{item.name}</Text>
+        {/* <Image source={require('../assets/images/test.jpg')} style={styles.itemImage} /> */}
+        {/* <Text style={styles.itemText}>{item.name}</Text> */}
       </TouchableOpacity>
-    )
+    );
   }
-
-  handleSearch = (text: any) => {
-    const formattedQuery = text.toLowerCase()
-    const filteredData = filter(this.state.items, (item: { name: String; typical: String; }) => {
-      return this.contains(item, formattedQuery);
-    });
-    this.setState({itemsSearch: filteredData});
-    this.setState({search: formattedQuery});
-  };
-  
-  contains = ({ name, typical }: {name: String; typical: String;}, query: any) => {
-    if (name.includes(query) || typical.includes(query)) {
-      return true;
-    }
-    return false;
-  };
 
   render() {
     const loading = this.state.isLoading;
-    const search = this.state.search;
     return (
       <View style={styles.container}>
-        <SafeAreaView style={{backgroundColor: '#FFFFFF'}} />
-        <TextInput
-          autoCapitalize="none"
-          autoCorrect={false}
-          clearButtonMode="always"
-          value={search}
-          onChangeText={(search) => this.handleSearch(search)}
-          placeholder="Input item..."
-          style={styles.search}
-        />
         {loading ? (
           <ActivityIndicator />
         ) : (
           <FlatList
-            data={this.state.itemsSearch}
+            data={this.state.items}
             numColumns={numColumns}
             renderItem={this.renderItem}
             style={styles.flatlist}
           />
         )}
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  image: {
+    width: 100,
+    height: 100,
   },
   itemInvisible: {
     backgroundColor: 'transparent',
@@ -138,17 +110,27 @@ const styles = StyleSheet.create({
   item: {
     justifyContent: 'center',
     flex: 1,
-    margin: 2,
+    margin: 10,
+    borderRadius: 15,
+    height: Dimensions.get('window').width / numColumns,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
+    marginVertical: 20,
+  },
+  itemImage: {
+    height: 200,
+    width: 160,
+    position: 'absolute',
     borderRadius: 10,
-    height: 50,
-    backgroundColor: '#fff',
   },
   flatlist: {
-    margin: 10,
-  },
-  search: {
-    backgroundColor: '#fff',
-    paddingHorizontal: 20,
-    margin: 15,
+    margin: 20,
+    marginTop: 50,
   },
 });

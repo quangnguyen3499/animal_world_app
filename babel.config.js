@@ -7,9 +7,13 @@ module.exports = {
         root: ['./src'],
         extensions: ['.ios.js', '.android.js', '.js', '.ts', '.tsx', '.json'],
         alias: {
-          tests: ['./tests/'],
-          "@components": "./src/components",
-          "@redux": "./src/redux",
+          '@assets': './src/assets',
+          '@core': './src/core',
+          '@navigation': './src/navigation',
+          '@resources': './src/resource',
+          '@screens': './src/screens',
+          '@shared-view': './src/shared-view',
+          '@shared-state': './src/shared-state',
         }
       }
     ]

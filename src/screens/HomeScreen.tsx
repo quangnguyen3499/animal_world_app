@@ -10,7 +10,7 @@ import {
   Dimensions,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import axios from '../core/config/api';
+import axios from '../core/api/api';
 import Tabs from '../navigation/tabs';
 
 const numColumns = 2;

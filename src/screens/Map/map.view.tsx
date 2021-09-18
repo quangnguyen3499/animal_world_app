@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-  ActivityIndicator,
   View,
   Text,
   StyleSheet,
@@ -19,7 +18,7 @@ type MyState = {
   longitudeDelta: any;
 };
 
-export default class MapScreen extends Component<{}, MyState> {
+export default class MapComponent extends Component<{}, MyState> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -63,7 +62,7 @@ export default class MapScreen extends Component<{}, MyState> {
                     <Image
                       style={styles.image}
                       resizeMode='stretch'
-                      source={require('../assets/images/lion.jpg')}
+                      source={require('@assets/images/lion.jpg')}
                     />
                   </Text>
                 </View>

@@ -1,17 +1,14 @@
 import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import Tabs from './src/navigation/tabs'
-import DetailScreen from './src/screens/DetailScreen'
-import MapScreen from './src/screens/MapScreen'
+import { Provider } from 'react-redux'
+import { RootNavigator } from '@navigation';
+import { store } from '@shared-state';
 
 const App = () => {
-  return(
-    <NavigationContainer>
-      {/* <Tabs /> */}
-      {/* <DetailScreen /> */}
-      <MapScreen />
-    </NavigationContainer>
-  )
-}
+  return (
+    <Provider store={store}>
+      <RootNavigator />
+    </Provider>
+  );
+};
 
 export default App

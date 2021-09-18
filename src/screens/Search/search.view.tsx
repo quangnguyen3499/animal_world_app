@@ -9,8 +9,7 @@ import {
   TextInput,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import axios from '../core/api/api';
-import Tabs from '../navigation/tabs';
+import axios from '../../core/api/api';
 import filter from 'lodash.filter';
 
 const numColumns = 1;
@@ -22,7 +21,7 @@ type MyState = {
   itemsSearch: Array<Object>;
 }
 
-export default class SearchScreen extends Component<{}, MyState> {
+export default class SearchComponent extends Component<{}, MyState> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -70,7 +69,7 @@ export default class SearchScreen extends Component<{}, MyState> {
         key={index}
         onPress={() => {}}
       >
-        <Text style={styles.itemText}>{item.name}</Text>
+        {/* <Text style={styles.itemText}>{item.name}</Text> */}
       </TouchableOpacity>
     )
   }

@@ -9,8 +9,7 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import axios from '../core/api/api';
-import Tabs from '../navigation/tabs';
+import axios from '../../core/api/api';
 
 const {width} = Dimensions.get('window');
 const height = width * 0.6;
@@ -21,7 +20,7 @@ type MyState = {
   activeDot: Number;
 };
 
-export default class DetailScreen extends Component<{}, MyState> {
+export default class DetailComponent extends Component<{}, MyState> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -112,28 +111,28 @@ export default class DetailScreen extends Component<{}, MyState> {
             <Text style={[styles.statDetails, styles.h2]}>
               <Image
                 style={styles.iconDetails}
-                source={require('../assets/icons/adn.png')}
+                source={require('@assets/icons/adn.png')}
               />
               Mammals
             </Text>
             <Text style={[styles.statDetails, styles.h2]}>
               <Image
                 style={styles.iconDetails}
-                source={require('../assets/icons/ruler.png')}
+                source={require('@assets/icons/ruler.png')}
               />
               142-185 cm
             </Text>
             <Text style={[styles.statDetails, styles.h2]}>
               <Image
                 style={styles.iconDetails}
-                source={require('../assets/icons/heart.png')}
+                source={require('@assets/icons/heart.png')}
               />
               15-20 years
             </Text>
             <Text style={[styles.statDetails, styles.h2]}>
               <Image
                 style={styles.iconDetails}
-                source={require('../assets/icons/weight.png')}
+                source={require('@assets/icons/weight.png')}
               />
               74-160 kg
             </Text>
@@ -150,7 +149,7 @@ export default class DetailScreen extends Component<{}, MyState> {
             <Text style={[styles.textBtn, styles.h3]}>
               <Image
                 style={styles.iconDetails}
-                source={require('../assets/icons/eye.png')}
+                source={require('@assets/icons/eye.png')}
               />
               Learn More
             </Text>
