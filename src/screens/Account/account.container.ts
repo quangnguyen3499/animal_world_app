@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import AccountComponent from './account.view';
+import { AccountComponent } from './account.view';
 
 export const AccountContainer = connect(
   (state: any) => {

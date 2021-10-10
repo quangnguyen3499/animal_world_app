@@ -1,1 +1,5 @@
-export * from './item.reducer';
+export * from './login.reducer'
+export * from './register.reducer'
+export * from './logout.reducer'
+export * from './marker.reducer'
+export * from './path.reducer'

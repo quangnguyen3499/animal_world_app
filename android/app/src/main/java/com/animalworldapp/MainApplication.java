@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.airbnb.android.react.maps.MapsPackage;
@@ -17,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 //react-native-maps
 import com.airbnb.android.react.maps.MapsPackage;
+import com.horcrux.svg.SvgPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -31,9 +33,11 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
           return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new AsyncStoragePackage(),
             new SafeAreaContextPackage(),
             new RNGestureHandlerPackage(),
-            new MapsPackage()
+            new MapsPackage(),
+            new SvgPackage()
           );
         }
 

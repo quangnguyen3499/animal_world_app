@@ -9,7 +9,7 @@ import {
   TextInput,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import axios from '../../core/api/api';
+import axios from '../../core/api/Api';
 import filter from 'lodash.filter';
 
 const numColumns = 1;

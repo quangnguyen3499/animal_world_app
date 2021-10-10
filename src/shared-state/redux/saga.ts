@@ -1,8 +1,18 @@
 import { all, fork } from 'redux-saga/effects';
-import { watchGetItemList } from './sagas';
+import { 
+  watchDoLogin, 
+  watchDoRegister, 
+  watchDoLogout, 
+  watchDoGetMarkers,
+  watchDoGetPath
+} from './sagas';
 
 export default function* rootSaga() {
   yield all([
-    fork(watchGetItemList),
+    fork(watchDoLogin),
+    fork(watchDoRegister),
+    fork(watchDoLogout),
+    fork(watchDoGetMarkers),
+    fork(watchDoGetPath)
   ]);
 }

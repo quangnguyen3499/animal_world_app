@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import MapComponent from './map.view';
+import { GetStartedComponent } from './getstarted.view';
 
-export const MapContainer = connect(
+export const GetStartedContainer = connect(
   (state: any) => {
     return {
     }
@@ -10,4 +10,4 @@ export const MapContainer = connect(
     return {
     }
   }
-)(MapComponent);
+)(GetStartedComponent);

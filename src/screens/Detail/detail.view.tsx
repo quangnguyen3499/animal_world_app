@@ -9,7 +9,7 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import axios from '../../core/api/api';
+import axios from '../../core/api/Api';
 
 const {width} = Dimensions.get('window');
 const height = width * 0.6;

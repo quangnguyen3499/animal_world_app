@@ -1,8 +1,18 @@
 import { combineReducers } from 'redux';
-import { itemReducer } from './reducers';
+import { 
+  loginReducer, 
+  logoutReducer, 
+  markerReducer, 
+  pathReducer, 
+  registerReducer 
+} from './reducers';
 
 const rootReducer = combineReducers({
-  item: itemReducer,
+  user: loginReducer,
+  register: registerReducer,
+  logout: logoutReducer,
+  markers: markerReducer,
+  path: pathReducer
 });
 
 export default rootReducer;

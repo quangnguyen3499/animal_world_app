@@ -16,3 +16,5 @@
 // export const SLIDE_STARTED = require('./slide-started.png');
 // export const SLIDE_STARTED_2 = require('./slide-started-2.png');
 // export const SLIDE_STARTED_3 = require('./slide-started-3.png');
+export const ICON_LOGOUT = require('./logout.png');
+export const ICON_SEARCH = require('./search.png');
