@@ -9,7 +9,7 @@ function* doRegister(action: object) {
     var user_data: any;
 
     yield axios.post(
-      'http://192.168.1.169:3000/api/v1/users', 
+      'http://192.168.1.20:3000/api/v1/users', 
       {
         email: email,
         password: password,

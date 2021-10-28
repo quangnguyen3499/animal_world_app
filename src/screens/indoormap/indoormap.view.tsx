@@ -7,12 +7,13 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import { ButtonCircle, Marker } from '@shared-view';
-import { COOPMART_FLOOR_1, ICON_SEARCH } from '@assets';
+import { ButtonCircle, FloorList, Marker } from '@shared-view';
+import { COOPMART_FLOOR_1 } from '@assets';
 import  {
   Svg,
   Polyline
 } from 'react-native-svg';
+import { Place } from 'src/core/entity/Place';
 
 interface State {
   isLoading: boolean
@@ -21,14 +22,16 @@ interface State {
   source: string
   target: string
   search: any
-  places: Array<Object>
+  activeTab: any
 }
 
 interface Props {
   navigation?: any
   markers: any
-  distance: Number
+  distance: string
   path: string
+  placeDetail: Place
+  doGetPlaceDetail: (place_id: string) => void
   doGetMarker: (place_id: string, floor_id: string) => void
   doGetPath: (
     place_id: string, 
@@ -48,16 +51,14 @@ export class IndoorMapComponent extends Component<Props, State> {
       source: "a",
       target: "c",
       search: "",
-      places: Array({
-        id: Number,
-        name: String
-      })
+      activeTab: 1,
     };
   }
 
   componentDidMount() {
     const {place_id, floor_id} = this.state;
-    this.props.doGetMarker(place_id, floor_id)        
+    this.props.doGetPlaceDetail(place_id)
+    this.props.doGetMarker(place_id, floor_id)      
   }
 
   getPath = () => {
@@ -70,8 +71,13 @@ export class IndoorMapComponent extends Component<Props, State> {
     );
   }
 
+  handlePress = (value: any) => {
+    console.log(value)
+  }
+  
   render() {
-    const { navigation, markers } = this.props;
+    const { navigation, markers, path, distance, placeDetail } = this.props;
+    const { activeTab } = this.state;    
     return (
       <View style={styles.container}>
         <ImageBackground style={{flex: 1, width: 400, height: 650}} source={COOPMART_FLOOR_1} resizeMode={'contain'}>
@@ -79,26 +85,41 @@ export class IndoorMapComponent extends Component<Props, State> {
           {
             return (
               <Marker
-                key={index}
-                onPress={this._onPress} 
+                key={index} 
                 top={data["longitude"]} 
                 left={data["latitude"]}
               />
             )
-          })         
+          })
         }
+          <View style={{marginTop: 20, marginLeft: 20}}>
+            <ButtonCircle
+              // onPress={() => navigation.navigate('Search')}
+              name={"bars"}
+              style={{backgroundColor: 'blue'}}
+            />
+            <FloorList 
+              data={placeDetail.floor_list}
+              onPress={this.handlePress}
+              activeTab={activeTab}
+            />
+          </View>
           <ButtonCircle
-            backgroundColor={'blue'}
             onPress={() => navigation.navigate('Search')}
             name={"search"}
+            style={{marginTop: 400, marginLeft: 350, backgroundColor: 'green'}}
           />
-          <Svg>
+          <Svg
+            style={{position: "absolute"}}
+          >
             <Polyline
+              // points={path}
               points="110,60 110,66 130,66"
               stroke="blue"
               strokeWidth="3"
             />
           </Svg>
+          {/* {distance} ? (<Text>Distance: {distance}</Text>) */}
         </ImageBackground>
       </View>
     )

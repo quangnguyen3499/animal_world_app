@@ -8,44 +8,67 @@ import {
   ImageBackground,
   Alert
 } from 'react-native';
-import { ButtonCustom, scale, verticalScale } from '@shared-view';
-import { ICON_LOGOUT } from '@assets';
+import { ButtonCircle, NavigationService, scale, verticalScale } from '@shared-view';
+import AsyncStorage from '@react-native-community/async-storage';
 
-interface State {}
+interface State {
+  username ?: string
+}
 
 interface Props {
   navigation?: any;
   isLoading: boolean;
+  isLogout: boolean;
   doLogout: () => void
 }
 
 export class HomeComponent extends Component<Props, State> {
   constructor(props: any) {
     super(props);
+    this.state = {
+      username: '',
+    }
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem('username', (err, res) => {
+      this.setState({ username: res });
+    })
   }
 
   handleLogout = () => {
-    this.props.doLogout();
+    const { doLogout, isLogout } = this.props;
+    doLogout();
   }
 
   render() {
+    const { username } = this.state;    
     const { navigation } = this.props;
     
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.button}
+        <View style={styles.header}>
+          <Text style={styles.auth}>Hi, {username.replace(/['"]+/g, '')}!</Text>
+          <ButtonCircle
+            name={"user-circle-o"}
+            style={{backgroundColor: 'red'}}
+          />
+        </View>
+        <ButtonCircle
+          onPress={() => navigation.navigate('IndoorMap')}
+          name={"map"}
+          style={{backgroundColor: 'blue'}}
+        />
+        <ButtonCircle
+          onPress={() => navigation.navigate('List')}
+          name={"th-list"}
+          style={{backgroundColor: 'blue'}}
+        />
+        <ButtonCircle
           onPress={() => this.handleLogout()}
-        >
-          <Text style={styles.buttonText}>Log Out</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate("IndoorMap")}
-        >
-          <Text style={styles.buttonText}>Indoor Map</Text>
-        </TouchableOpacity>
-        <ButtonCustom />
+          name={"sign-out"}
+          style={{backgroundColor: 'blue'}}
+        />
       </View>
     )
   }
@@ -54,6 +77,21 @@ export class HomeComponent extends Component<Props, State> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  header: {
+    height: 80,
+    backgroundColor: '#fff',
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  auth: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   button: {
     backgroundColor: '#DA70D6',

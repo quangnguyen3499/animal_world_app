@@ -1,11 +1,35 @@
-import React from 'react'
-import {StyleSheet, TouchableOpacity} from 'react-native'
+import React, { useState } from 'react'
+import {
+  StyleSheet, 
+  Text, 
+  TouchableOpacity,
+  Image,
+  View,
+} from 'react-native'
 
-const Marker = ({onPress, top, left}: (any)) => (
-  <TouchableOpacity 
-    onPress={onPress} 
-    style={[styles.marker, {top, left}]} 
-  />
+const [isShowDetail, setIsShowDetail] = useState(false);
+
+const showDetail = () => (
+  setIsShowDetail(true)
+)
+
+const Marker = ({title, imageUrl, top, left}: (any)) => (
+  <View>
+    {/* {!isShowDetail ?
+      (
+        <View>
+          <Text>{title}</Text>
+          <Image 
+            source={imageUrl}
+          />
+        </View>
+      ) : null
+    } */}
+    <TouchableOpacity 
+      onPress={showDetail} 
+      style={[styles.marker, {top, left}]} 
+    />
+  </View>
 )
 
 const styles = StyleSheet.create({

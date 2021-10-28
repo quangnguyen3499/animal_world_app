@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { 
@@ -6,34 +6,20 @@ import {
   SearchContainer, 
   DetailContainer, 
   LoginContainer,
-  AccountContainer,
   RegisterContainer,
   GetStartedContainer,
-  IndoorMapContainer
+  IndoorMapContainer,
+  // ListPlaceContainer,
 } from '@screens';
-import { isSignedIn } from '@core';
-import { Alert } from 'react-native';
 
 const Stack = createStackNavigator();
-
-export const RootNavigator = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   
-  useEffect(() => {
-    async function checkSignIn() {
-      let res = await isSignedIn()
-        res 
-        ? setIsLoggedIn(true)
-        : setIsLoggedIn(false)
-    }
-    checkSignIn()
-    console.log("is Logged In: " + isLoggedIn);
-  })
-  
+export const RootNavigator = (isLoggedIn: any) => {
+  console.log(isLoggedIn.isLoggedIn);
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {!isLoggedIn ? (
+        {!isLoggedIn.isLoggedIn ? (
           <Stack.Group>
             <Stack.Screen
               name="Register"
@@ -48,11 +34,11 @@ export const RootNavigator = () => {
           </Stack.Group>
         ) : (
           <Stack.Group>
-            {/* <Stack.Screen
+            <Stack.Screen
               name="Home"
               component={HomeContainer}
               options={{ title: 'Home', headerShown: false }}
-            /> */}
+            />
             <Stack.Screen
               name="IndoorMap"
               component={IndoorMapContainer}
@@ -72,11 +58,11 @@ export const RootNavigator = () => {
               component={DetailContainer}
               options={{ title: 'Detail', headerShown: false }}
             />
-            <Stack.Screen
-              name="Account"
-              component={AccountContainer}
-              options={{ title: 'Account', headerShown: false }}
-            />
+            {/* <Stack.Screen
+              name="ListPlace"
+              component={ListPlaceContainer}
+              options={{ title: 'ListPlace', headerShown: false }}
+            /> */}
           </Stack.Group>
         )}
       </Stack.Navigator>

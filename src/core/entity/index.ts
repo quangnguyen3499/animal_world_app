@@ -1,2 +1,2 @@
-export * from './Item'
+export * from './Place'
 export * from './User'

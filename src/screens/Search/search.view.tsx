@@ -47,7 +47,7 @@ export default class SearchComponent extends Component<{}, MyState> {
   getListItems = async () => {
     this.setState({isLoading: true});
     await axios
-      .get('http://192.168.1.169:3000/api/v1/items')
+      .get('http://192.168.1.20:3000/api/v1/items')
       .then(res => {
         this.setState({
           items: res.data.data.items,

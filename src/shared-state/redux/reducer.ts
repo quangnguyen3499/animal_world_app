@@ -4,7 +4,9 @@ import {
   logoutReducer, 
   markerReducer, 
   pathReducer, 
-  registerReducer 
+  registerReducer,
+  placeDetailReducer,
+  listPlaceReducer,
 } from './reducers';
 
 const rootReducer = combineReducers({
@@ -12,7 +14,9 @@ const rootReducer = combineReducers({
   register: registerReducer,
   logout: logoutReducer,
   markers: markerReducer,
-  path: pathReducer
+  path: pathReducer,
+  placeDetail: placeDetailReducer,
+  listPlace: listPlaceReducer,
 });
 
 export default rootReducer;

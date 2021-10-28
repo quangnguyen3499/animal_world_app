@@ -9,7 +9,7 @@ function* doGetMarkers(action: object) {
     var data: any;
 
     yield axios.get(
-      'http://192.168.1.169:3000/api/v1/coordinates', 
+      'http://192.168.1.20:3000/api/v1/coordinates', 
       {
         params: {
           place_id: place_id,

@@ -4,7 +4,9 @@ import {
   watchDoRegister, 
   watchDoLogout, 
   watchDoGetMarkers,
-  watchDoGetPath
+  watchDoGetPath,
+  watchDoGetPlaceDetail,
+  watchDoGetListPlace,
 } from './sagas';
 
 export default function* rootSaga() {
@@ -13,6 +15,8 @@ export default function* rootSaga() {
     fork(watchDoRegister),
     fork(watchDoLogout),
     fork(watchDoGetMarkers),
-    fork(watchDoGetPath)
+    fork(watchDoGetPath),
+    fork(watchDoGetPlaceDetail),
+    fork(watchDoGetListPlace),
   ]);
 }

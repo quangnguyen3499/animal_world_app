@@ -2,8 +2,9 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { DO_LOGOUT, DO_LOGOUT_SUCCESS, DO_LOGOUT_FAIL, } from '../actions';
 import { Alert } from 'react-native';
 import axios from '../../../core/api/Api';
-import { onSignOut } from '@core';
+// import { onSignOut } from '@core';
 import AsyncStorage from '@react-native-community/async-storage';
+import { NavigationService } from '@shared-view';
 
 function* doLogout(action: object) {
   try {
@@ -15,7 +16,7 @@ function* doLogout(action: object) {
     });
     
     yield axios.delete(
-      'http://192.168.1.169:3000/api/v1/users/sign_out',
+      'http://192.168.1.20:3000/api/v1/users/sign_out',
       {
         params: {
           uid: token
@@ -27,7 +28,10 @@ function* doLogout(action: object) {
       "Đăng xuất thành công"
     );
     yield put({ type: DO_LOGOUT_SUCCESS });
-    yield call(onSignOut);
+    // yield call(onSignOut);
+    yield call(NavigationService.navigate, "Login");
+    yield AsyncStorage.removeItem('tokenAuth');
+    yield NavigationService.navigate("Register");
   }
   catch (error) {
     Alert.alert(

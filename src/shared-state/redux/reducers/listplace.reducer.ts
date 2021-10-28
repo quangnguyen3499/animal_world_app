@@ -1,15 +1,13 @@
-import { UserState } from '@core';
-import {DO_LOGOUT, DO_LOGOUT_SUCCESS, DO_LOGOUT_FAIL, } from '../actions';
+import {DO_GET_LIST_PLACE, DO_GET_LIST_PLACE_SUCCESS, DO_GET_LIST_PLACE_FAIL} from '../actions';
 
-const INITIAL_STATE: UserState ={
+const INITIAL_STATE = {
   isLoading: false,
-  isLogout: false,
-  username: "",
+  listPlace: []
 };
 
-export const logoutReducer = (state = INITIAL_STATE, action: any) => {  
+export const listPlaceReducer = (state = INITIAL_STATE, action: any) => {  
   switch(action.type) {
-    case DO_LOGOUT: 
+    case DO_GET_LIST_PLACE: 
     return Object.assign(
       {},
       state,
@@ -17,17 +15,16 @@ export const logoutReducer = (state = INITIAL_STATE, action: any) => {
         isLoading: true
       }
     );
-    case DO_LOGOUT_SUCCESS:
+    case DO_GET_LIST_PLACE_SUCCESS:                
       return Object.assign(
         {},
         state,
         {
           isLoading: false,
-          isLogout: true,
-          username: action.username,
+          listPlace: action.data.data
         }
       );
-    case DO_LOGOUT_FAIL:
+    case DO_GET_LIST_PLACE_FAIL:
       return Object.assign(
         {},
         state,

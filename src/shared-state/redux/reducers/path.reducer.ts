@@ -22,7 +22,7 @@ export const pathReducer = (state = INITIAL_STATE, action: any) => {
         state,
         {
           isLoading: false,
-          path: action.path,
+          direction: action.path,
           distance: action.distance
         }
       );
