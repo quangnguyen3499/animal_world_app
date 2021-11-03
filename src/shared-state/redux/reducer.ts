@@ -1,9 +1,9 @@
-import { combineReducers } from 'redux';
-import { 
-  loginReducer, 
-  logoutReducer, 
-  markerReducer, 
-  pathReducer, 
+import {combineReducers} from 'redux';
+import {
+  loginReducer,
+  logoutReducer,
+  markerReducer,
+  pathReducer,
   registerReducer,
   placeDetailReducer,
   listPlaceReducer,

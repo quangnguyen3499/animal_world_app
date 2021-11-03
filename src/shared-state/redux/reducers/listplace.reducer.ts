@@ -15,13 +15,13 @@ export const listPlaceReducer = (state = INITIAL_STATE, action: any) => {
         isLoading: true
       }
     );
-    case DO_GET_LIST_PLACE_SUCCESS:                
+    case DO_GET_LIST_PLACE_SUCCESS:      
       return Object.assign(
         {},
         state,
         {
           isLoading: false,
-          listPlace: action.data.data
+          listPlace: action.data
         }
       );
     case DO_GET_LIST_PLACE_FAIL:
