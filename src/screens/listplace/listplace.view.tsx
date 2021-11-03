@@ -7,21 +7,17 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
-  SafeAreaView,
 } from 'react-native';
 
 const numColumns = 2;
 
 interface Props {
-  navigation ?: any
-  doGetListPlace: () => void
+  navigation?: any;
+  listplace: Array<Object>;
+  doGetListPlace: () => void;
 }
 
-interface State {
-
-}
-
-export class ListPlaceComponent extends Component<Props, State> {
+export class ListPlaceComponent extends Component<Props, {}> {
   constructor(props: any) {
     super(props);
   }
@@ -40,7 +36,7 @@ export class ListPlaceComponent extends Component<Props, State> {
   };
 
   renderItem = ({item, index}: {item: any; index: number}) => {
-    const { navigation } = this.props;
+    const {navigation} = this.props;
     if (item.empty === true) {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
@@ -48,8 +44,7 @@ export class ListPlaceComponent extends Component<Props, State> {
       <TouchableOpacity
         style={styles.item}
         key={index}
-        onPress={() => navigation.navigate(item.screen)}
-      >
+        onPress={item => navigation.navigate('Detail', {place_id: item.id})}>
         <Image source={item.backgroundImage} style={styles.itemImage} />
         <Text style={styles.itemText}>{item.title}</Text>
       </TouchableOpacity>
@@ -57,37 +52,12 @@ export class ListPlaceComponent extends Component<Props, State> {
   };
 
   render() {
-    const data = [
-      {
-        id: '1',
-        title: 'Lịch trình',
-        backgroundImage: require(''),
-        screen: "",
-      },
-      {
-        id: '2',
-        title: 'Món ăn hằng ngày',
-        backgroundImage: require(''),
-        screen: "",
-      },
-      {
-        id: '3',
-        title: 'Tình trạng sức khỏe',
-        backgroundImage: require(''),
-        screen: "",
-      },
-      {
-        id: '4',
-        title: 'Thể dục',
-        backgroundImage: require(''),
-        screen: "",
-      },
-    ];
+    const {listplace} = this.props;
 
     return (
-      <View style={styles.container}>        
+      <View style={styles.container}>
         <FlatList
-          data={this.formatData(data, numColumns)}
+          data={this.formatData(listplace, numColumns)}
           style={styles.flatlist}
           renderItem={this.renderItem}
           numColumns={numColumns}
@@ -100,26 +70,6 @@ export class ListPlaceComponent extends Component<Props, State> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    height: 80,
-    backgroundColor: '#fff',
-    borderBottomLeftRadius: 15,
-    borderBottomRightRadius: 15,
-    paddingLeft: 30,
-    paddingRight: 30,
-    paddingTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-  },
-  auth: {
-    fontSize: 20,
-    fontWeight: 'bold',
   },
   flatlist: {
     margin: 20,

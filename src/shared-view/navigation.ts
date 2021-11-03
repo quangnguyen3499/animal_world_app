@@ -9,8 +9,7 @@ interface IScreen {
 
 const navigationRef: any = React.createRef();
 
-const navigate = (screen: any) =>
-  navigationRef.current?.navigate(screen);
+const navigate = (screen: any) => navigationRef.current?.navigate(screen);
 
 const goBack = () => navigationRef.current?.goBack();
 
@@ -36,7 +35,7 @@ const NavigationService = {
   popToTop,
   getRootState,
 };
-export { NavigationService };
+export {NavigationService};
 
 const forFade = ({current}: {current: any}) => ({
   cardStyle: {

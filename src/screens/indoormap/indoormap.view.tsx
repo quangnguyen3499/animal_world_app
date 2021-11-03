@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
   View,
@@ -11,7 +14,7 @@ import { ButtonCircle, FloorList, Marker } from '@shared-view';
 import { COOPMART_FLOOR_1 } from '@assets';
 import  {
   Svg,
-  Polyline
+  Polyline,
 } from 'react-native-svg';
 import { Place } from 'src/core/entity/Place';
 
@@ -19,9 +22,6 @@ interface State {
   isLoading: boolean
   place_id: string
   floor_id: string
-  source: string
-  target: string
-  search: any
   activeTab: any
 }
 
@@ -31,11 +31,13 @@ interface Props {
   distance: string
   path: string
   placeDetail: Place
+  source_id: string
+  target_id: string
   doGetPlaceDetail: (place_id: string) => void
   doGetMarker: (place_id: string, floor_id: string) => void
   doGetPath: (
-    place_id: string, 
-    floor_id: string, 
+    place_id: string,
+    floor_id: string,
     source: string,
     target: string
   ) => void
@@ -46,59 +48,62 @@ export class IndoorMapComponent extends Component<Props, State> {
     super(props);
     this.state = {
       isLoading: false,
-      place_id: "1",
-      floor_id: "1",
-      source: "a",
-      target: "c",
-      search: "",
+      place_id: '1',
+      floor_id: '1',
       activeTab: 1,
     };
   }
 
   componentDidMount() {
     const {place_id, floor_id} = this.state;
-    this.props.doGetPlaceDetail(place_id)
-    this.props.doGetMarker(place_id, floor_id)      
+    this.props.doGetPlaceDetail(place_id);
+    this.props.doGetMarker(place_id, floor_id);
   }
 
   getPath = () => {
-    const {place_id, floor_id, source, target} = this.state;
+    const {place_id, floor_id} = this.state;
+    const {source_id, target_id} = this.props;
+
     this.props.doGetPath(
       place_id,
       floor_id,
-      source, 
-      target
+      source_id,
+      target_id
     );
   }
 
   handlePress = (value: any) => {
-    console.log(value)
+    console.log(value);
   }
-  
   render() {
     const { navigation, markers, path, distance, placeDetail } = this.props;
-    const { activeTab } = this.state;    
+    const { activeTab } = this.state;
     return (
       <View style={styles.container}>
         <ImageBackground style={{flex: 1, width: 400, height: 650}} source={COOPMART_FLOOR_1} resizeMode={'contain'}>
-        {markers.map((data: any, index: any) => 
+        {markers.map((data: any, index: any) =>
           {
             return (
               <Marker
-                key={index} 
-                top={data["longitude"]} 
-                left={data["latitude"]}
+                key={index}
+                top={data.longitude}
+                left={data.latitude}
               />
-            )
+            );
           })
         }
           <View style={{marginTop: 20, marginLeft: 20}}>
             <ButtonCircle
-              // onPress={() => navigation.navigate('Search')}
-              name={"bars"}
+              onPress={() => navigation.navigate('Detail', {place_id: placeDetail.id})}
+              name={'arrow-back'}
               style={{backgroundColor: 'blue'}}
             />
-            <FloorList 
+            <ButtonCircle
+              onPress={() => navigation.navigate('ListPlace')}
+              name={'bars'}
+              style={{backgroundColor: 'blue'}}
+            />
+            <FloorList
               data={placeDetail.floor_list}
               onPress={this.handlePress}
               activeTab={activeTab}
@@ -106,11 +111,11 @@ export class IndoorMapComponent extends Component<Props, State> {
           </View>
           <ButtonCircle
             onPress={() => navigation.navigate('Search')}
-            name={"search"}
+            name={'search'}
             style={{marginTop: 400, marginLeft: 350, backgroundColor: 'green'}}
           />
           <Svg
-            style={{position: "absolute"}}
+            style={{position: 'absolute'}}
           >
             <Polyline
               // points={path}
@@ -122,7 +127,7 @@ export class IndoorMapComponent extends Component<Props, State> {
           {/* {distance} ? (<Text>Distance: {distance}</Text>) */}
         </ImageBackground>
       </View>
-    )
+    );
   }
 }
 
@@ -135,7 +140,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   item: {
     justifyContent: 'center',

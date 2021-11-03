@@ -1,88 +1,100 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
 import {
   ActivityIndicator,
   FlatList,
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Text,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import axios from '../../core/api/Api';
 import filter from 'lodash.filter';
+import { ButtonCircle } from '@shared-view';
 
 const numColumns = 1;
 
-type MyState = {
+interface State {
   isLoading: boolean;
-  items: Array<Object>;
-  search: any;
-  itemsSearch: Array<Object>;
+  shops: Array<Object>;
+  keySearchShop: any;
+  keySearchSource: any;
+  keySearchTarget: any;
+  shopsSearch: Array<Object>;
+  flag: any;
+  isSearchPath: boolean;
 }
 
-export default class SearchComponent extends Component<{}, MyState> {
+interface Props {
+  navigation ?: any
+  doGetListShop: () => void
+}
+
+export default class SearchComponent extends Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {
       isLoading: false,
-      items: Array({
+      shops: Array({
         id: Number,
         name: String,
         typical: String,
       }),
-      itemsSearch: Array({
+      shopsSearch: Array({
         id: Number,
         name: String,
         typical: String,
       }),
-      search: "",
+      keySearchShop: '',
+      keySearchSource: '',
+      keySearchTarget: '',
+      flag: 0,
+      isSearchPath: false,
     };
   }
 
-  componentDidMount() {
-    this.getListItems();
-  }
+  renderItem = ({item, index} : any, flag: any) => {
+    const {navigation} = this.props;
 
-  getListItems = async () => {
-    this.setState({isLoading: true});
-    await axios
-      .get('http://192.168.1.20:3000/api/v1/items')
-      .then(res => {
-        this.setState({
-          items: res.data.data.items,
-          isLoading: false,
-        });
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
-
-  renderItem = ({item, index}: {item: any; index: number}) => {
     if (item.empty === true) {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
-    return(
+    const setValue = (item: any) => {
+      switch (flag) {
+        case 0:
+          navigation.navigate('Detail', {place_id: item.id});
+          break;
+        case 1:
+          this.setState({keySearchSource: item.id});
+          break;
+        case 2:
+          this.setState({keySearchTarget: item.id});
+          break;
+        default: break;
+      }
+    };
+    return (
       <TouchableOpacity
         style={styles.item}
         key={index}
-        onPress={() => {}}
+        onPress={() => setValue(item)}
       >
-        {/* <Text style={styles.itemText}>{item.name}</Text> */}
+        <Text style={styles.itemText}>{item.name}</Text>
       </TouchableOpacity>
-    )
+    );
   }
 
-  handleSearch = (text: any) => {
-    const formattedQuery = text.toLowerCase()
-    const filteredData = filter(this.state.items, (item: { name: String; typical: String; }) => {
+  doSearchShop = (text: any) => {
+    const formattedQuery = text.toLowerCase();
+    const filteredData = filter(this.state.shops, (item: { name: String; typical: String; }) => {
       return this.contains(item, formattedQuery);
     });
-    this.setState({itemsSearch: filteredData});
-    this.setState({search: formattedQuery});
+    this.setState({shopsSearch: filteredData});
+    this.setState({keySearchShop: formattedQuery});
   };
-  
+
   contains = ({ name, typical }: {name: String; typical: String;}, query: any) => {
     if (name.includes(query) || typical.includes(query)) {
       return true;
@@ -90,31 +102,103 @@ export default class SearchComponent extends Component<{}, MyState> {
     return false;
   };
 
-  render() {
-    const loading = this.state.isLoading;
-    const search = this.state.search;
+  SearchShop = () => {
+    const { isLoading, keySearchShop } = this.state;
+
     return (
-      <View style={styles.container}>
-        <SafeAreaView style={{backgroundColor: '#FFFFFF'}} />
+      <View style={styles.searchResult}>
         <TextInput
           autoCapitalize="none"
           autoCorrect={false}
           clearButtonMode="always"
-          value={search}
-          onChangeText={(search) => this.handleSearch(search)}
-          placeholder="Input item..."
+          value={keySearchShop}
+          onChangeText={(search) => this.doSearchShop(search)}
+          placeholder="Input shop..."
           style={styles.search}
         />
-        {loading ? (
+        {isLoading ? (
           <ActivityIndicator />
         ) : (
           <FlatList
-            data={this.state.itemsSearch}
+            data={this.state.shopsSearch}
             numColumns={numColumns}
-            renderItem={this.renderItem}
+            renderItem={(item) => this.renderItem(item, 0)}
             style={styles.flatlist}
           />
         )}
+      </View>
+    );
+  }
+
+  SearchPath = () => {
+    const { keySearchSource, keySearchTarget } = this.state;
+    const { navigation } = this.props;
+
+    return (
+      <View style={styles.searchResult}>
+        <TextInput
+          autoCapitalize="none"
+          autoCorrect={false}
+          clearButtonMode="always"
+          value={keySearchSource}
+          onChangeText={(value) => this.doSearchShop(value)}
+          placeholder="From..."
+          style={styles.search}
+        />
+        <FlatList
+          data={this.state.shopsSearch}
+          numColumns={numColumns}
+          renderItem={(item) => this.renderItem(item, 1)}
+          style={styles.flatlist}
+        />
+        <TextInput
+          autoCapitalize="none"
+          autoCorrect={false}
+          clearButtonMode="always"
+          value={keySearchTarget}
+          onChangeText={(value) => this.doSearchShop(value)}
+          placeholder="To..."
+          style={styles.search}
+        />
+        <FlatList
+          data={this.state.shopsSearch}
+          numColumns={numColumns}
+          renderItem={(item) => this.renderItem(item, 2)}
+          style={styles.flatlist}
+        />
+        <ButtonCircle
+          onPress={() => navigation.navigate('IndoorMap', {
+            source_id: keySearchSource,
+            target_id: keySearchTarget,
+          })}
+          name={'search'}
+          style={{backgroundColor: 'blue'}}
+        />
+      </View>
+    );
+  }
+
+  render() {
+    const { isSearchPath } = this.state;
+
+    return (
+      <View style={styles.container}>
+        <View style={styles.formSelect}>
+          <ButtonCircle
+            onPress={() => this.setState({isSearchPath: false})}
+            name={isSearchPath ? 'radio-button-off' : 'radio-button-on'}
+            style={{backgroundColor: 'blue'}}
+          />
+          <Text>Search shop</Text>
+          <ButtonCircle
+            onPress={() => this.setState({isSearchPath: true})}
+            name={isSearchPath ? 'radio-button-on' : 'radio-button-off'}
+            style={{backgroundColor: 'blue'}}
+          />
+          <Text>Search direction</Text>
+        </View>
+        <SafeAreaView style={{backgroundColor: '#FFFFFF'}} />
+        {isSearchPath ? this.SearchShop : this.SearchPath}
       </View>
     );
   }
@@ -149,5 +233,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 20,
     margin: 15,
+  },
+  formSelect: {
+    marginLeft: 300,
+  },
+  searchResult: {
+    position: 'absolute',
+    width: '80',
   },
 });

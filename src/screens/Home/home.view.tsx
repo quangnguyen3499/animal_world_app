@@ -1,25 +1,17 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ImageBackground,
-  Alert
-} from 'react-native';
-import { ButtonCircle, NavigationService, scale, verticalScale } from '@shared-view';
+import {View, Text, StyleSheet} from 'react-native';
+import {ButtonCircle, scale, verticalScale} from '@shared-view';
 import AsyncStorage from '@react-native-community/async-storage';
 
 interface State {
-  username ?: string
+  username?: string;
 }
 
 interface Props {
   navigation?: any;
   isLoading: boolean;
   isLogout: boolean;
-  doLogout: () => void
+  doLogout: () => void;
 }
 
 export class HomeComponent extends Component<Props, State> {
@@ -27,50 +19,46 @@ export class HomeComponent extends Component<Props, State> {
     super(props);
     this.state = {
       username: '',
-    }
+    };
   }
 
   componentDidMount() {
-    AsyncStorage.getItem('username', (err, res) => {
-      this.setState({ username: res });
-    })
+    AsyncStorage.getItem('username', (_err, res) => {
+      this.setState({username: res});
+    });
   }
 
   handleLogout = () => {
-    const { doLogout, isLogout } = this.props;
+    const {doLogout, isLogout, navigation} = this.props;
     doLogout();
-  }
+    isLogout ? navigation.navigate('Login') : null;
+  };
 
   render() {
-    const { username } = this.state;    
-    const { navigation } = this.props;
-    
+    const {username} = this.state;
+    const {navigation} = this.props;
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.auth}>Hi, {username.replace(/['"]+/g, '')}!</Text>
           <ButtonCircle
-            name={"user-circle-o"}
+            name={'user-circle-o'}
             style={{backgroundColor: 'red'}}
           />
         </View>
         <ButtonCircle
-          onPress={() => navigation.navigate('IndoorMap')}
-          name={"map"}
-          style={{backgroundColor: 'blue'}}
-        />
-        <ButtonCircle
           onPress={() => navigation.navigate('List')}
-          name={"th-list"}
+          name={'th-list'}
           style={{backgroundColor: 'blue'}}
         />
         <ButtonCircle
           onPress={() => this.handleLogout()}
-          name={"sign-out"}
+          name={'sign-out'}
           style={{backgroundColor: 'blue'}}
         />
       </View>
-    )
+    );
   }
 }
 

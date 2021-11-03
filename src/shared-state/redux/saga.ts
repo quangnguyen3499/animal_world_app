@@ -1,8 +1,8 @@
-import { all, fork } from 'redux-saga/effects';
-import { 
-  watchDoLogin, 
-  watchDoRegister, 
-  watchDoLogout, 
+import {all, fork} from 'redux-saga/effects';
+import {
+  watchDoLogin,
+  watchDoRegister,
+  watchDoLogout,
   watchDoGetMarkers,
   watchDoGetPath,
   watchDoGetPlaceDetail,
