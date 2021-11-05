@@ -1,43 +1,31 @@
-import { UserState } from '@core';
-import {DO_LOGOUT, DO_LOGOUT_SUCCESS, DO_LOGOUT_FAIL, } from '../actions';
+import {UserState} from '@core';
+import {DO_LOGOUT, DO_LOGOUT_SUCCESS, DO_LOGOUT_FAIL} from '../actions';
 
-const INITIAL_STATE: UserState ={
+const INITIAL_STATE: UserState = {
   isLoading: false,
   isLogout: false,
-  username: "",
+  username: '',
 };
 
-export const logoutReducer = (state = INITIAL_STATE, action: any) => {  
-  switch(action.type) {
-    case DO_LOGOUT: 
-    return Object.assign(
-      {},
-      state,
-      {
-        isLoading: true
-      }
-    );
+export const logoutReducer = (state = INITIAL_STATE, action: any) => {
+  switch (action.type) {
+    case DO_LOGOUT:
+      return Object.assign({}, state, {
+        isLoading: true,
+      });
     case DO_LOGOUT_SUCCESS:
-      return Object.assign(
-        {},
-        state,
-        {
-          isLoading: false,
-          isLogout: true,
-          username: action.username,
-        }
-      );
+      return Object.assign({}, state, {
+        isLoading: false,
+        isLogout: true,
+        username: action.username,
+      });
     case DO_LOGOUT_FAIL:
-      return Object.assign(
-        {},
-        state,
-        {
-          isLoading: false,
-          error: action.error
-        }
-      );
-      default:
-        break;
-  };
+      return Object.assign({}, state, {
+        isLoading: false,
+        error: action.error,
+      });
+    default:
+      break;
+  }
   return state;
-}
+};

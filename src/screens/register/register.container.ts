@@ -1,16 +1,16 @@
-import { connect } from 'react-redux';
-import { RegisterComponent } from './register.view';
-import { doRegister } from '@shared-state'
+import {connect} from 'react-redux';
+import {RegisterComponent} from './register.view';
+import {doRegister} from '@shared-state';
 
 export const RegisterContainer = connect(
-  (state: any) => {
-    return {}
+  () => {
+    return {};
   },
   (dispatch: any) => {
     return {
       doRegister: (email: string, password: string, username: string) => {
-        dispatch(doRegister(email, password, username))
-      }
-    }
-  }
+        dispatch(doRegister(email, password, username));
+      },
+    };
+  },
 )(RegisterComponent);

@@ -1,46 +1,33 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable prettier/prettier */
-/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ImageBackground,
-} from 'react-native';
-import { ButtonCircle, FloorList, Marker } from '@shared-view';
-import { COOPMART_FLOOR_1 } from '@assets';
-import  {
-  Svg,
-  Polyline,
-} from 'react-native-svg';
-import { Place } from 'src/core/entity/Place';
+import {View, StyleSheet, ImageBackground} from 'react-native';
+import {ButtonCircle, FloorList, Marker} from '@shared-view';
+import {COOPMART_FLOOR_1} from '@assets';
+import {Svg, Polyline} from 'react-native-svg';
+import {Place} from 'src/core/entity/Place';
 
 interface State {
-  isLoading: boolean
-  place_id: string
-  floor_id: string
-  activeTab: any
+  isLoading: boolean;
+  place_id: string;
+  floor_id: string;
+  activeTab: any;
 }
 
 interface Props {
-  navigation?: any
-  markers: any
-  distance: string
-  path: string
-  placeDetail: Place
-  source_id: string
-  target_id: string
-  doGetPlaceDetail: (place_id: string) => void
-  doGetMarker: (place_id: string, floor_id: string) => void
+  navigation?: any;
+  markers: any;
+  distance: string;
+  path: string;
+  placeDetail: Place;
+  source_id: string;
+  target_id: string;
+  doGetPlaceDetail: (place_id: string) => void;
+  doGetMarker: (place_id: string, floor_id: string) => void;
   doGetPath: (
     place_id: string,
     floor_id: string,
     source: string,
-    target: string
-  ) => void
+    target: string,
+  ) => void;
 }
 
 export class IndoorMapComponent extends Component<Props, State> {
@@ -64,37 +51,37 @@ export class IndoorMapComponent extends Component<Props, State> {
     const {place_id, floor_id} = this.state;
     const {source_id, target_id} = this.props;
 
-    this.props.doGetPath(
-      place_id,
-      floor_id,
-      source_id,
-      target_id
-    );
-  }
+    this.props.doGetPath(place_id, floor_id, source_id, target_id);
+  };
 
   handlePress = (value: any) => {
     console.log(value);
-  }
+  };
   render() {
-    const { navigation, markers, path, distance, placeDetail } = this.props;
-    const { activeTab } = this.state;
+    const {navigation, markers, path, distance, placeDetail} = this.props;
+    const {activeTab} = this.state;
     return (
       <View style={styles.container}>
-        <ImageBackground style={{flex: 1, width: 400, height: 650}} source={COOPMART_FLOOR_1} resizeMode={'contain'}>
-        {markers.map((data: any, index: any) =>
-          {
+        <ImageBackground
+          style={{flex: 1, width: 400, height: 650}}
+          source={COOPMART_FLOOR_1}
+          resizeMode={'contain'}>
+          {markers.map((data: any, index: any) => {
             return (
               <Marker
                 key={index}
                 top={data.longitude}
                 left={data.latitude}
+                // title={data.name}
+                // imageUrl={data.imageUrl}
               />
             );
-          })
-        }
+          })}
           <View style={{marginTop: 20, marginLeft: 20}}>
             <ButtonCircle
-              onPress={() => navigation.navigate('Detail', {place_id: placeDetail.id})}
+              onPress={() =>
+                navigation.navigate('Detail', {place_id: placeDetail.id})
+              }
               name={'arrow-back'}
               style={{backgroundColor: 'blue'}}
             />
@@ -114,9 +101,7 @@ export class IndoorMapComponent extends Component<Props, State> {
             name={'search'}
             style={{marginTop: 400, marginLeft: 350, backgroundColor: 'green'}}
           />
-          <Svg
-            style={{position: 'absolute'}}
-          >
+          <Svg style={{position: 'absolute'}}>
             <Polyline
               // points={path}
               points="110,60 110,66 130,66"
@@ -141,19 +126,5 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     justifyContent: 'center',
-  },
-  item: {
-    justifyContent: 'center',
-    flex: 1,
-    margin: 2,
-    borderRadius: 10,
-    height: 50,
-    backgroundColor: '#fff',
-  },
-  flatlist: {
-    margin: 10,
-  },
-  itemInvisible: {
-    backgroundColor: 'transparent',
   },
 });

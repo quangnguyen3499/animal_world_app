@@ -7,6 +7,7 @@ import {
   watchDoGetPath,
   watchDoGetPlaceDetail,
   watchDoGetListPlace,
+  watchDoUpdateAccount,
 } from './sagas';
 
 export default function* rootSaga() {
@@ -18,5 +19,6 @@ export default function* rootSaga() {
     fork(watchDoGetPath),
     fork(watchDoGetPlaceDetail),
     fork(watchDoGetListPlace),
+    fork(watchDoUpdateAccount),
   ]);
 }

@@ -21,12 +21,12 @@ export class ListPlaceComponent extends Component<Props, {}> {
   constructor(props: any) {
     super(props);
   }
-  
+
   componentDidMount() {
     this.props.doGetListPlace();
   }
 
-  formatData = (data: any, numColumns: any) => {
+  formatData = (data: any) => {
     const numberOfFullRows = Math.floor(data.length / numColumns);
     let numberOfElementsLastRow = data.length - numberOfFullRows * numColumns;
     while (
@@ -60,8 +60,11 @@ export class ListPlaceComponent extends Component<Props, {}> {
 
     return (
       <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.listplace}>List Places</Text>
+        </View>
         <FlatList
-          data={this.formatData(listplace, numColumns)}
+          data={this.formatData(listplace)}
           style={styles.flatlist}
           renderItem={this.renderItem}
           numColumns={numColumns}
@@ -87,8 +90,8 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').width / numColumns,
     shadowColor: '#000',
     shadowOffset: {
-      width: 5,
-      height: 5,
+      width: 2,
+      height: 2,
     },
     shadowOpacity: 0.2,
     shadowRadius: 2,
@@ -98,7 +101,6 @@ const styles = StyleSheet.create({
   itemImage: {
     height: 200,
     width: 160,
-    position: 'absolute',
     borderRadius: 10,
   },
   itemInvisible: {
@@ -110,5 +112,21 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginLeft: 20,
     width: '50%',
+    position: 'absolute',
+  },
+  header: {
+    height: 80,
+    backgroundColor: '#fff',
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  listplace: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });

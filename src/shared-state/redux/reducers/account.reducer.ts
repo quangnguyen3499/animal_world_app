@@ -1,26 +1,26 @@
 import {
-  DO_GET_LIST_PLACE,
-  DO_GET_LIST_PLACE_SUCCESS,
-  DO_GET_LIST_PLACE_FAIL,
+  DO_UPDATE_ACCOUNT,
+  DO_UPDATE_ACCOUNT_SUCCESS,
+  DO_UPDATE_ACCOUNT_FAIL,
 } from '../actions';
 
 const INITIAL_STATE = {
   isLoading: false,
-  listPlace: [],
+  username: '',
 };
 
-export const listPlaceReducer = (state = INITIAL_STATE, action: any) => {
+export const accountReducer = (state = INITIAL_STATE, action: any) => {
   switch (action.type) {
-    case DO_GET_LIST_PLACE:
+    case DO_UPDATE_ACCOUNT:
       return Object.assign({}, state, {
         isLoading: true,
       });
-    case DO_GET_LIST_PLACE_SUCCESS:
+    case DO_UPDATE_ACCOUNT_SUCCESS:
       return Object.assign({}, state, {
         isLoading: false,
-        listPlace: action.data,
+        username: action.username,
       });
-    case DO_GET_LIST_PLACE_FAIL:
+    case DO_UPDATE_ACCOUNT_FAIL:
       return Object.assign({}, state, {
         isLoading: false,
         error: action.error,

@@ -4,10 +4,9 @@ import {doGetPlaceDetail} from '@shared-state';
 
 export const DetailContainer = connect(
   (state: any) => {
-    console.log(state.placeDetail);
-
     return {
       placeDetail: state.placeDetail.placeDetail,
+      imagesPlace: state.placeDetail.images,
     };
   },
   (dispatch: any) => {

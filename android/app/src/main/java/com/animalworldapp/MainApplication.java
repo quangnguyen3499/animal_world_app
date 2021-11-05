@@ -19,6 +19,9 @@ import java.util.List;
 //react-native-maps
 import com.airbnb.android.react.maps.MapsPackage;
 import com.horcrux.svg.SvgPackage;
+import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;
+import io.invertase.firebase.storage.ReactNativeFirebaseStoragePackage;
+import io.invertase.firebase.auth.ReactNativeFirebaseAuthPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -37,7 +40,10 @@ public class MainApplication extends Application implements ReactApplication {
             new SafeAreaContextPackage(),
             new RNGestureHandlerPackage(),
             new MapsPackage(),
-            new SvgPackage()
+            new SvgPackage(),
+            new ReactNativeFirebaseAppPackage(),
+            new ReactNativeFirebaseStoragePackage(),
+            new ReactNativeFirebaseAuthPackage()
           );
         }
 

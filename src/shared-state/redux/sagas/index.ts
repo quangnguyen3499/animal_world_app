@@ -5,3 +5,4 @@ export * from './marker.saga';
 export * from './path.saga';
 export * from './place.saga';
 export * from './listplace.saga';
+export * from './account.saga';

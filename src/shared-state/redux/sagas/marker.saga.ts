@@ -4,23 +4,19 @@ import {
   DO_GET_MARKER_SUCCESS,
   DO_GET_MARKER_FAIL,
 } from '../actions';
-import axios from '../../../core/api/Api';
+import storage from '@react-native-firebase/storage';
+import {MapService} from '@core';
 
 function* doGetMarkers(action: object) {
   try {
     const {place_id, floor_id}: {place_id?: string; floor_id?: string} = action;
     var data: any;
 
-    yield axios
-      .get('http://192.168.1.20:3000/api/v1/coordinates', {
-        params: {
-          place_id: place_id,
-          floor_id: floor_id,
-        },
-      })
-      .then(res => {
-        data = res.data;
-      });
+    // const reference = storage().ref('/coopmart/floormap');
+    // console.log(reference);
+
+    data = MapService.getMarkers(place_id, floor_id);
+
     yield put({type: DO_GET_MARKER_SUCCESS, data});
   } catch (error) {
     yield put({type: DO_GET_MARKER_FAIL, error: error});
