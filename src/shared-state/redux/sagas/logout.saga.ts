@@ -1,10 +1,9 @@
-import {call, put, takeLatest} from 'redux-saga/effects';
+import {put, takeLatest} from 'redux-saga/effects';
 import {DO_LOGOUT, DO_LOGOUT_SUCCESS, DO_LOGOUT_FAIL} from '../actions';
 import {Alert} from 'react-native';
 import axios from '../../../core/api/Api';
 // import { onSignOut } from '@core';
 import AsyncStorage from '@react-native-community/async-storage';
-import {NavigationService} from '@shared-view';
 
 function* doLogout() {
   try {

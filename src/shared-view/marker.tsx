@@ -1,28 +1,26 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, Image, View} from 'react-native';
 
-const [isShowDetail, setIsShowDetail] = useState(false);
+const Marker = ({title, imageUrl, top, left}: any) => {
+  const [isShowDetail, setIsShowDetail] = useState(false);
 
-const showDetail = () => setIsShowDetail(true);
+  const showDetail = () => setIsShowDetail(true);
 
-const Marker = ({title, imageUrl, top, left}: any) => (
-  <View>
-    {/* {!isShowDetail ?
-      (
-        <View>
-          <Text>{title}</Text>
-          <Image
-            source={imageUrl}
-          />
+  return (
+    <View>
+      {!isShowDetail ? (
+        <View style={styles.detail}>
+          <Text style={styles.title}>{title}</Text>
+          <Image source={imageUrl} />
         </View>
-      ) : null
-    } */}
-    <TouchableOpacity
-      onPress={showDetail}
-      style={[styles.marker, {top, left}]}
-    />
-  </View>
-);
+      ) : null}
+      <TouchableOpacity
+        onPress={() => showDetail}
+        style={[styles.marker, {top, left}]}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   marker: {
@@ -32,6 +30,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     position: 'absolute',
     opacity: 0.8,
+  },
+  detail: {
+    //
+  },
+  title: {
+    //
   },
 });
 

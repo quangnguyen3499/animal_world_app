@@ -27,7 +27,7 @@ function* doGetPath(action: object) {
           target: target,
         },
       })
-      .then(res => {
+      .then((res: {data: any}) => {
         data = res.data;
       });
     Alert.alert('Thông báo', 'Get path thành công');

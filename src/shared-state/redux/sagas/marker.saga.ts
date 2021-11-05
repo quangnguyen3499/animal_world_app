@@ -5,11 +5,15 @@ import {
   DO_GET_MARKER_FAIL,
 } from '../actions';
 import axios from '../../../core/api/Api';
+import storage from '@react-native-firebase/storage';
 
 function* doGetMarkers(action: object) {
   try {
     const {place_id, floor_id}: {place_id?: string; floor_id?: string} = action;
     var data: any;
+
+    const reference = storage().ref('/coopmart/floormap');
+    console.log(reference);
 
     yield axios
       .get('http://192.168.1.20:3000/api/v1/coordinates', {
@@ -18,7 +22,7 @@ function* doGetMarkers(action: object) {
           floor_id: floor_id,
         },
       })
-      .then(res => {
+      .then((res: {data: any}) => {
         data = res.data;
       });
     yield put({type: DO_GET_MARKER_SUCCESS, data});

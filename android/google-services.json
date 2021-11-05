@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "552120705171",
+    "project_id": "indoormap-a28c2",
+    "storage_bucket": "indoormap-a28c2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:552120705171:android:ba647133dd80e436d86d66",
+        "android_client_info": {
+          "package_name": "com.xompany.animalworldapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "552120705171-ok6gevjc2g1c0pgqabb21qa5283ete9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChLhmSFcZ86pQe271TSeGCPMMQH9_9rUQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "552120705171-ok6gevjc2g1c0pgqabb21qa5283ete9r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

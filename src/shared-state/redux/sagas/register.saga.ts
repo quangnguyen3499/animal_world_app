@@ -18,7 +18,7 @@ function* doRegister(action: object) {
         password: password,
         username: username,
       })
-      .then(res => {
+      .then((res: {data: any}) => {
         user_data = res.data;
       });
     Alert.alert('Thông báo', 'Đăng ký thành công');

@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {ButtonCircle, scale, verticalScale} from '@shared-view';
+import {View, Text, StyleSheet, Image} from 'react-native';
+import {ButtonCircle} from '@shared-view';
 import AsyncStorage from '@react-native-community/async-storage';
+import {DEFAULT_AVATAR} from '@assets';
 
 interface State {
   username?: string;
+  avatar?: String;
 }
 
 interface Props {
@@ -17,14 +19,14 @@ interface Props {
 export class HomeComponent extends Component<Props, State> {
   constructor(props: any) {
     super(props);
-    this.state = {
-      username: '',
-    };
   }
 
   componentDidMount() {
     AsyncStorage.getItem('username', (_err, res) => {
       this.setState({username: res});
+    });
+    AsyncStorage.getItem('avatar', (_err, res) => {
+      this.setState({avatar: res});
     });
   }
 
@@ -35,27 +37,36 @@ export class HomeComponent extends Component<Props, State> {
   };
 
   render() {
-    const {username} = this.state;
+    const {username, avatar} = this.state;
     const {navigation} = this.props;
+
+    console.log(avatar);
 
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.auth}>Hi, {username.replace(/['"]+/g, '')}!</Text>
-          <ButtonCircle
-            name={'user-circle-o'}
-            style={{backgroundColor: 'red'}}
-          />
+          <Text style={styles.auth}>
+            Hi, {username ? username.replace(/['"]+/g, '') : ''}!
+          </Text>
+          <Image source={avatar ? DEFAULT_AVATAR : avatar} />
         </View>
         <ButtonCircle
-          onPress={() => navigation.navigate('ListPlace')}
+          onPress={() => navigation.navigate('Account')}
+          name={'user-circle-o'}
+          style={styles.accBtn}
+          size={50}
+        />
+        <ButtonCircle
+          onPress={() => navigation.navigate('List')}
           name={'th-list'}
-          style={{backgroundColor: 'blue'}}
+          style={styles.listBtn}
+          size={200}
         />
         <ButtonCircle
           onPress={() => this.handleLogout()}
           name={'sign-out'}
-          style={{backgroundColor: 'blue'}}
+          style={styles.logoutBtn}
+          size={50}
         />
       </View>
     );
@@ -81,16 +92,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  button: {
-    backgroundColor: '#DA70D6',
-    height: verticalScale(48),
-    borderRadius: scale(6),
-    fontSize: verticalScale(20),
+  listBtn: {
+    backgroundColor: 'blue',
     justifyContent: 'center',
   },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: verticalScale(20),
-    textAlign: 'center',
+  accBtn: {
+    backgroundColor: 'orange',
+  },
+  logoutBtn: {
+    backgroundColor: 'gray',
+    margin: 20,
   },
 });

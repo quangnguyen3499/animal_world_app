@@ -1,1 +1,1 @@
-export * from './register.container'
+export * from './register.container';

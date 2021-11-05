@@ -1,5 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
 import {
   ActivityIndicator,
@@ -12,7 +10,7 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import filter from 'lodash.filter';
-import { ButtonCircle } from '@shared-view';
+import {ButtonCircle} from '@shared-view';
 
 const numColumns = 1;
 
@@ -28,8 +26,8 @@ interface State {
 }
 
 interface Props {
-  navigation ?: any
-  doGetListShop: () => void
+  navigation?: any;
+  doGetListShop: () => void;
 }
 
 export default class SearchComponent extends Component<Props, State> {
@@ -55,7 +53,7 @@ export default class SearchComponent extends Component<Props, State> {
     };
   }
 
-  renderItem = ({item, index} : any, flag: any) => {
+  renderItem = ({item, index}: any, flag: any) => {
     const {navigation} = this.props;
 
     if (item.empty === true) {
@@ -72,30 +70,33 @@ export default class SearchComponent extends Component<Props, State> {
         case 2:
           this.setState({keySearchTarget: item.id});
           break;
-        default: break;
+        default:
+          break;
       }
     };
     return (
       <TouchableOpacity
         style={styles.item}
         key={index}
-        onPress={() => setValue(item)}
-      >
+        onPress={() => setValue(item)}>
         <Text style={styles.itemText}>{item.name}</Text>
       </TouchableOpacity>
     );
-  }
+  };
 
   doSearchShop = (text: any) => {
     const formattedQuery = text.toLowerCase();
-    const filteredData = filter(this.state.shops, (item: { name: String; typical: String; }) => {
-      return this.contains(item, formattedQuery);
-    });
+    const filteredData = filter(
+      this.state.shops,
+      (item: {name: String; typical: String}) => {
+        return this.contains(item, formattedQuery);
+      },
+    );
     this.setState({shopsSearch: filteredData});
     this.setState({keySearchShop: formattedQuery});
   };
 
-  contains = ({ name, typical }: {name: String; typical: String;}, query: any) => {
+  contains = ({name, typical}: {name: String; typical: String}, query: any) => {
     if (name.includes(query) || typical.includes(query)) {
       return true;
     }
@@ -103,7 +104,7 @@ export default class SearchComponent extends Component<Props, State> {
   };
 
   SearchShop = () => {
-    const { isLoading, keySearchShop } = this.state;
+    const {isLoading, keySearchShop} = this.state;
 
     return (
       <View style={styles.searchResult}>
@@ -112,7 +113,7 @@ export default class SearchComponent extends Component<Props, State> {
           autoCorrect={false}
           clearButtonMode="always"
           value={keySearchShop}
-          onChangeText={(search) => this.doSearchShop(search)}
+          onChangeText={search => this.doSearchShop(search)}
           placeholder="Input shop..."
           style={styles.search}
         />
@@ -122,17 +123,17 @@ export default class SearchComponent extends Component<Props, State> {
           <FlatList
             data={this.state.shopsSearch}
             numColumns={numColumns}
-            renderItem={(item) => this.renderItem(item, 0)}
+            renderItem={item => this.renderItem(item, 0)}
             style={styles.flatlist}
           />
         )}
       </View>
     );
-  }
+  };
 
   SearchPath = () => {
-    const { keySearchSource, keySearchTarget } = this.state;
-    const { navigation } = this.props;
+    const {keySearchSource, keySearchTarget} = this.state;
+    const {navigation} = this.props;
 
     return (
       <View style={styles.searchResult}>
@@ -141,14 +142,14 @@ export default class SearchComponent extends Component<Props, State> {
           autoCorrect={false}
           clearButtonMode="always"
           value={keySearchSource}
-          onChangeText={(value) => this.doSearchShop(value)}
+          onChangeText={value => this.doSearchShop(value)}
           placeholder="From..."
           style={styles.search}
         />
         <FlatList
           data={this.state.shopsSearch}
           numColumns={numColumns}
-          renderItem={(item) => this.renderItem(item, 1)}
+          renderItem={item => this.renderItem(item, 1)}
           style={styles.flatlist}
         />
         <TextInput
@@ -156,30 +157,32 @@ export default class SearchComponent extends Component<Props, State> {
           autoCorrect={false}
           clearButtonMode="always"
           value={keySearchTarget}
-          onChangeText={(value) => this.doSearchShop(value)}
+          onChangeText={value => this.doSearchShop(value)}
           placeholder="To..."
           style={styles.search}
         />
         <FlatList
           data={this.state.shopsSearch}
           numColumns={numColumns}
-          renderItem={(item) => this.renderItem(item, 2)}
+          renderItem={item => this.renderItem(item, 2)}
           style={styles.flatlist}
         />
         <ButtonCircle
-          onPress={() => navigation.navigate('IndoorMap', {
-            source_id: keySearchSource,
-            target_id: keySearchTarget,
-          })}
+          onPress={() =>
+            navigation.navigate('IndoorMap', {
+              source_id: keySearchSource,
+              target_id: keySearchTarget,
+            })
+          }
           name={'search'}
           style={{backgroundColor: 'blue'}}
         />
       </View>
     );
-  }
+  };
 
   render() {
-    const { isSearchPath } = this.state;
+    const {isSearchPath} = this.state;
 
     return (
       <View style={styles.container}>
