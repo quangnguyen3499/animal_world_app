@@ -4,7 +4,6 @@ import {ButtonCircle} from '@shared-view';
 import AsyncStorage from '@react-native-community/async-storage';
 import {DEFAULT_AVATAR} from '@assets';
 import storage from '@react-native-firebase/storage';
-import auth from '@react-native-firebase/auth';
 
 interface State {
   username?: any;
@@ -34,7 +33,6 @@ export class HomeComponent extends Component<Props, State> {
     // AsyncStorage.getItem('avatar', (_err, res) => {
     //   this.setState({avatar: res});
     // });
-    auth().signInAnonymously();
   }
 
   handleLogout = () => {
@@ -43,25 +41,23 @@ export class HomeComponent extends Component<Props, State> {
     isLogout ? navigation.navigate('Login') : null;
   };
 
-  url() {
-    return storage().ref('/user/1.jpeg').getDownloadURL()
-      .then(res => console.log(res)
-      )
+  async getAvatar() {
+    return await storage().ref('/user/1.jpeg').getDownloadURL()
+      .then(res => this.setState({avatar: res}));
   }
 
   render() {
     const {avatar} = this.state;
     const {navigation} = this.props;
-    // this.url();
-    const test = {uri: 'https://firebasestorage.googleapis.com/v0/b/indoormap-a28c2.appspot.com/o/user%2F1.jpeg?alt=media&token=6b0ca904-56bf-4e4f-bbaa-859a4b058ea9'}
-    
+    this.getAvatar();
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.auth}>
+          <Text style={styles.auth}>Hi Quang!
             {/* Hi, {username ? username.replace(/['"]+/g, '') : ''}! */}
           </Text>
-          <Image source={test} style={{
+          <Image source={avatar ? {uri: avatar} : DEFAULT_AVATAR} style={{
               height: 60,
               width: 60,
               borderRadius: 30,
@@ -75,7 +71,7 @@ export class HomeComponent extends Component<Props, State> {
           // size={50}
         />
         <ButtonCircle
-          onPress={() => navigation.navigate('List')}
+          onPress={() => navigation.navigate('ListPlace')}
           name={'th-list'}
           style={styles.listBtn}
           // size={200}

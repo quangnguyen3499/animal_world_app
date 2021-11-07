@@ -3,6 +3,7 @@ import {Provider} from 'react-redux';
 import {RootNavigator} from '@navigation';
 import {store} from '@shared-state';
 import AsyncStorage from '@react-native-community/async-storage';
+import auth from '@react-native-firebase/auth';
 
 const App = () => {
   const [isLog, setIsLog] = useState(false);
@@ -14,6 +15,8 @@ const App = () => {
     }
     checkAuth();
   }, []);
+
+  auth().signInAnonymously();
 
   return (
     <Provider store={store}>
