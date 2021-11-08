@@ -14,8 +14,8 @@ function* doGetListPlace() {
     thumbnail = FireBaseService.getStorage('/thumbnail');
 
     data = {
-      ...PlaceService.getPlaces(),
-      ...thumbnail
+      listplace: PlaceService.getPlaces(),
+      thumbnail_url: thumbnail
     }
     
     yield put({type: DO_GET_LIST_PLACE_SUCCESS, data});

@@ -4,10 +4,12 @@ import {ButtonCircle} from '@shared-view';
 import AsyncStorage from '@react-native-community/async-storage';
 import {DEFAULT_AVATAR} from '@assets';
 import storage from '@react-native-firebase/storage';
+import { FireBaseService } from '@core';
 
 interface State {
   username?: any;
   avatar?: any;
+  user_id?: any;
 }
 
 interface Props {
@@ -27,29 +29,21 @@ export class HomeComponent extends Component<Props, State> {
   }
 
   componentDidMount() {
-    AsyncStorage.getItem('username', (_err, res) => {
-      this.setState({username: res});
+    AsyncStorage.getItem('user_data', (_err, res) => {
+      this.setState({username: JSON.parse(res).username});
     });
-    // AsyncStorage.getItem('avatar', (_err, res) => {
-    //   this.setState({avatar: res});
-    // });
   }
 
   handleLogout = () => {
     const {doLogout, isLogout, navigation} = this.props;
     doLogout();
-    isLogout ? navigation.navigate('Login') : null;
+    // isLogout ? navigation.navigate('Login') : null;
   };
 
-  async getAvatar() {
-    return await storage().ref('/user/1.jpeg').getDownloadURL()
-      .then(res => this.setState({avatar: res}));
-  }
-
   render() {
-    const {avatar} = this.state;
+    let {avatar, user_id} = this.state;
     const {navigation} = this.props;
-    this.getAvatar();
+    avatar = FireBaseService.getStorage(`user/${user_id}.jpeg`);
 
     return (
       <View style={styles.container}>

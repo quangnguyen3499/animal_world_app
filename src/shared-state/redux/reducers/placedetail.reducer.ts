@@ -7,7 +7,6 @@ import {
 const INITIAL_STATE = {
   isLoading: false,
   placeDetail: {},
-  images: [],
 };
 
 export const placeDetailReducer = (state = INITIAL_STATE, action: any) => {
@@ -20,7 +19,6 @@ export const placeDetailReducer = (state = INITIAL_STATE, action: any) => {
       return Object.assign({}, state, {
         isLoading: false,
         placeDetail: action.data,
-        images: [],
       });
     case DO_GET_PLACE_FAIL:
       return Object.assign({}, state, {
