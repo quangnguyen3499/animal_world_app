@@ -8,7 +8,6 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import storage from '@react-native-firebase/storage';
 
 const numColumns = 2;
 
@@ -27,10 +26,6 @@ export class ListPlaceComponent extends Component<Props, {}> {
     this.props.doGetListPlace();
   }
 
-  async getThumbnail(url: string) {
-    return await storage().ref(url).getDownloadURL();
-  }
-  
   formatData = (data: any) => {
     const numberOfFullRows = Math.floor(data.length / numColumns);
     let numberOfElementsLastRow = data.length - numberOfFullRows * numColumns;
@@ -53,8 +48,8 @@ export class ListPlaceComponent extends Component<Props, {}> {
       <TouchableOpacity
         style={styles.item}
         key={index}
-        onPress={item => navigation.navigate('Detail', {place_id: item.id})}>
-        <Image source={this.getThumbnail(item.url)} style={styles.itemImage} />
+        onPress={() => navigation.navigate('Detail', {place_id: index})}>
+        <Image source={item.thumbnail} style={styles.itemImage} />
         <Text style={styles.itemText}>{item.title}</Text>
       </TouchableOpacity>
     );

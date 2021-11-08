@@ -1,4 +1,4 @@
-import {PlaceService} from '@core';
+import {PlaceService, FireBaseService} from '@core';
 import {put, takeLatest} from 'redux-saga/effects';
 import {
   DO_GET_LIST_PLACE,
@@ -9,8 +9,14 @@ import {
 function* doGetListPlace() {
   try {
     var data: any;
+    var thumbnail: any;
 
-    data = PlaceService.getPlaces();
+    thumbnail = FireBaseService.getStorage('/thumbnail');
+
+    data = {
+      ...PlaceService.getPlaces(),
+      ...thumbnail
+    }
     
     yield put({type: DO_GET_LIST_PLACE_SUCCESS, data});
   } catch (error) {

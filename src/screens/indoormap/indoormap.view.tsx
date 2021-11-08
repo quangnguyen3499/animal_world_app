@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, ImageBackground} from 'react-native';
 import {ButtonCircle, FloorList, Marker} from '@shared-view';
-import {COOPMART_FLOOR_1} from '@assets';
 import {Svg, Polyline} from 'react-native-svg';
 import {Place} from 'src/core/entity/Place';
 
@@ -64,7 +63,8 @@ export class IndoorMapComponent extends Component<Props, State> {
       <View style={styles.container}>
         <ImageBackground
           style={{flex: 1, width: 400, height: 650}}
-          source={COOPMART_FLOOR_1}
+          // TODO:
+          source={placeDetail.floormap[0]}
           resizeMode={'contain'}>
           {markers.map((data: any, index: any) => {
             return (
@@ -73,7 +73,7 @@ export class IndoorMapComponent extends Component<Props, State> {
                 top={data.longitude}
                 left={data.latitude}
                 // title={data.name}
-                // imageUrl={data.imageUrl}
+                // logo={data.logoUrl}
               />
             );
           })}
