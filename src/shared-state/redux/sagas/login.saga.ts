@@ -2,8 +2,7 @@ import {put, takeLatest} from 'redux-saga/effects';
 import {DO_LOGIN, DO_LOGIN_SUCCESS, DO_LOGIN_FAIL} from '../actions';
 import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import storage from '@react-native-firebase/storage';
-import {UserService} from '@core';
+import {FireBaseService, UserService} from '@core';
 
 function* doLogin(action: object) {
   try {
@@ -12,6 +11,7 @@ function* doLogin(action: object) {
     var user_token: any;
     var user_name: any;
     var data: any;
+    var avatar: any;
 
     data = UserService.login(email, password);
     
@@ -22,12 +22,16 @@ function* doLogin(action: object) {
     Alert.alert('Thông báo', 'Đăng nhập thành công');
     yield put({type: DO_LOGIN_SUCCESS, user_data});
 
-    // const avatar = storage().ref(`/user/${user_data.id}.jpeg`).getDownloadURL();
+    // avatar = FireBaseService.getStorage(`user/${user_data.id}`);
 
-    yield AsyncStorage.setItem('user_id', JSON.stringify(user_data.id));
-    yield AsyncStorage.setItem('username', JSON.stringify(user_name));
-    yield AsyncStorage.setItem('tokenAuth', JSON.stringify(user_token));
-    // yield AsyncStorage.setItem('avatar', JSON.stringify(avatar));
+    // yield AsyncStorage.setItem('user_data', JSON.stringify(
+    //   {
+    //     ...{id: user_data.id},
+    //     ...{user_name: user_name},
+    //     ...{user_token: user_token},
+    //     ...{avatar: avatar}
+    //   })
+    // );
   } catch (error) {
     Alert.alert('Thông báo', 'Đăng nhập không thành công');
     yield put({type: DO_LOGIN_FAIL, error: error});

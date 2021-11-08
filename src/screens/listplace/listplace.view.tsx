@@ -13,7 +13,7 @@ const numColumns = 2;
 
 interface Props {
   navigation?: any;
-  listplace: Array<Object>;
+  listplace: any;
   doGetListPlace: () => void;
 }
 
@@ -49,7 +49,7 @@ export class ListPlaceComponent extends Component<Props, {}> {
         style={styles.item}
         key={index}
         onPress={() => navigation.navigate('Detail', {place_id: index})}>
-        <Image source={item.thumbnail} style={styles.itemImage} />
+        {/* <Image source={item.thumbnail_url} style={styles.itemImage} /> */}
         <Text style={styles.itemText}>{item.title}</Text>
       </TouchableOpacity>
     );
@@ -64,7 +64,7 @@ export class ListPlaceComponent extends Component<Props, {}> {
           <Text style={styles.listplace}>List Places</Text>
         </View>
         <FlatList
-          data={this.formatData(listplace)}
+          data={this.formatData(listplace.listplace)}
           style={styles.flatlist}
           renderItem={this.renderItem}
           numColumns={numColumns}

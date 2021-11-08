@@ -5,6 +5,8 @@ export interface Place {
   tel: string;
   url: string;
   floor: number;
-  floor_list: Array<Object>;
+  floorlist: Array<Object>;
+  floormap: Array<String>;
+  images: Array<String>;
   description: Text;
 }

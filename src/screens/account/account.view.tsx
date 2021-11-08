@@ -29,15 +29,15 @@ export default class AccountComponent extends Component<Props, State> {
   };
 
   componentDidMount() {
-    AsyncStorage.getItem('username', (_err, res) => {
+    AsyncStorage.getItem('user_data', (_err, res) => {
       this.setState({username: res});
     });
-    AsyncStorage.getItem('avatar', (_err, res) => {
-      this.setState({avatar: res});
-    });
-    AsyncStorage.getItem('user_id', (_err, res) => {
-      this.setState({user_id: res});
-    });
+    // AsyncStorage.getItem('avatar', (_err, res) => {
+    //   this.setState({avatar: res});
+    // });
+    // AsyncStorage.getItem('user_id', (_err, res) => {
+    //   this.setState({user_id: res});
+    // });
   }
 
   render() {

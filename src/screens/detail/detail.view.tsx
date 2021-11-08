@@ -5,7 +5,6 @@ import {View, Text, StyleSheet} from 'react-native';
 
 interface State {
   placeDetail: Place;
-  imagesPlace: Array<String>;
 }
 
 interface Props {
@@ -26,13 +25,12 @@ export default class DetailComponent extends Component<Props, State> {
 
   render() {
     const {navigation} = this.props;
-    const {placeDetail, imagesPlace} = this.state;
-    // TODO: store all images on firebase
+    const {placeDetail} = this.state;
 
     return (
       <View style={styles.container}>
         {/* TODO: image slider */}
-        <ImageSlider data={imagesPlace} />
+        <ImageSlider data={placeDetail.images} />
         <ButtonCircle
           onPress={() => navigation.navigate('Search')}
           name={'search'}

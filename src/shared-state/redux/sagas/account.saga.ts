@@ -19,7 +19,8 @@ function* doUpdateAccount(action: object) {
     user_name = user_data.first_name + user_data.last_name;
 
     yield put({type: DO_UPDATE_ACCOUNT_SUCCESS, user_data});
-    yield AsyncStorage.setItem('username', JSON.stringify(user_name));
+    // TODO:
+    yield AsyncStorage.setItem('user_data', JSON.stringify(user_name));
   } catch (error) {
     yield put({type: DO_UPDATE_ACCOUNT_FAIL, error: error});
   }

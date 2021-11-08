@@ -64,7 +64,7 @@ export class IndoorMapComponent extends Component<Props, State> {
         <ImageBackground
           style={{flex: 1, width: 400, height: 650}}
           // TODO:
-          source={placeDetail.floormap[0]}
+          source={placeDetail.floormap[activeTab]}
           resizeMode={'contain'}>
           {markers.map((data: any, index: any) => {
             return (
@@ -91,7 +91,7 @@ export class IndoorMapComponent extends Component<Props, State> {
               style={{backgroundColor: 'blue'}}
             />
             <FloorList
-              data={placeDetail.floor_list}
+              data={placeDetail.floorlist}
               onPress={this.handlePress}
               activeTab={activeTab}
             />
