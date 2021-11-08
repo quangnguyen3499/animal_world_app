@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, Image, View} from 'react-native';
 
-const Marker = ({title, imageUrl, top, left}: any) => {
+const Marker = ({title, logoUrl, top, left}: any) => {
   const [isShowDetail, setIsShowDetail] = useState(false);
 
   const showDetail = () => setIsShowDetail(true);
@@ -11,7 +11,7 @@ const Marker = ({title, imageUrl, top, left}: any) => {
       {!isShowDetail ? (
         <View style={styles.detail}>
           <Text style={styles.title}>{title}</Text>
-          <Image source={imageUrl} />
+          <Image source={logoUrl} />
         </View>
       ) : null}
       <TouchableOpacity

@@ -12,9 +12,6 @@ function* doGetMarkers(action: object) {
     const {place_id, floor_id}: {place_id?: string; floor_id?: string} = action;
     var data: any;
 
-    // const reference = storage().ref('/coopmart/floormap');
-    // console.log(reference);
-
     data = MapService.getMarkers(place_id, floor_id);
 
     yield put({type: DO_GET_MARKER_SUCCESS, data});
