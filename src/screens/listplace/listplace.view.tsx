@@ -49,7 +49,7 @@ export class ListPlaceComponent extends Component<Props, {}> {
         style={styles.item}
         key={index}
         onPress={() => navigation.navigate('Detail', {place_id: index})}>
-        {/* <Image source={item.thumbnail_url} style={styles.itemImage} /> */}
+        <Image source={item.thumbnail_url} style={styles.itemImage} />
         <Text style={styles.itemText}>{item.title}</Text>
       </TouchableOpacity>
     );

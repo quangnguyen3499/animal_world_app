@@ -8,14 +8,14 @@ function* doLogout() {
   try {
     var token: string;
 
-    AsyncStorage.getItem('tokenAuth').then(val => {
-      token = JSON.parse(val)[Object.keys(JSON.parse(val))[0]];
+    AsyncStorage.getItem('user_data').then((val: any) => {
+      token = val.user_token;
       UserService.logout(token);
     });
     
     Alert.alert('Thông báo', 'Đăng xuất thành công');
     yield put({type: DO_LOGOUT_SUCCESS});
-    yield AsyncStorage.removeItem('tokenAuth');
+    yield AsyncStorage.removeItem('user_data');
   } catch (error) {
     Alert.alert('Thông báo', 'Đăng xuất không thành công');
     yield put({type: DO_LOGOUT_FAIL, error: error});

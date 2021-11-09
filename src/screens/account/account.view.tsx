@@ -29,23 +29,20 @@ export default class AccountComponent extends Component<Props, State> {
   };
 
   componentDidMount() {
-    AsyncStorage.getItem('user_data', (_err, res) => {
-      this.setState({username: res});
+    AsyncStorage.getItem('user_data').then((val: any) => {
+      const data = JSON.parse(val);
+      this.setState({username: data.username});
+      this.setState({avatar: data.avatar});
+      this.setState({user_id: data.id});
     });
-    // AsyncStorage.getItem('avatar', (_err, res) => {
-    //   this.setState({avatar: res});
-    // });
-    // AsyncStorage.getItem('user_id', (_err, res) => {
-    //   this.setState({user_id: res});
-    // });
   }
 
   render() {
-    // const {avatar} = this.state;
+    const {avatar} = this.state;
 
     return (
       <View style={styles.container}>
-        {/* <Image source={avatar ? DEFAULT_AVATAR : avatar} /> */}
+        <Image source={avatar ? DEFAULT_AVATAR : avatar} />
         <View>
           <TextInput
             style={styles.username}

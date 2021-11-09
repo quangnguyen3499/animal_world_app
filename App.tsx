@@ -10,8 +10,9 @@ const App = () => {
 
   useEffect(() => {
     async function checkAuth() {
-      let value = await AsyncStorage.getItem('tokenAuth');
-      setIsLog(value != null);
+      await AsyncStorage.getItem('user_data').then((val: any) => {
+        setIsLog(val.user_token != null);
+      })
     }
     checkAuth();
   }, []);

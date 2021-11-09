@@ -11,7 +11,7 @@ function* doGetListPlace() {
     var data: any;
     var thumbnail: any;
 
-    thumbnail = FireBaseService.getStorage('/thumbnail');
+    thumbnail = FireBaseService.getFolderStorage('/thumbnail');
 
     data = {
       listplace: PlaceService.getPlaces(),
