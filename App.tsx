@@ -11,7 +11,7 @@ const App = () => {
   useEffect(() => {
     async function checkAuth() {
       await AsyncStorage.getItem('user_data').then((val: any) => {
-        setIsLog(val.user_token != null);
+        setIsLog(JSON.parse(val).user_token.token != null);
       })
     }
     checkAuth();

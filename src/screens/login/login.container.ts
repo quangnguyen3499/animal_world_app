@@ -3,11 +3,10 @@ import { LoginComponent } from './login.view';
 import {doLogin} from '@shared-state'
 
 export const LoginContainer = connect(
-  (state: any) => {
+  (state: any) => {    
     return {
       isLoading: state.user.isLoading,
       isLogged: state.user.isLogged,
-      username: state.user.username,
     }
   },
   (dispatch: any) => {

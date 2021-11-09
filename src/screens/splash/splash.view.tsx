@@ -5,11 +5,11 @@ import {
   Text,
   View
 } from 'react-native';
-import { Container } from 'native-base';
 import { ICON_LOGO_APP } from '@assets';
 
 interface Props {
   navigation?: any;
+  route?: any;
 }
 
 export class SplashComponent extends Component<Props> {
@@ -26,35 +26,30 @@ export class SplashComponent extends Component<Props> {
   }
 
   async componentDidMount() {    
-    const {navigation} = this.props;
-    const isLoggedIn = !!JSON.stringify(navigation.getParam('isLoggedIn'));
+    const {navigation, route} = this.props;
     const data = await this.performTimeConsumingTask();
+    
     if (data !== null) {
-      this.props.navigation.navigate(isLoggedIn ? 'Home' : 'Register');
+      navigation.navigate(route.params.isLoggedIn ? "Home" : "Register");
     }
   }
 
   render() {
     return (
-      <Container style={styles.container}>
-        <View style={styles.content}>
-          <Image
-            style={styles.image}
-            source={ICON_LOGO_APP}
-            resizeMode={'contain'}
-          />
-          <Text style={styles.text}>Welcome to Indoor Map!</Text>
-        </View>
-      </Container>
+      <View style={styles.container}>
+        <Image
+          style={styles.image}
+          source={ICON_LOGO_APP}
+          resizeMode={'contain'}
+        />
+        <Text style={styles.text}>Welcome to Indoor Map!</Text>
+      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  },
-  content: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'

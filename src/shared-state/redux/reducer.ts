@@ -6,7 +6,7 @@ import {
   pathReducer,
   registerReducer,
   placeDetailReducer,
-  listPlaceReducer,
+  listplaceReducer,
   accountReducer,
 } from './reducers';
 
@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
   markers: markerReducer,
   path: pathReducer,
   placeDetail: placeDetailReducer,
-  listPlace: listPlaceReducer,
+  listplace: listplaceReducer,
   username: accountReducer,
 });
 

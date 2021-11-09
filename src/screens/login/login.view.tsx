@@ -14,7 +14,6 @@ import {BACKGROUND_LOGIN} from '@assets';
 interface Props {
   isLoading?: boolean;
   isLogged?: boolean;
-  username?: string;
   doLogin: (email: string, password: string) => void;
   navigation?: any;
 }
@@ -41,6 +40,11 @@ export class LoginComponent extends Component<Props, State> {
       Alert.alert('Thông báo', 'Tài khoản hoặc mật khẩu là bắt buộc!');
     }
   };
+
+  componentDidMount() {
+    const {isLogged, navigation} = this.props;
+    isLogged ? navigation.navigate('Home') : null;
+  }
 
   render() {
     const {navigation} = this.props;

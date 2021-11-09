@@ -1,5 +1,5 @@
 import {PlaceService, FireBaseService} from '@core';
-import {put, takeLatest} from 'redux-saga/effects';
+import {call, put, take, takeLatest} from 'redux-saga/effects';
 import {
   DO_GET_LIST_PLACE,
   DO_GET_LIST_PLACE_SUCCESS,
@@ -9,14 +9,13 @@ import {
 function* doGetListPlace() {
   try {
     var data: any;
-    var thumbnail: any;
 
-    thumbnail = FireBaseService.getFolderStorage('/thumbnail');
-
-    data = {
-      listplace: PlaceService.getPlaces(),
-      thumbnail_url: thumbnail
-    }
+    yield FireBaseService.getFolderStorage('/thumbnail').then(async val => {
+      data = {
+        listplace: await PlaceService.getPlaces(),
+        thumbnail_url: val
+      }
+    });
     
     yield put({type: DO_GET_LIST_PLACE_SUCCESS, data});
   } catch (error) {

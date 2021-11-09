@@ -7,31 +7,29 @@ import {FireBaseService, UserService} from '@core';
 function* doLogin(action: object) {
   try {
     const {email, password}: {email?: any; password?: any} = action;
-    var user_data: any;
     var user_token: any;
     var username: any;
     var data: any;
-    var avatar: any;
+    var avatar: string;
 
-    data = UserService.login(email, password);
-    
-    user_data = data.data.data.user;
-    username = user_data.first_name + user_data.last_name;
-    user_token = data.data.data.token;
+    UserService.login(email, password).then(async val => {
+      data = val.data.user;      
+      username = data.first_name + data.last_name;
+      user_token = val.data.token;
 
-    Alert.alert('Thông báo', 'Đăng nhập thành công');
-    yield put({type: DO_LOGIN_SUCCESS, user_data});
+      Alert.alert('Thông báo', 'Đăng nhập thành công');
+      put({type: DO_LOGIN_SUCCESS});
 
-    // avatar = FireBaseService.getFileStorage(`user/${user_data.id}`);
-    avatar = FireBaseService.getFileStorage('user/1.jpeg');
+      // avatar = FireBaseService.getFileStorage(`user/${user_data.id}`);
+      avatar = await FireBaseService.getFileStorage('user/1.jpeg');
 
-    yield AsyncStorage.setItem('user_data', Object.assign(
-      {id: user_data.id},
-      {username: username},
-      {user_token: user_token},
-      {avatar: avatar},
-      {}
-    ));
+      AsyncStorage.setItem('user_data', JSON.stringify({
+        id: data.id,
+        username: username,
+        user_token: user_token,
+        avatar: avatar
+      }));
+    })
   } catch (error) {
     Alert.alert('Thông báo', 'Đăng nhập không thành công');
     yield put({type: DO_LOGIN_FAIL, error: error});

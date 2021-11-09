@@ -1,10 +1,8 @@
-import {UserState} from '@core';
 import {DO_LOGIN, DO_LOGIN_SUCCESS, DO_LOGIN_FAIL} from '../actions';
 
-const INITIAL_STATE: UserState = {
+const INITIAL_STATE = {
   isLoading: false,
-  username: '',
-  isLogout: false,
+  isLogged: false,
 };
 
 export const loginReducer = (state = INITIAL_STATE, action: any) => {
@@ -13,11 +11,10 @@ export const loginReducer = (state = INITIAL_STATE, action: any) => {
       return Object.assign({}, state, {
         isLoading: true,
       });
-    case DO_LOGIN_SUCCESS:
+    case DO_LOGIN_SUCCESS:      
       return Object.assign({}, state, {
         isLoading: false,
         isLogged: true,
-        username: action.username,
       });
     case DO_LOGIN_FAIL:
       return Object.assign({}, state, {

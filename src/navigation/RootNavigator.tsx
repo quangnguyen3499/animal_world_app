@@ -20,14 +20,15 @@ export const RootNavigator = (isLoggedIn: any) => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Splash"
           component={SplashContainer}
           options={{title: 'Splash', headerShown: false}}
           initialParams={{isLoggedIn: isLoggedIn.isLoggedIn}}
-        />
+        /> */}
         {!isLoggedIn.isLoggedIn ? (
-          <Stack.Group>
+          // <Stack.Group>
+          <>
             <Stack.Screen
               name="Register"
               component={RegisterContainer}
@@ -38,9 +39,11 @@ export const RootNavigator = (isLoggedIn: any) => {
               component={LoginContainer}
               options={{title: 'Login', headerShown: false}}
             />
-          </Stack.Group>
+          {/* </Stack.Group> */}
+          </>
         ) : (
-          <Stack.Group>
+          // <Stack.Group>
+          <>
             <Stack.Screen
               name="Home"
               component={HomeContainer}
@@ -75,7 +78,8 @@ export const RootNavigator = (isLoggedIn: any) => {
               component={AccountContainer}
               options={{title: 'Account', headerShown: false}}
             />
-          </Stack.Group>
+          {/* </Stack.Group> */}
+          </>
         )}
       </Stack.Navigator>
     </NavigationContainer>

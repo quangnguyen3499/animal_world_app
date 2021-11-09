@@ -19,12 +19,20 @@ interface Props {
 export class HomeComponent extends Component<Props, State> {
   constructor(props: any) {
     super(props);
+    this.state = {
+      user_data: {
+        id: '',
+        user_token: {},
+        username: '',
+        avatar: ''
+      }
+    }
   }
 
   componentDidMount() {
     const {isLogout, navigation} = this.props;
     AsyncStorage.getItem('user_data').then((val: any) => {
-      this.setState({user_data: val});
+      this.setState({user_data: JSON.parse(val)});
     });
     isLogout ? navigation.navigate('Login') : null;
   };
@@ -35,13 +43,13 @@ export class HomeComponent extends Component<Props, State> {
   };
 
   render() {
-    let {user_data} = this.state;
+    const {user_data} = this.state;
     const {navigation} = this.props;
 
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.auth}>Hi Quang!
+          <Text style={styles.auth}>
             Hi, {user_data.username ? user_data.username.replace(/['"]+/g, '') : ''}!
           </Text>
           <Image source={user_data.avatar ? {uri: user_data.avatar} : DEFAULT_AVATAR} style={{
@@ -83,9 +91,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
-    padding: 10,
+    padding: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center'
   },
   auth: {
     fontSize: 20,

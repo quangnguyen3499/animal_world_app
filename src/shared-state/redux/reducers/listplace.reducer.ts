@@ -6,19 +6,19 @@ import {
 
 const INITIAL_STATE = {
   isLoading: false,
-  listPlace: [],
+  listplace: {},
 };
 
-export const listPlaceReducer = (state = INITIAL_STATE, action: any) => {
+export const listplaceReducer = (state = INITIAL_STATE, action: any) => {  
   switch (action.type) {
-    case DO_GET_LIST_PLACE:
+    case DO_GET_LIST_PLACE:      
       return Object.assign({}, state, {
         isLoading: true,
       });
-    case DO_GET_LIST_PLACE_SUCCESS:
+    case DO_GET_LIST_PLACE_SUCCESS:          
       return Object.assign({}, state, {
         isLoading: false,
-        listPlace: action.data,
+        listplace: action.data,
       });
     case DO_GET_LIST_PLACE_FAIL:
       return Object.assign({}, state, {
