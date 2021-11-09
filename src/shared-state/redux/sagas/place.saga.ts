@@ -11,14 +11,10 @@ function* doGetPlaceDetail(action: object) {
     const {place_id}: {place_id?: string} = action;
     var data: any;
 
-    const images = FireBaseService.getStorage(`/place/${place_id}/images`);
-    const floormap = FireBaseService.getStorage(`place/${place_id}/floormap`);
+    const images = FireBaseService.getFolderStorage(`/place/${place_id}/images`);
+    const floormap = FireBaseService.getFolderStorage(`place/${place_id}/floormap`);
 
-    data = {
-      ...PlaceService.getPlaceDetail(place_id),
-      ...{images: images},
-      ...{floormap: floormap}
-    };
+    data = Object.assign(PlaceService.getPlaceDetail(place_id), images, floormap);
 
     yield put({type: DO_GET_PLACE_SUCCESS, data});
   } catch (error) {

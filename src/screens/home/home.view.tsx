@@ -3,13 +3,10 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 import {ButtonCircle} from '@shared-view';
 import AsyncStorage from '@react-native-community/async-storage';
 import {DEFAULT_AVATAR} from '@assets';
-import storage from '@react-native-firebase/storage';
-import { FireBaseService } from '@core';
+import {User} from '@core';
 
 interface State {
-  username?: any;
-  avatar?: any;
-  user_id?: any;
+  user_data: User;
 }
 
 interface Props {
@@ -22,39 +19,37 @@ interface Props {
 export class HomeComponent extends Component<Props, State> {
   constructor(props: any) {
     super(props);
-    this.state = {
-      avatar: '',
-      username: ''
-    }
   }
 
   componentDidMount() {
-    // AsyncStorage.getItem('user_data');
+    const {isLogout, navigation} = this.props;
+    AsyncStorage.getItem('user_data').then((val: any) => {
+      this.setState({user_data: val});
+    });
+    isLogout ? navigation.navigate('Login') : null;
   };
 
   handleLogout = () => {
-    const {doLogout, isLogout, navigation} = this.props;
+    const {doLogout} = this.props;
     doLogout();
-    // isLogout ? navigation.navigate('Login') : null;
   };
 
   render() {
-    let {avatar, user_id} = this.state;
+    let {user_data} = this.state;
     const {navigation} = this.props;
-    avatar = FireBaseService.getStorage(`user/1.jpeg`);
 
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.auth}>Hi Quang!
-            {/* Hi, {username ? username.replace(/['"]+/g, '') : ''}! */}
+            Hi, {user_data.username ? user_data.username.replace(/['"]+/g, '') : ''}!
           </Text>
-          {/* <Image source={avatar ? {uri: avatar} : DEFAULT_AVATAR} style={{
+          <Image source={user_data.avatar ? {uri: user_data.avatar} : DEFAULT_AVATAR} style={{
               height: 60,
               width: 60,
               borderRadius: 30,
             }}
-          /> */}
+          />
         </View>
         <ButtonCircle
           onPress={() => navigation.navigate('Account')}

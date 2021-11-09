@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
@@ -20,11 +20,12 @@ export const RootNavigator = (isLoggedIn: any) => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Splash"
           component={SplashContainer}
           options={{title: 'Splash', headerShown: false}}
-        /> */}
+          initialParams={{isLoggedIn: isLoggedIn.isLoggedIn}}
+        />
         {!isLoggedIn.isLoggedIn ? (
           <Stack.Group>
             <Stack.Screen
@@ -69,11 +70,11 @@ export const RootNavigator = (isLoggedIn: any) => {
               component={ListPlaceContainer}
               options={{title: 'ListPlace', headerShown: false}}
             />
-            {/* <Stack.Screen
+            <Stack.Screen
               name="Account"
               component={AccountContainer}
               options={{title: 'Account', headerShown: false}}
-            /> */}
+            />
           </Stack.Group>
         )}
       </Stack.Navigator>

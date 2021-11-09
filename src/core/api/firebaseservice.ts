@@ -1,9 +1,12 @@
 import storage from '@react-native-firebase/storage';
 
 class FireBaseService {
-  static async getStorage(url: string) {
-    const fileRefs = await storage().ref(url).listAll();
-    return await Promise.all(fileRefs.items.map((ref) => ref.getDownloadURL()));
+  static async getFolderStorage(url: string) {
+    const folderRef = await storage().ref(url).listAll();
+    return await Promise.all(folderRef.items.map((ref) => ref.getDownloadURL()));
+  }
+  static async getFileStorage(url: string) {
+    return await storage().ref(url).getDownloadURL();
   }
 }
 

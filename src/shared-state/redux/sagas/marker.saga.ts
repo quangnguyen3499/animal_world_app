@@ -4,7 +4,6 @@ import {
   DO_GET_MARKER_SUCCESS,
   DO_GET_MARKER_FAIL,
 } from '../actions';
-import storage from '@react-native-firebase/storage';
 import {MapService} from '@core';
 
 function* doGetMarkers(action: object) {
