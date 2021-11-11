@@ -28,7 +28,7 @@ export class ListPlaceComponent extends Component<Props, {}> {
 
   formatData = (data: any) => {
     
-    const numberOfFullRows = 2;
+    // const numberOfFullRows = 2;
     let numberOfElementsLastRow = 2;
     while (
       numberOfElementsLastRow !== numColumns &&
@@ -50,8 +50,8 @@ export class ListPlaceComponent extends Component<Props, {}> {
       <TouchableOpacity
         style={styles.item}
         key={index}
-        onPress={() => navigation.navigate('Detail', {place_id: index})}>
-        {/* <Image source={item.thumbnail_url} style={styles.itemImage} /> */}
+        onPress={() => navigation.navigate('Detail', {place_id: index+1})}>
+        <Image source={item.thumbnail_url} style={styles.itemImage} />
         <Text style={styles.itemText}>{item.title}</Text>
       </TouchableOpacity>
     );

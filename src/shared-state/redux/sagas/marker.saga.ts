@@ -4,15 +4,18 @@ import {
   DO_GET_MARKER_SUCCESS,
   DO_GET_MARKER_FAIL,
 } from '../actions';
-import {MapService} from '@core';
+import {FireBaseService, MapService} from '@core';
 
 function* doGetMarkers(action: object) {
   try {
     const {place_id, floor_id}: {place_id?: string; floor_id?: string} = action;
     var data: any;
 
-    data = MapService.getMarkers(place_id, floor_id);
+    const logos = FireBaseService.getFolderStorage('/logo');
 
+    yield MapService.getMarkers(place_id, floor_id).then(val => {
+      data = Object.assign(val, logos);
+    });
     yield put({type: DO_GET_MARKER_SUCCESS, data});
   } catch (error) {
     yield put({type: DO_GET_MARKER_FAIL, error: error});

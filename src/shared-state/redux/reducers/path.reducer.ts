@@ -13,6 +13,8 @@ export const pathReducer = (state = INITIAL_STATE, action: any) => {
         isLoading: true,
       });
     case DO_GET_PATH_SUCCESS:
+      console.log("direction: " + action);
+
       return Object.assign({}, state, {
         isLoading: false,
         direction: action.path,

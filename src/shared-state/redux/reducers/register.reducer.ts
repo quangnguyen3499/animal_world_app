@@ -1,7 +1,6 @@
-import {UserState} from '@core';
 import {DO_REGISTER, DO_REGISTER_SUCCESS, DO_REGISTER_FAIL} from '../actions';
 
-const INITIAL_STATE: UserState = {
+const INITIAL_STATE = {
   isLoading: false,
   username: '',
   isLogout: false,

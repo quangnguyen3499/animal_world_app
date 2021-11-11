@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, ImageBackground} from 'react-native';
+import {View, StyleSheet, ImageBackground, Text} from 'react-native';
 import {ButtonCircle, FloorList, Marker} from '@shared-view';
 import {Svg, Polyline} from 'react-native-svg';
 import {Place} from 'src/core/entity/Place';
+import { DEFAULT_MAP } from '@assets';
 
 interface State {
   isLoading: boolean;
@@ -48,24 +49,27 @@ export class IndoorMapComponent extends Component<Props, State> {
 
   getPath = () => {
     const {place_id, floor_id} = this.state;
-    const {source_id, target_id} = this.props;
+    const {source_id, target_id, doGetPath} = this.props;
 
-    this.props.doGetPath(place_id, floor_id, source_id, target_id);
+    doGetPath(place_id, floor_id, source_id, target_id);
   };
 
   handlePress = (value: any) => {
+    // TODO:
     console.log(value);
   };
   render() {
     const {navigation, markers, path, distance, placeDetail} = this.props;
     const {activeTab} = this.state;
+    const imgMap = placeDetail.floormap[activeTab];
+
     return (
       <View style={styles.container}>
         <ImageBackground
           style={{flex: 1, width: 400, height: 650}}
-          // TODO:
-          source={placeDetail.floormap[activeTab]}
-          resizeMode={'contain'}>
+          source={imgMap ? {uri: imgMap} : DEFAULT_MAP}
+          resizeMode={'contain'}
+        >
           {markers.map((data: any, index: any) => {
             return (
               <Marker
@@ -101,15 +105,17 @@ export class IndoorMapComponent extends Component<Props, State> {
             name={'search'}
             style={{marginTop: 400, marginLeft: 350, backgroundColor: 'green'}}
           />
-          <Svg style={{position: 'absolute'}}>
-            <Polyline
-              // points={path}
-              points="110,60 110,66 130,66"
-              stroke="blue"
-              strokeWidth="3"
-            />
-          </Svg>
-          {/* {distance} ? (<Text>Distance: {distance}</Text>) */}
+          {path ? (
+              <Svg style={{position: 'absolute'}}>
+                <Polyline
+                  points={path}
+                  stroke="blue"
+                  strokeWidth="3"
+                />
+              </Svg>
+            ) : null
+          }
+          <Text style={styles.distance}>Distance: {distance || 0}</Text>
         </ImageBackground>
       </View>
     );
@@ -126,5 +132,8 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     justifyContent: 'center',
+  },
+  distance: {
+
   },
 });

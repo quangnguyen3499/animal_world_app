@@ -23,9 +23,7 @@ export default class AccountComponent extends Component<Props, State> {
 
   updateAccount = () => {
     const {user_id, username} = this.state;
-    const {isLoading, navigation} = this.props;
     this.props.doUpdateAccount(user_id, username);
-    isLoading ? navigation.navigate('Home') : null;
   };
 
   componentDidMount() {
@@ -35,6 +33,8 @@ export default class AccountComponent extends Component<Props, State> {
       this.setState({avatar: data.avatar});
       this.setState({user_id: data.id});
     });
+    const {isLoading, navigation} = this.props;
+    isLoading ? navigation.navigate('Home') : null;
   }
 
   render() {

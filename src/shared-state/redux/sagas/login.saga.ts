@@ -20,8 +20,7 @@ function* doLogin(action: object) {
       Alert.alert('Thông báo', 'Đăng nhập thành công');
       put({type: DO_LOGIN_SUCCESS});
 
-      // avatar = FireBaseService.getFileStorage(`user/${user_data.id}`);
-      avatar = await FireBaseService.getFileStorage('user/1.jpeg');
+      avatar = await FireBaseService.getFileStorage(`user/${data.id}.jpeg`);
 
       AsyncStorage.setItem('user_data', JSON.stringify({
         id: data.id,

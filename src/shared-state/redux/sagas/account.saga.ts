@@ -12,11 +12,11 @@ function* doUpdateAccount(action: object) {
     const {user_id, username}: {user_id?: any; username?: any} = action;
     var user_data: any;
     var fullname: any;
-    var data: any;
 
-    data = UserService.update(user_id, username);
-    user_data = data.user;
-    fullname = user_data.first_name + user_data.last_name;
+    yield UserService.update(user_id, username).then(val => {
+      user_data = val.user;
+      fullname = user_data.first_name + user_data.last_name;
+    })
 
     yield put({type: DO_UPDATE_ACCOUNT_SUCCESS, user_data});
     yield AsyncStorage.getItem('user_data').then((val: any) => {

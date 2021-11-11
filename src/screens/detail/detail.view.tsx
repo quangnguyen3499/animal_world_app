@@ -18,9 +18,9 @@ export default class DetailComponent extends Component<Props, State> {
   }
 
   componentDidMount() {
-    const {navigation} = this.props;
+    const {navigation, doGetPlaceDetail} = this.props;
     const place_id = JSON.stringify(navigation.getParam('place_id'));
-    this.props.doGetPlaceDetail(place_id);
+    doGetPlaceDetail(place_id);
   }
 
   render() {
@@ -29,20 +29,22 @@ export default class DetailComponent extends Component<Props, State> {
 
     return (
       <View style={styles.container}>
-        {/* TODO: image slider */}
         <ImageSlider data={placeDetail.images} />
         <ButtonCircle
-          onPress={() => navigation.navigate('Search')}
-          name={'search'}
+          onPress={() => navigation.navigate('Home')}
+          name={'back'}
           style={{marginTop: 400, marginLeft: 350, backgroundColor: 'green'}}
         />
-        <Text>{placeDetail.name}</Text>
-        <Text>{placeDetail.description}</Text>
-        <ButtonCircle
-          onPress={() => navigation.navigate('IndoorMap')}
-          name={'map'}
-          style={{backgroundColor: 'blue'}}
-        />
+        <View style={styles.content}>
+          <Text>{placeDetail.name}</Text>
+          <Text>{placeDetail.url}</Text>
+          <Text>{placeDetail.description}</Text>
+          <ButtonCircle
+            onPress={() => navigation.navigate('IndoorMap')}
+            name={'map'}
+            style={{backgroundColor: 'blue'}}
+          />
+        </View>
       </View>
     );
   }
@@ -52,5 +54,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+  },
+  content: {
+    margin: 20,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: 'gray',
   },
 });
