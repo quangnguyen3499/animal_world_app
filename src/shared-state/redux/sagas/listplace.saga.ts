@@ -8,15 +8,17 @@ import {
 
 function* doGetListPlace() {
   try {
-    var data: any;
+    var data: Array<Object>;
+    var temp: any;
+    data = [];
 
-    yield PlaceService.getPlaces().then(async val => {
-      val.map((data: any) => {
-        data = {
-          listplace: Object.assign(data, {thumbnail_url: FireBaseService.getFileStorage(`/thumbnail/${data.id}`)})
-        }
-      })
+    yield PlaceService.getPlaces().then(val => temp = val);
+    yield* temp.map(async (e: any) => {
+      data.push(Object.assign({
+        thumbnail_url: await FireBaseService.getFileStorage(`/thumbnail/${e.id}.jpg`)}, e)
+      );
     })
+
     yield put({type: DO_GET_LIST_PLACE_SUCCESS, data});
   } catch (error) {
     yield put({type: DO_GET_LIST_PLACE_FAIL, error: error});

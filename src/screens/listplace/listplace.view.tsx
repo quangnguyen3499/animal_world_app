@@ -27,16 +27,14 @@ export class ListPlaceComponent extends Component<Props, {}> {
   }
 
   formatData = (data: any) => {
-    
-    // const numberOfFullRows = 2;
-    let numberOfElementsLastRow = 2;
+    let numberOfElementsLastRow = data.length%2 + 1;
     while (
       numberOfElementsLastRow !== numColumns &&
       numberOfElementsLastRow !== 0
     ) {
       data.push({key: `blank-${numberOfElementsLastRow}`, empty: true});
       numberOfElementsLastRow++;
-    }
+    }    
     return data;
   };
 
@@ -46,13 +44,14 @@ export class ListPlaceComponent extends Component<Props, {}> {
     if (item.empty === true) {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
+    
     return (
       <TouchableOpacity
         style={styles.item}
         key={index}
-        onPress={() => navigation.navigate('Detail', {place_id: index+1})}>
-        <Image source={item.thumbnail_url} style={styles.itemImage} />
-        <Text style={styles.itemText}>{item.title}</Text>
+        onPress={() => navigation.navigate('Detail', {place_id: item.id})}>
+        <Image source={{uri: item.thumbnail_url}} style={styles.itemImage} />
+        <Text style={styles.itemText}>{item.name}</Text>
       </TouchableOpacity>
     );
   };
@@ -66,7 +65,7 @@ export class ListPlaceComponent extends Component<Props, {}> {
           <Text style={styles.listplace}>List Places</Text>
         </View>
         <FlatList
-          data={this.formatData(listplace.listplace)}
+          data={this.formatData(listplace)}
           style={styles.flatlist}
           renderItem={this.renderItem}
           numColumns={numColumns}

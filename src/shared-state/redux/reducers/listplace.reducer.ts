@@ -15,7 +15,7 @@ export const listplaceReducer = (state = INITIAL_STATE, action: any) => {
       return Object.assign({}, state, {
         isLoading: true,
       });
-    case DO_GET_LIST_PLACE_SUCCESS:          
+    case DO_GET_LIST_PLACE_SUCCESS:                 
       return Object.assign({}, state, {
         isLoading: false,
         listplace: action.data,
