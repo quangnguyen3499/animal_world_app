@@ -3,7 +3,7 @@ import {ListPlaceComponent} from './listplace.view';
 import {doGetListPlace} from '@shared-state';
 
 export const ListPlaceContainer = connect(
-  (state: any) => {    
+  (state: any) => {
     return {
       listplace: state.listplace.listplace,
     };

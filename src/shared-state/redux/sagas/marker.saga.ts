@@ -10,8 +10,13 @@ function* doGetMarkers(action: object) {
   try {
     const {place_id, floor_id}: {place_id?: string; floor_id?: string} = action;
     var data: any;
-
+    var floormap: any;
+    
     const logos = FireBaseService.getFolderStorage('/logo');
+
+    yield FireBaseService.getFolderStorage(`place/${place_id}/floormap`).then(val => {
+      floormap = val;
+    });
 
     yield MapService.getMarkers(place_id, floor_id).then(val => {
       data = Object.assign(val, logos);

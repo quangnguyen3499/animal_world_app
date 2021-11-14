@@ -1,49 +1,54 @@
 import {Place} from '@core';
 import {ButtonCircle, ImageSlider} from '@shared-view';
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-
-interface State {
-  placeDetail: Place;
-}
+import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
 
 interface Props {
   navigation?: any;
+  placeDetail?: any;
+  route?: any;
   doGetPlaceDetail: (place_id: string) => void;
 }
 
-export default class DetailComponent extends Component<Props, State> {
+export default class DetailComponent extends Component<Props, {}> {
   constructor(props: any) {
     super(props);
   }
 
   componentDidMount() {
-    const {navigation, doGetPlaceDetail} = this.props;
-    const place_id = JSON.stringify(navigation.getParam('place_id'));
+    const {route, doGetPlaceDetail} = this.props;
+    const place_id = JSON.stringify(route.params.place_id);
     doGetPlaceDetail(place_id);
   }
 
   render() {
-    const {navigation} = this.props;
-    const {placeDetail} = this.state;
+    const {navigation, placeDetail} = this.props;
+    
+    if(Object.keys(placeDetail).length === 0)
+      return <ActivityIndicator />
 
     return (
       <View style={styles.container}>
         <ImageSlider data={placeDetail.images} />
         <ButtonCircle
-          onPress={() => navigation.navigate('Home')}
-          name={'back'}
-          style={{marginTop: 400, marginLeft: 350, backgroundColor: 'green'}}
+          onPress={() => navigation.navigate('ListPlace')}
+          name={'backward'}
+          style={styles.backBtn}
         />
         <View style={styles.content}>
-          <Text>{placeDetail.name}</Text>
-          <Text>{placeDetail.url}</Text>
-          <Text>{placeDetail.description}</Text>
-          <ButtonCircle
-            onPress={() => navigation.navigate('IndoorMap')}
-            name={'map'}
-            style={{backgroundColor: 'blue'}}
-          />
+          <Text style={styles.name}>{placeDetail.detail.name}</Text>
+          <View style={styles.description}>
+            <Text>Url: {placeDetail.detail.url}</Text>
+            <Text>{placeDetail.detail.description}</Text>
+          </View>
+          <View style={styles.bottom}>
+            <Text>Go to IndoorMap</Text>
+            <ButtonCircle
+              onPress={() => navigation.navigate('IndoorMap', {place_id: placeDetail.detail.id})}
+              name={'map'}
+              style={styles.mapBtn}
+            />
+          </View>
         </View>
       </View>
     );
@@ -53,12 +58,29 @@ export default class DetailComponent extends Component<Props, State> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    margin: 5,
   },
   content: {
-    margin: 20,
+    top: 250,
     padding: 10,
-    borderRadius: 10,
-    backgroundColor: 'gray',
+    position: 'absolute',
+    backgroundColor: '#CCD0D1',
+  },
+  backBtn: {
+    opacity: 0.5,
+    position: 'absolute',
+    backgroundColor: '#555656'
+  },
+  mapBtn: {
+    backgroundColor: 'blue'
+  },
+  name: {
+
+  },
+  description: {
+
+  },
+  bottom: {
+
   },
 });

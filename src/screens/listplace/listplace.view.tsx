@@ -7,6 +7,7 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 
 const numColumns = 2;
@@ -27,14 +28,14 @@ export class ListPlaceComponent extends Component<Props, {}> {
   }
 
   formatData = (data: any) => {
-    let numberOfElementsLastRow = data.length%2 + 1;
+    let numberOfElementsLastRow = data.length%2;
     while (
       numberOfElementsLastRow !== numColumns &&
       numberOfElementsLastRow !== 0
     ) {
       data.push({key: `blank-${numberOfElementsLastRow}`, empty: true});
       numberOfElementsLastRow++;
-    }    
+    }
     return data;
   };
 
@@ -59,17 +60,23 @@ export class ListPlaceComponent extends Component<Props, {}> {
   render() {
     const {listplace} = this.props;
 
+    let checkListPlaceExist = Object.keys(listplace).length === 0
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.listplace}>List Places</Text>
         </View>
-        <FlatList
-          data={this.formatData(listplace)}
-          style={styles.flatlist}
-          renderItem={this.renderItem}
-          numColumns={numColumns}
-        />
+        {checkListPlaceExist ? (
+          <ActivityIndicator />
+        ) : (
+          <FlatList
+            data={this.formatData(listplace)}
+            style={styles.flatlist}
+            renderItem={this.renderItem}
+            numColumns={numColumns}
+          />
+        )}
       </View>
     );
   }

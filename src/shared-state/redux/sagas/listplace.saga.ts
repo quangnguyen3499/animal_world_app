@@ -11,7 +11,7 @@ function* doGetListPlace() {
     var data: Array<Object>;
     var temp: any;
     data = [];
-
+    
     yield PlaceService.getPlaces().then(val => temp = val);
     yield* temp.map(async (e: any) => {
       data.push(Object.assign({

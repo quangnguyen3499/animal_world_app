@@ -13,11 +13,12 @@ interface State {
 }
 
 interface Props {
+  route?: any;
   navigation?: any;
   markers: any;
   distance: string;
   path: string;
-  placeDetail: Place;
+  placeDetail: any;
   source_id: string;
   target_id: string;
   doGetPlaceDetail: (place_id: string) => void;
@@ -42,9 +43,11 @@ export class IndoorMapComponent extends Component<Props, State> {
   }
 
   componentDidMount() {
-    const {place_id, floor_id} = this.state;
-    this.props.doGetPlaceDetail(place_id);
-    this.props.doGetMarker(place_id, floor_id);
+    const {route, doGetPlaceDetail, doGetMarker} = this.props;
+    let {place_id, floor_id} = this.state;
+    place_id = JSON.stringify(route.params.place_id);
+    doGetPlaceDetail(place_id);
+    doGetMarker(place_id, floor_id);
   }
 
   getPath = () => {
@@ -55,14 +58,13 @@ export class IndoorMapComponent extends Component<Props, State> {
   };
 
   handlePress = (value: any) => {
-    // TODO:
-    console.log(value);
+    this.setState({activeTab: value});
   };
   render() {
     const {navigation, markers, path, distance, placeDetail} = this.props;
     const {activeTab} = this.state;
-    const imgMap = placeDetail.floormap[activeTab];
-
+    const imgMap = placeDetail.floormap[activeTab-1];    
+    
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -86,7 +88,7 @@ export class IndoorMapComponent extends Component<Props, State> {
               onPress={() =>
                 navigation.navigate('Detail', {place_id: placeDetail.id})
               }
-              name={'arrow-back'}
+              name={'backward'}
               style={{backgroundColor: 'blue'}}
             />
             <ButtonCircle
@@ -95,7 +97,7 @@ export class IndoorMapComponent extends Component<Props, State> {
               style={{backgroundColor: 'blue'}}
             />
             <FloorList
-              data={placeDetail.floorlist}
+              data={placeDetail.detail.floor_list}
               onPress={this.handlePress}
               activeTab={activeTab}
             />
@@ -106,14 +108,13 @@ export class IndoorMapComponent extends Component<Props, State> {
             style={{marginTop: 400, marginLeft: 350, backgroundColor: 'green'}}
           />
           {path ? (
-              <Svg style={{position: 'absolute'}}>
-                <Polyline
-                  points={path}
-                  stroke="blue"
-                  strokeWidth="3"
-                />
-              </Svg>
-            ) : null
+            <Svg style={{position: 'absolute'}}>
+              <Polyline
+                points={path}
+                stroke="blue"
+                strokeWidth="3"
+              />
+            </Svg>) : null
           }
           <Text style={styles.distance}>Distance: {distance || 0}</Text>
         </ImageBackground>
