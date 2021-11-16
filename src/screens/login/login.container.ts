@@ -6,7 +6,7 @@ export const LoginContainer = connect(
   (state: any) => {    
     return {
       isLoading: state.user.isLoading,
-      isLogged: state.user.isLogged,
+      isLogIn: state.user.user,
     }
   },
   (dispatch: any) => {

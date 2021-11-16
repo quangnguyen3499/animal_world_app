@@ -14,6 +14,7 @@ import {BACKGROUND_REGISTER} from '@assets';
 interface Props {
   doRegister: (email: string, password: string, username: string) => void;
   navigation?: any;
+  isLogIn?: any;
 }
 
 interface State {
@@ -41,6 +42,13 @@ export class RegisterComponent extends Component<Props, State> {
       doRegister(email, password, username);
     }
   };
+
+  componentDidMount() {
+    const {isLogIn, navigation} = this.props;
+    console.log(isLogIn);
+    
+    isLogIn ? navigation.navigate('Home') : null;
+  }
 
   render() {
     const {navigation} = this.props;

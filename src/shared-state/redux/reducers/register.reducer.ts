@@ -15,7 +15,6 @@ export const registerReducer = (state = INITIAL_STATE, action: any) => {
     case DO_REGISTER_SUCCESS:
       return Object.assign({}, state, {
         isLoading: false,
-        isLogged: true,
         username: action.username,
       });
     case DO_REGISTER_FAIL:

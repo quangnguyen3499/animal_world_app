@@ -13,9 +13,9 @@ import {BACKGROUND_LOGIN} from '@assets';
 
 interface Props {
   isLoading?: boolean;
-  isLogged?: boolean;
   doLogin: (email: string, password: string) => void;
   navigation?: any;
+  isLogIn?: any;
 }
 
 interface State {
@@ -42,8 +42,8 @@ export class LoginComponent extends Component<Props, State> {
   };
 
   componentDidMount() {
-    const {isLogged, navigation} = this.props;
-    isLogged ? navigation.navigate('Home') : null;
+    const {isLogIn, navigation} = this.props;
+    isLogIn ? navigation.navigate('Home') : null;
   }
 
   render() {

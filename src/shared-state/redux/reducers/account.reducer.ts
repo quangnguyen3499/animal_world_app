@@ -15,7 +15,7 @@ export const accountReducer = (state = INITIAL_STATE, action: any) => {
       return Object.assign({}, state, {
         isLoading: true,
       });
-    case DO_UPDATE_ACCOUNT_SUCCESS:
+    case DO_UPDATE_ACCOUNT_SUCCESS:      
       return Object.assign({}, state, {
         isLoading: false,
         username: action.username,

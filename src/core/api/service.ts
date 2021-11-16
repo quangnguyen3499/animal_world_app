@@ -24,7 +24,7 @@ class UserService {
   }
 
   static update(user_id: string, username: string) {
-    const url = `${API_URL}/users/${user_id}`;
+    const url = `${API_URL}/users/${user_id}`;    
     return axios
       .put(url, {
         username: username
@@ -91,6 +91,12 @@ class FireBaseService {
   }
   static getFileStorage(url: string) {
     return storage().ref(url).getDownloadURL();
+  }
+  static removeFileStorage(url: string) {
+    return storage().ref(url).delete();
+  }
+  static putFileStorage(url: string, new_path: string) {
+    return storage().ref(url).putFile(new_path);
   }
 }
 

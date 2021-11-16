@@ -13,6 +13,8 @@ interface Props {
   navigation?: any;
   isLoading: boolean;
   isLogout: boolean;
+  username: String;
+  avatarNew?: String;
   doLogout: () => void;
 }
 
@@ -30,29 +32,29 @@ export class HomeComponent extends Component<Props, State> {
   }
 
   componentDidMount() {
-    const {isLogout, navigation} = this.props;
     AsyncStorage.getItem('user_data').then((val: any) => {
       this.setState({user_data: JSON.parse(val)});
-    });
-    isLogout ? navigation.navigate('Login') : null;
+    });    
   };
 
   handleLogout = () => {
-    const {doLogout} = this.props;
+    const {isLogout, navigation, doLogout} = this.props;
     doLogout();
+    isLogout ? navigation.navigate('Login') : null;
   };
 
   render() {
     const {user_data} = this.state;
-    const {navigation} = this.props;
+    const {navigation, username, avatarNew} = this.props;
+    let avatar = avatarNew || user_data.avatar;
 
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.auth}>
-            Hi, {user_data.username ? user_data.username.replace(/['"]+/g, '') : ''}!
+            Hi, {username || user_data.username}!
           </Text>
-          <Image source={user_data.avatar ? {uri: user_data.avatar} : DEFAULT_AVATAR} style={{
+          <Image source={avatar ? {uri: avatar} : DEFAULT_AVATAR} style={{
               height: 60,
               width: 60,
               borderRadius: 30,

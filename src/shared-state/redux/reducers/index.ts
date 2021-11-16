@@ -6,3 +6,4 @@ export * from './path.reducer';
 export * from './placedetail.reducer';
 export * from './listplace.reducer';
 export * from './account.reducer';
+export * from './avatar.reducer';

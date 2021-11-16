@@ -4,3 +4,4 @@ export * from './buttoncustom';
 export * from './navigation';
 export * from './floorlist';
 export * from './imageslider';
+export * from './popupmenu';

@@ -30,7 +30,7 @@ export class SplashComponent extends Component<Props> {
     const data = await this.performTimeConsumingTask();
     
     if (data !== null) {
-      navigation.navigate(route.params.isLoggedIn ? "Home" : "Register");
+      navigation.navigate("Register");
     }
   }
 

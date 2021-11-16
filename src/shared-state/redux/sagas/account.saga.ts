@@ -10,20 +10,19 @@ import {UserService} from '@core';
 function* doUpdateAccount(action: object) {
   try {
     const {user_id, username}: {user_id?: any; username?: any} = action;
-    var user_data: any;
-    var fullname: any;
+    var new_username: any;
+    var temp: any;
 
-    yield UserService.update(user_id, username).then(val => {
-      user_data = val.user;
-      fullname = user_data.first_name + user_data.last_name;
+    yield UserService.update(user_id, username).then(val => {      
+      new_username = val.user.username;      
     })
 
-    yield put({type: DO_UPDATE_ACCOUNT_SUCCESS, user_data});
+    yield put({type: DO_UPDATE_ACCOUNT_SUCCESS, username: new_username});
     yield AsyncStorage.getItem('user_data').then((val: any) => {
-      let temp = JSON.parse(val);
-      temp.username = fullname;
-      AsyncStorage.setItem('user_data', temp);
+      temp = JSON.parse(val);
+      temp.username = new_username;
     })
+    yield AsyncStorage.setItem('user_data', JSON.stringify(temp));   
   } catch (error) {
     yield put({type: DO_UPDATE_ACCOUNT_FAIL, error: error});
   }

@@ -1,3 +1,4 @@
+import { ButtonCircle } from '@shared-view';
 import React, {Component} from 'react';
 import {
   StyleSheet,
@@ -58,17 +59,27 @@ export class ListPlaceComponent extends Component<Props, {}> {
   };
 
   render() {
-    const {listplace} = this.props;
+    const {listplace, navigation} = this.props;
 
     let checkListPlaceExist = Object.keys(listplace).length === 0
 
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.listplace}>List Places</Text>
+          <ButtonCircle
+            onPress={() =>
+              navigation.navigate('Home')
+            }
+            name={'backward'}
+            style={{backgroundColor: 'blue'}}
+          />
+          <Text style={styles.listplace}>Danh sách các địa điểm</Text>
         </View>
         {checkListPlaceExist ? (
-          <ActivityIndicator />
+          <View style={{alignItems: 'center'}}>
+            <ActivityIndicator size={60} color="#47477b" />
+            <Text>Loading</Text>
+          </View>
         ) : (
           <FlatList
             data={this.formatData(listplace)}
@@ -127,14 +138,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
-    paddingLeft: 30,
-    paddingRight: 30,
-    paddingTop: 20,
+    paddingLeft: 15,
+    alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   listplace: {
     fontSize: 20,
     fontWeight: 'bold',
+    marginLeft: 40,
   },
 });
