@@ -8,7 +8,7 @@ import {
   Alert,
   ImageBackground,
 } from 'react-native';
-import {scale, verticalScale} from '@shared-view';
+import {NormalButton, scale, verticalScale} from '@shared-view';
 import {BACKGROUND_REGISTER} from '@assets';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -49,8 +49,9 @@ export class RegisterComponent extends Component<Props, State> {
 
   backToAuth = () => {
     const {navigation} = this.props;
-    AsyncStorage.getItem('user_data').then((val: any) => {                
-      JSON.parse(val).token ? navigation.navigate('Home') : null;
+    AsyncStorage.getItem('user_data').then((val: any) => {
+      let data = JSON.parse(val);                
+      (data?.token || data) ? navigation.navigate('Home') : null;
     });
   }
 
@@ -62,7 +63,7 @@ export class RegisterComponent extends Component<Props, State> {
       <View style={styles.container}>
         <ImageBackground
           source={BACKGROUND_REGISTER}
-          resizeMode="cover"
+          resizeMode="contain"
           imageStyle={{borderRadius: 10}}
           style={[{width: 410, height: 656}, styles.container]}>
           <View style={styles.form}>
@@ -91,19 +92,22 @@ export class RegisterComponent extends Component<Props, State> {
                 value={this.state.password}
               />
             </View>
-            <View>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => this.handleRegister()}>
-                <Text style={styles.buttonText}>Register</Text>
-              </TouchableOpacity>
-            </View>
-            <View>
-              <TouchableOpacity
-                style={styles.buttonLogin}
-                onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.buttonText}>Login</Text>
-              </TouchableOpacity>
+            <View style={{alignItems: 'center'}}>
+              <View>
+                <NormalButton 
+                  name={"Register"}
+                  onPress={() => this.handleRegister()}
+                  width={'large'}
+                />
+              </View>
+              <View>
+                <NormalButton 
+                  name={"Log In"}
+                  onPress={() => navigation.navigate('Login')}
+                  width={'normal'}
+                  style={{backgroundColor: '#F96060'}}
+                />
+              </View>
             </View>
           </View>
         </ImageBackground>

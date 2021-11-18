@@ -23,8 +23,7 @@ interface Props {
   navigation?: any;
   isLoading?: any;
   avatarNew?: any;
-  doUpdateAccount: (user_id?: string, username?: string) => void;
-  doChangeAvatar: (user_id?: string, media?: any) => void;
+  doUpdateAccount: (user_id?: string, username?: any, media?: any) => void;
 }
 
 const listchoice = [
@@ -48,7 +47,7 @@ export default class AccountComponent extends Component<Props, State> {
   updateAccount = () => {
     const {user_data} = this.state;    
     const {isLoading, navigation, doUpdateAccount} = this.props;
-    doUpdateAccount(user_data.id, user_data.username);
+    doUpdateAccount(user_data.id, user_data.username, null);
     !isLoading ? navigation.navigate('Home') : null;
   };
 
@@ -64,8 +63,8 @@ export default class AccountComponent extends Component<Props, State> {
 
   onMediaSelect = (media: any) => {
     const {user_data} = this.state;
-    const {doChangeAvatar} = this.props;
-    doChangeAvatar(user_data.id, media);    
+    const {doUpdateAccount} = this.props;
+    doUpdateAccount(user_data.id, null, media);    
   };
   
   selectAction = (value: any) => {

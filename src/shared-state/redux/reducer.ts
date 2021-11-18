@@ -2,25 +2,23 @@ import {combineReducers} from 'redux';
 import {
   loginReducer,
   logoutReducer,
-  markerReducer,
+  shopReducer,
   pathReducer,
   registerReducer,
   placeDetailReducer,
   listplaceReducer,
   accountReducer,
-  avatarReducer,
 } from './reducers';
 
 const rootReducer = combineReducers({
   user: loginReducer,
   register: registerReducer,
   logout: logoutReducer,
-  markers: markerReducer,
+  shops: shopReducer,
   path: pathReducer,
   placeDetail: placeDetailReducer,
   listplace: listplaceReducer,
   account: accountReducer,
-  avatar: avatarReducer,
 });
 
 export default rootReducer;

@@ -9,6 +9,6 @@ export const Colors = {
   WHITE: '#FFFFFF',
   OVERLAY: 'rgba(51,51,51,0.4)',
   LIGHT_PINK: '#ee4e9b26',
-  PINK: '#ee4e9b96',
+  PINK: 'pink',
   LIGHT_ORANGE: '#d06767d6',
 };

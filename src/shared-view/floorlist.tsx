@@ -29,20 +29,20 @@ const FloorList = ({data, activeTab, onPress}: any) => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
-    width: 40,
-    borderColor: '#EFEAEA',
+    width: 46,
+    borderColor: '#697069',
     borderRadius: 20,
-    borderWidth: 1,
+    borderWidth: 3,
     backgroundColor: '#E6DFDF',
   },
   item: {
     borderRadius: 20,
     height: 40,
     justifyContent: 'center',
-    paddingHorizontal: 15,
+    paddingHorizontal: 16,
   },
   active: {
-    backgroundColor: 'red',
+    backgroundColor: '#2AF52F',
   },
 });
 

@@ -2,30 +2,27 @@ import React, {Component} from 'react';
 import {View, StyleSheet, ImageBackground, Text} from 'react-native';
 import {ButtonCircle, FloorList, Marker} from '@shared-view';
 import {Svg, Polyline} from 'react-native-svg';
-import {Place} from 'src/core/entity/Place';
 import { DEFAULT_MAP } from '@assets';
 
 interface State {
   isLoading: boolean;
   place_id: string;
-  floor_id: string;
-  activeTab: any;
+  floor_id: any;
 }
 
 interface Props {
   route?: any;
   navigation?: any;
-  markers: any;
+  shops: any;
   distance: string;
   path: string;
   placeDetail: any;
   source_id: string;
   target_id: string;
-  doGetPlaceDetail: (place_id: string) => void;
-  doGetMarker: (place_id: string, floor_id: string) => void;
+  doGetListShop: (place_id: string, floor_id: any) => void;
   doGetPath: (
     place_id: string,
-    floor_id: string,
+    floor_id: any,
     source: string,
     target: string,
   ) => void;
@@ -37,17 +34,15 @@ export class IndoorMapComponent extends Component<Props, State> {
     this.state = {
       isLoading: false,
       place_id: '1',
-      floor_id: '1',
-      activeTab: 1,
+      floor_id: 1,
     };
   }
 
   componentDidMount() {
-    const {route, doGetPlaceDetail, doGetMarker} = this.props;
+    const {route, doGetListShop} = this.props;
     let {place_id, floor_id} = this.state;
-    place_id = JSON.stringify(route.params.place_id);
-    doGetPlaceDetail(place_id);
-    doGetMarker(place_id, floor_id);
+    this.setState({place_id: JSON.stringify(route.params.place_id)});    
+    doGetListShop(place_id, floor_id);
   }
 
   getPath = () => {
@@ -57,56 +52,61 @@ export class IndoorMapComponent extends Component<Props, State> {
     doGetPath(place_id, floor_id, source_id, target_id);
   };
 
-  handlePress = (value: any) => {
-    this.setState({activeTab: value});
-  };
+  onChangeFloor = (value: any) => {
+    let {place_id} = this.state;
+    const {doGetListShop} = this.props;          
+    this.setState({floor_id: value}, () => doGetListShop(place_id, this.state.floor_id))        
+  }
+
   render() {
-    const {navigation, markers, path, distance, placeDetail} = this.props;
-    const {activeTab} = this.state;
-    const imgMap = placeDetail.floormap[activeTab-1];    
+    const {navigation, shops, path, distance, placeDetail} = this.props;
+    const {floor_id} = this.state;
+    const imgMap = placeDetail.floormap[floor_id-1];    
     
     return (
       <View style={styles.container}>
         <ImageBackground
-          style={{flex: 1, width: 400, height: 650}}
+          style={{flex: 1, width: 440, height: 640}}
           source={imgMap ? {uri: imgMap} : DEFAULT_MAP}
           resizeMode={'contain'}
         >
-          {markers.map((data: any, index: any) => {
+          {shops.map((data: any, index: any) => {
             return (
               <Marker
                 key={index}
-                top={data.longitude}
-                left={data.latitude}
-                // title={data.name}
-                // logo={data.logoUrl}
+                top={data.coordinate.longitude}
+                left={data.coordinate.latitude}
+                title={data.name}
+                logoUrl={data.logo_url}
               />
             );
           })}
-          <View style={{marginTop: 20, marginLeft: 20}}>
+          <View style={{marginTop: 20, marginLeft: 20, position: 'absolute'}}>
             <ButtonCircle
               onPress={() =>
                 navigation.navigate('Detail', {place_id: placeDetail.id})
               }
-              name={'backward'}
-              style={{backgroundColor: 'blue'}}
+              name={'long-arrow-alt-left'}
+              size={20}
             />
             <ButtonCircle
               onPress={() => navigation.navigate('ListPlace')}
               name={'bars'}
-              style={{backgroundColor: 'blue'}}
+              size={18}
+              style={{backgroundColor: 'orange', marginLeft: 2, borderColor: 'white', borderWidth: 1}}
             />
             <FloorList
               data={placeDetail.detail.floor_list}
-              onPress={this.handlePress}
-              activeTab={activeTab}
+              onPress={(value: any) => this.onChangeFloor(value)}
+              activeTab={floor_id}
             />
+            <ButtonCircle
+              onPress={() => navigation.navigate('Search')}
+              name={'search'}
+              size={20}
+            />
+            <Text style={styles.distance}>Distance: {distance || 0}</Text>
           </View>
-          <ButtonCircle
-            onPress={() => navigation.navigate('Search')}
-            name={'search'}
-            style={{marginTop: 400, marginLeft: 350, backgroundColor: 'green'}}
-          />
           {path ? (
             <Svg style={{position: 'absolute'}}>
               <Polyline
@@ -116,7 +116,6 @@ export class IndoorMapComponent extends Component<Props, State> {
               />
             </Svg>) : null
           }
-          <Text style={styles.distance}>Distance: {distance || 0}</Text>
         </ImageBackground>
       </View>
     );
@@ -126,13 +125,14 @@ export class IndoorMapComponent extends Component<Props, State> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#dddddd',
     position: 'absolute',
     top: 0,
     bottom: 0,
     left: 0,
     right: 0,
     justifyContent: 'center',
+    paddingTop: 10,
   },
   distance: {
 

@@ -3,12 +3,11 @@ import {
   watchDoLogin,
   watchDoRegister,
   watchDoLogout,
-  watchDoGetMarkers,
+  watchDoGetListShop,
   watchDoGetPath,
   watchDoGetPlaceDetail,
   watchDoGetListPlace,
   watchDoUpdateAccount,
-  watchDoChangeAvatar,
 } from './sagas';
 
 export default function* rootSaga() {
@@ -16,11 +15,10 @@ export default function* rootSaga() {
     fork(watchDoLogin),
     fork(watchDoRegister),
     fork(watchDoLogout),
-    fork(watchDoGetMarkers),
+    fork(watchDoGetListShop),
     fork(watchDoGetPath),
     fork(watchDoGetPlaceDetail),
     fork(watchDoGetListPlace),
     fork(watchDoUpdateAccount),
-    fork(watchDoChangeAvatar),
   ]);
 }

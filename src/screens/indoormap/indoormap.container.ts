@@ -1,11 +1,11 @@
 import {connect} from 'react-redux';
 import {IndoorMapComponent} from './indoormap.view';
-import {doGetMarker, doGetPath, doGetPlaceDetail} from '@shared-state';
+import {doGetListShop, doGetPath} from '@shared-state';
 
 export const IndoorMapContainer = connect(
-  (state: any) => {
+  (state: any) => {    
     return {
-      markers: state.markers.markers,
+      shops: state.shops.shops,
       path: state.direction,
       distance: state.path.distance,
       placeDetail: state.placeDetail.placeDetail,
@@ -13,19 +13,16 @@ export const IndoorMapContainer = connect(
   },
   (dispatch: any) => {
     return {
-      doGetMarker: (place_id: string, floor_id: string) => {
-        dispatch(doGetMarker(place_id, floor_id));
+      doGetListShop: (place_id: string, floor_id: any) => {
+        dispatch(doGetListShop(place_id, floor_id));
       },
       doGetPath: (
         place_id: string,
-        floor_id: string,
+        floor_id: any,
         source: string,
         target: string,
       ) => {
         dispatch(doGetPath(place_id, floor_id, source, target));
-      },
-      doGetPlaceDetail: (place_id: string) => {
-        dispatch(doGetPlaceDetail(place_id));
       },
     };
   },

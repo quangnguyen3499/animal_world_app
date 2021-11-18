@@ -70,15 +70,15 @@ export class ListPlaceComponent extends Component<Props, {}> {
             onPress={() =>
               navigation.navigate('Home')
             }
-            name={'backward'}
-            style={{backgroundColor: 'blue'}}
+            name={'long-arrow-alt-left'}
+            color={'black'}
+            size={24}
           />
           <Text style={styles.listplace}>Danh sách các địa điểm</Text>
         </View>
         {checkListPlaceExist ? (
-          <View style={{alignItems: 'center'}}>
-            <ActivityIndicator size={60} color="#47477b" />
-            <Text>Loading</Text>
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <ActivityIndicator size={60} color="blue" />
           </View>
         ) : (
           <FlatList
@@ -132,9 +132,12 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     width: '50%',
     position: 'absolute',
+    backgroundColor: 'lightgrey',
+    padding: 4,
+    borderRadius: 5,
   },
   header: {
-    height: 80,
+    height: 60,
     backgroundColor: '#fff',
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,

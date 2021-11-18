@@ -59,8 +59,8 @@ class PlaceService {
 }
 
 class MapService {
-  static getMarkers(place_id: any, floor_id: any) {
-    const url = `${API_URL}/coordinates`;
+  static getShops(place_id: any, floor_id: any) {
+    const url = `${API_URL}/shops`;
     return axios
       .get(url, {
         params: {
@@ -90,7 +90,13 @@ class FireBaseService {
     return await Promise.all(folderRef.items.map((ref) => ref.getDownloadURL()));
   }
   static getFileStorage(url: string) {
-    return storage().ref(url).getDownloadURL();
+    return storage().ref(url).getDownloadURL().catch((e) => {
+      switch (e.code) {
+        case 'storage/object-not-found':
+          ''
+        break;
+      }
+    });
   }
   static removeFileStorage(url: string) {
     return storage().ref(url).delete();

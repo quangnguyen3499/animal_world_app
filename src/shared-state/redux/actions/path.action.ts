@@ -4,7 +4,7 @@ export const DO_GET_PATH_FAIL = ' DO_GET_PATH_FAIL';
 
 export const doGetPath = (
   place_id: string,
-  floor_id: string,
+  floor_id: any,
   source: string,
   target: string,
 ) => ({

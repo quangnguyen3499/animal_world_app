@@ -12,7 +12,7 @@ function* doGetPath(action: object) {
       target,
     }: {
       place_id?: string;
-      floor_id?: string;
+      floor_id?: any;
       source?: string;
       target?: string;
     } = action;

@@ -2,8 +2,10 @@ import {connect} from 'react-redux';
 import SearchComponent from './search.view';
 
 export const SearchContainer = connect(
-  () => {
-    return {};
+  (state: any) => {
+    return {
+      shops: state.shops.shops,
+    };
   },
   () => {
     return {};

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
-import {ButtonCircle, NormalButton} from '@shared-view';
+import {NormalButton} from '@shared-view';
 import AsyncStorage from '@react-native-community/async-storage';
 import {DEFAULT_AVATAR} from '@assets';
 import {User} from '@core';
@@ -46,7 +46,7 @@ export class HomeComponent extends Component<Props, State> {
 
   backToAuth = () => {
     const {navigation} = this.props;
-    AsyncStorage.getItem('user_data').then((val: any) => {                    
+    AsyncStorage.getItem('user_data').then((val: any) => {                  
       !JSON.parse(val).token ? navigation.navigate('Login') : null;
     });
   }
@@ -74,10 +74,12 @@ export class HomeComponent extends Component<Props, State> {
           <NormalButton 
             name={"Account"}
             onPress={() => navigation.navigate('Account')}
+            width={'normal'}
           />
           <NormalButton 
             name={"List Place"}
             onPress={() => navigation.navigate('ListPlace')}
+            width={'normal'}
           />
         </View>
         <NormalButton 
@@ -109,6 +111,6 @@ const styles = StyleSheet.create({
   },
   listBtn: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center'
   },
 });

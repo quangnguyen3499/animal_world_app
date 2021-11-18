@@ -46,8 +46,9 @@ export class LoginComponent extends Component<Props, State> {
   
   backToAuth = () => {
     const {navigation} = this.props;
-    AsyncStorage.getItem('user_data').then((val: any) => {                
-      JSON.parse(val).token ? navigation.navigate('Home') : null;
+    AsyncStorage.getItem('user_data').then((val: any) => {
+      let data = JSON.parse(val);               
+      (data?.token || data) ? navigation.navigate('Home') : null;
     });
   }
 
@@ -58,7 +59,7 @@ export class LoginComponent extends Component<Props, State> {
       <View style={styles.container}>
         <ImageBackground
           source={BACKGROUND_LOGIN}
-          resizeMode="cover"
+          resizeMode="contain"
           imageStyle={{borderRadius: 10}}
           style={[{width: 410, height: 656}, styles.container]}>
           <View style={styles.form}>
@@ -82,18 +83,22 @@ export class LoginComponent extends Component<Props, State> {
               <View style={styles.forgotRight}>
                 <Text style={styles.textForgot}>Forgot Password</Text>
               </View>
-              <View>
-                <NormalButton 
-                  name={"Log In"}
-                  onPress={() => this.handleLogin()}
-                />
-              </View>
-              <View>
-                <TouchableOpacity
-                  style={styles.buttonRegister}
-                  onPress={() => navigation.navigate('Register')}>
-                  <Text style={styles.buttonText}>Register</Text>
-                </TouchableOpacity>
+              <View style={{alignItems: 'center'}}>
+                <View>
+                  <NormalButton 
+                    name={"Log In"}
+                    onPress={() => this.handleLogin()}
+                    width={'large'}
+                  />
+                </View>
+                <View>
+                  <NormalButton
+                    name={"Register"}
+                    onPress={() => navigation.navigate('Register')}
+                    style={{backgroundColor: '#F96060'}}
+                    width={'normal'}
+                  />
+                </View>
               </View>
             </View>
           </View>

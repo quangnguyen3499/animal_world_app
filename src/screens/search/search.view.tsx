@@ -8,9 +8,8 @@ import {
   TextInput,
   Text,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import filter from 'lodash.filter';
-import {ButtonCircle} from '@shared-view';
+import {ButtonCircle, RadioButton} from '@shared-view';
 
 const numColumns = 1;
 
@@ -27,7 +26,7 @@ interface State {
 
 interface Props {
   navigation?: any;
-  doGetListShop: () => void;
+  shops: any;
 }
 
 export default class SearchComponent extends Component<Props, State> {
@@ -187,21 +186,20 @@ export default class SearchComponent extends Component<Props, State> {
     return (
       <View style={styles.container}>
         <View style={styles.formSelect}>
-          <ButtonCircle
+          <RadioButton
             onPress={() => this.setState({isSearchPath: false})}
-            name={isSearchPath ? 'radio-button-off' : 'radio-button-on'}
-            style={{backgroundColor: 'blue'}}
+            size={18}
+            selected={!isSearchPath}
           />
           <Text>Search shop</Text>
-          <ButtonCircle
+          <RadioButton
             onPress={() => this.setState({isSearchPath: true})}
-            name={isSearchPath ? 'radio-button-on' : 'radio-button-off'}
-            style={{backgroundColor: 'blue'}}
+            size={18}
+            selected={isSearchPath}
           />
           <Text>Search direction</Text>
         </View>
-        <SafeAreaView style={{backgroundColor: '#FFFFFF'}} />
-        {isSearchPath ? this.SearchShop : this.SearchPath}
+        {/* {isSearchPath ? this.SearchShop : this.SearchPath} */}
       </View>
     );
   }

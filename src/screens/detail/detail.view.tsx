@@ -26,9 +26,8 @@ export default class DetailComponent extends Component<Props, {}> {
     
     if(Object.keys(placeDetail).length === 0)
       return (
-        <View style={{alignItems: 'center'}}>
-          <ActivityIndicator size={60} color="#47477b" />
-          <Text>Loading</Text>
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+          <ActivityIndicator size={60} color="blue" />
         </View>
       )
 
@@ -37,21 +36,22 @@ export default class DetailComponent extends Component<Props, {}> {
         <ImageSlider data={placeDetail.images} />
         <ButtonCircle
           onPress={() => navigation.navigate('ListPlace')}
-          name={'backward'}
+          name={'long-arrow-alt-left'}
           style={styles.backBtn}
+          color={'black'}
+          size={24}
         />
         <View style={styles.content}>
           <Text style={styles.name}>{placeDetail.detail.name}</Text>
-          <View style={styles.description}>
-            <Text>Url: {placeDetail.detail.url}</Text>
-            <Text>{placeDetail.detail.description}</Text>
-          </View>
+          <Text style={styles.normalText}>Url: {placeDetail.detail.url}</Text>
+          <Text style={styles.normalText}>Mô tả: {placeDetail.detail.description}</Text>
           <View style={styles.bottom}>
-            <Text>Go to IndoorMap</Text>
+            <Text style={styles.normalText}>IndoorMap</Text>
             <ButtonCircle
               onPress={() => navigation.navigate('IndoorMap', {place_id: placeDetail.detail.id})}
               name={'map'}
               style={styles.mapBtn}
+              size={30}
             />
           </View>
         </View>
@@ -70,22 +70,23 @@ const styles = StyleSheet.create({
     padding: 10,
     position: 'absolute',
     backgroundColor: '#CCD0D1',
+    alignItems: 'center',
   },
   backBtn: {
-    opacity: 0.5,
     position: 'absolute',
-    backgroundColor: '#555656'
   },
   mapBtn: {
-    backgroundColor: 'blue'
+    backgroundColor: 'blue',
+    margin: 10,
   },
   name: {
-
+    fontSize: 30,
   },
-  description: {
-
+  normalText: {
+    fontSize: 20,
+    margin: 10,
   },
   bottom: {
-
+    alignItems: 'center'
   },
 });

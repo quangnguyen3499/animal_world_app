@@ -1,22 +1,19 @@
-import { doUpdateAccount, doChangeAvatar } from '@shared-state';
+import { doUpdateAccount } from '@shared-state';
 import {connect} from 'react-redux';
 import AccountComponent from './account.view';
 
 export const AccountContainer = connect(
-  (state: any) => {        
+  (state: any) => {         
     return {
-      isLoading: state.avatar.isLoading,
-      avatarNew: state.avatar.avatar,
+      isLoading: state.account.isLoading,
+      avatarNew: state.account.avatar,
     };
   },
   (dispatch: any) => {
     return {
-      doUpdateAccount: (user_id: string, username: string) => {        
-        dispatch(doUpdateAccount(user_id, username));
+      doUpdateAccount: (user_id: string, username: string, media: string) => {        
+        dispatch(doUpdateAccount(user_id, username, media));
       },
-      doChangeAvatar: (user_id: string, media: string) => {
-        dispatch(doChangeAvatar(user_id, media));
-      }
     };
   },
 )(AccountComponent);

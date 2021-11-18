@@ -7,6 +7,7 @@ import {
 const INITIAL_STATE = {
   isLoading: false,
   username: '',
+  avatar: '',
 };
 
 export const accountReducer = (state = INITIAL_STATE, action: any) => {
@@ -15,10 +16,11 @@ export const accountReducer = (state = INITIAL_STATE, action: any) => {
       return Object.assign({}, state, {
         isLoading: true,
       });
-    case DO_UPDATE_ACCOUNT_SUCCESS:      
+    case DO_UPDATE_ACCOUNT_SUCCESS:         
       return Object.assign({}, state, {
         isLoading: false,
         username: action.username,
+        avatar: action.avatar,
       });
     case DO_UPDATE_ACCOUNT_FAIL:
       return Object.assign({}, state, {
