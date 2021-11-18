@@ -2,8 +2,6 @@ import {DO_LOGOUT, DO_LOGOUT_SUCCESS, DO_LOGOUT_FAIL} from '../actions';
 
 const INITIAL_STATE = {
   isLoading: false,
-  isLogout: false,
-  username: '',
 };
 
 export const logoutReducer = (state = INITIAL_STATE, action: any) => {
@@ -15,8 +13,6 @@ export const logoutReducer = (state = INITIAL_STATE, action: any) => {
     case DO_LOGOUT_SUCCESS:
       return Object.assign({}, state, {
         isLoading: false,
-        isLogout: true,
-        username: action.username,
       });
     case DO_LOGOUT_FAIL:
       return Object.assign({}, state, {

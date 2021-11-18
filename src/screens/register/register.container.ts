@@ -3,10 +3,8 @@ import {RegisterComponent} from './register.view';
 import {doRegister} from '@shared-state';
 
 export const RegisterContainer = connect(
-  (state: any) => {      
-    return {
-      isLogIn: state.user.user,
-    };
+  () => {
+    return {};
   },
   (dispatch: any) => {
     return {

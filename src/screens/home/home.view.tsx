@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
-import {ButtonCircle} from '@shared-view';
+import {ButtonCircle, NormalButton} from '@shared-view';
 import AsyncStorage from '@react-native-community/async-storage';
 import {DEFAULT_AVATAR} from '@assets';
 import {User} from '@core';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface State {
   user_data: User;
@@ -32,18 +33,26 @@ export class HomeComponent extends Component<Props, State> {
   }
 
   componentDidMount() {
+    this.backToAuth();
     AsyncStorage.getItem('user_data').then((val: any) => {
       this.setState({user_data: JSON.parse(val)});
-    });    
+    });
   };
 
   handleLogout = () => {
-    const {isLogout, navigation, doLogout} = this.props;
+    const {doLogout} = this.props;
     doLogout();
-    isLogout ? navigation.navigate('Login') : null;
   };
 
+  backToAuth = () => {
+    const {navigation} = this.props;
+    AsyncStorage.getItem('user_data').then((val: any) => {                    
+      !JSON.parse(val).token ? navigation.navigate('Login') : null;
+    });
+  }
+
   render() {
+    this.backToAuth();
     const {user_data} = this.state;
     const {navigation, username, avatarNew} = this.props;
     let avatar = avatarNew || user_data.avatar;
@@ -61,23 +70,19 @@ export class HomeComponent extends Component<Props, State> {
             }}
           />
         </View>
-        <ButtonCircle
-          onPress={() => navigation.navigate('Account')}
-          name={'user-circle-o'}
-          style={styles.accBtn}
-          // size={50}
-        />
-        <ButtonCircle
-          onPress={() => navigation.navigate('ListPlace')}
-          name={'th-list'}
-          style={styles.listBtn}
-          // size={200}
-        />
-        <ButtonCircle
+        <View style={styles.listBtn}>
+          <NormalButton 
+            name={"Account"}
+            onPress={() => navigation.navigate('Account')}
+          />
+          <NormalButton 
+            name={"List Place"}
+            onPress={() => navigation.navigate('ListPlace')}
+          />
+        </View>
+        <NormalButton 
+          name={"Log Out"}
           onPress={() => this.handleLogout()}
-          name={'sign-out'}
-          style={styles.logoutBtn}
-          // size={50}
         />
       </View>
     );
@@ -103,14 +108,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   listBtn: {
-    backgroundColor: 'blue',
-    justifyContent: 'center',
-  },
-  accBtn: {
-    backgroundColor: 'orange',
-  },
-  logoutBtn: {
-    backgroundColor: 'gray',
-    margin: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });

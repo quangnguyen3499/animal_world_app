@@ -8,14 +8,14 @@ import {
   Alert,
   ImageBackground,
 } from 'react-native';
-import {scale, verticalScale} from '@shared-view';
+import {NormalButton, scale, verticalScale} from '@shared-view';
 import {BACKGROUND_LOGIN} from '@assets';
+import AsyncStorage from '@react-native-community/async-storage';
 
 interface Props {
   isLoading?: boolean;
   doLogin: (email: string, password: string) => void;
   navigation?: any;
-  isLogIn?: any;
 }
 
 interface State {
@@ -33,7 +33,6 @@ export class LoginComponent extends Component<Props, State> {
   }
 
   handleLogin = () => {
-    // Check validation
     if (this.state.email != '' && this.state.password != '') {
       this.props.doLogin(this.state.email, this.state.password);
     } else {
@@ -42,12 +41,19 @@ export class LoginComponent extends Component<Props, State> {
   };
 
   componentDidMount() {
-    const {isLogIn, navigation} = this.props;
-    isLogIn ? navigation.navigate('Home') : null;
+    this.backToAuth();
+  }
+  
+  backToAuth = () => {
+    const {navigation} = this.props;
+    AsyncStorage.getItem('user_data').then((val: any) => {                
+      JSON.parse(val).token ? navigation.navigate('Home') : null;
+    });
   }
 
   render() {
     const {navigation} = this.props;
+    this.backToAuth();
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -77,11 +83,10 @@ export class LoginComponent extends Component<Props, State> {
                 <Text style={styles.textForgot}>Forgot Password</Text>
               </View>
               <View>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => this.handleLogin()}>
-                  <Text style={styles.buttonText}>Log In</Text>
-                </TouchableOpacity>
+                <NormalButton 
+                  name={"Log In"}
+                  onPress={() => this.handleLogin()}
+                />
               </View>
               <View>
                 <TouchableOpacity

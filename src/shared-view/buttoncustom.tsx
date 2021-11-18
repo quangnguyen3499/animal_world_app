@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const ButtonCircle = ({name, onPress, size, style}: any) => (
@@ -23,4 +23,30 @@ const ButtonCircle = ({name, onPress, size, style}: any) => (
   </TouchableOpacity>
 );
 
-export {ButtonCircle};
+const NormalButton = ({name, onPress, style}: any) => (
+  <TouchableOpacity 
+    style={[styles.normalBtn, style]}
+    onPress={onPress}
+  >
+    <Text style={styles.buttonText}>{name}</Text>
+  </TouchableOpacity>
+)
+
+const styles = StyleSheet.create({
+  normalBtn: {
+    backgroundColor: '#DA70D6',
+    height: 40,
+    borderRadius: 6,
+    fontSize: 20,
+    justifyContent: 'center',
+    width: 160,
+    margin: 20,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 20,
+    textAlign: 'center',
+  },
+})
+
+export {ButtonCircle, NormalButton};

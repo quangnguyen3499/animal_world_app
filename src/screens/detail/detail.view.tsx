@@ -25,7 +25,12 @@ export default class DetailComponent extends Component<Props, {}> {
     const {navigation, placeDetail} = this.props;
     
     if(Object.keys(placeDetail).length === 0)
-      return <ActivityIndicator />
+      return (
+        <View style={{alignItems: 'center'}}>
+          <ActivityIndicator size={60} color="#47477b" />
+          <Text>Loading</Text>
+        </View>
+      )
 
     return (
       <View style={styles.container}>

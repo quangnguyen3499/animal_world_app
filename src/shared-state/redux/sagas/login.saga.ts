@@ -1,7 +1,7 @@
 import {put, takeLatest} from 'redux-saga/effects';
 import {DO_LOGIN, DO_LOGIN_SUCCESS, DO_LOGIN_FAIL} from '../actions';
-import {Alert} from 'react-native';
 import {FireBaseService, UserService} from '@core';
+import AsyncStorage from '@react-native-community/async-storage';
 
 function* doLogin(action: object) {
   try {
@@ -10,18 +10,24 @@ function* doLogin(action: object) {
     var avatar: any;
 
     yield UserService.login(email, password).then(val => {
-      data = val.data;            
-      Alert.alert('Thông báo', 'Đăng nhập thành công');
+      data = val.data;      
     });
     yield FireBaseService.getFileStorage(`user/${data.user.id}.jpg`).then(val => {
-      avatar = val;      
+      avatar = val;
     });
 
     data = Object.assign(data, {avatar: avatar});
-    
+
+    yield AsyncStorage.setItem('user_data', JSON.stringify({
+      id: data.user.id,
+      username: data.user.username,
+      token: data.token.token,
+      avatar: data.avatar,
+      email: data.user.email
+    }))
+
     yield put({type: DO_LOGIN_SUCCESS, data});
   } catch (error) {        
-    Alert.alert('Thông báo', 'Đăng nhập không thành công');
     yield put({type: DO_LOGIN_FAIL, error: error});
   }
 }

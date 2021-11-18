@@ -6,16 +6,16 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 function* doLogout() {
   try {
-    var token: string;
+    let user_data: any;
 
-    AsyncStorage.getItem('user_data').then((val: any) => {
-      token = val.user_token;
-      UserService.logout(token);
+    yield AsyncStorage.getItem('user_data').then((val: any) => {           
+      user_data = JSON.parse(val);
+      UserService.logout(user_data.email);
     });
     
-    Alert.alert('Thông báo', 'Đăng xuất thành công');
     yield put({type: DO_LOGOUT_SUCCESS});
-    yield AsyncStorage.removeItem('user_data');
+    user_data.token = null;
+    yield AsyncStorage.setItem('user_data', JSON.stringify(user_data));
   } catch (error) {
     Alert.alert('Thông báo', 'Đăng xuất không thành công');
     yield put({type: DO_LOGOUT_FAIL, error: error});

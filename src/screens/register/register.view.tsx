@@ -10,11 +10,11 @@ import {
 } from 'react-native';
 import {scale, verticalScale} from '@shared-view';
 import {BACKGROUND_REGISTER} from '@assets';
+import AsyncStorage from '@react-native-community/async-storage';
 
 interface Props {
   doRegister: (email: string, password: string, username: string) => void;
   navigation?: any;
-  isLogIn?: any;
 }
 
 interface State {
@@ -44,14 +44,20 @@ export class RegisterComponent extends Component<Props, State> {
   };
 
   componentDidMount() {
-    const {isLogIn, navigation} = this.props;
-    console.log(isLogIn);
-    
-    isLogIn ? navigation.navigate('Home') : null;
+    this.backToAuth();
+  }
+
+  backToAuth = () => {
+    const {navigation} = this.props;
+    AsyncStorage.getItem('user_data').then((val: any) => {                
+      JSON.parse(val).token ? navigation.navigate('Home') : null;
+    });
   }
 
   render() {
     const {navigation} = this.props;
+    
+    this.backToAuth();
     return (
       <View style={styles.container}>
         <ImageBackground
