@@ -10,12 +10,12 @@ import {
 } from 'react-native';
 import filter from 'lodash.filter';
 import {ButtonCircle, RadioButton} from '@shared-view';
+import _ from 'lodash';
 
 const numColumns = 1;
 
 interface State {
   isLoading: boolean;
-  shops: Array<Object>;
   keySearchShop: any;
   keySearchSource: any;
   keySearchTarget: any;
@@ -34,15 +34,9 @@ export default class SearchComponent extends Component<Props, State> {
     super(props);
     this.state = {
       isLoading: false,
-      shops: Array({
-        id: Number,
-        name: String,
-        typical: String,
-      }),
       shopsSearch: Array({
         id: Number,
         name: String,
-        typical: String,
       }),
       keySearchShop: '',
       keySearchSource: '',
@@ -58,52 +52,46 @@ export default class SearchComponent extends Component<Props, State> {
     if (item.empty === true) {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
+    
     const setValue = (item: any) => {
       switch (flag) {
         case 0:
-          navigation.navigate('Detail', {place_id: item.id});
+          console.log("search shop");
+          
+          // navigation.navigate('Detail', {place_id: item.id});
           break;
         case 1:
           this.setState({keySearchSource: item.id});
           break;
         case 2:
           this.setState({keySearchTarget: item.id});
+          // navigation.navigate('IndoorMap', {})
           break;
         default:
           break;
       }
-    };
+    };    
     return (
       <TouchableOpacity
         style={styles.item}
         key={index}
-        onPress={() => setValue(item)}>
-        <Text style={styles.itemText}>{item.name}</Text>
+        onPress={() => setValue(item)}
+      >
+      {/* <Text style={styles.itemText}>{item.name}</Text> */}
       </TouchableOpacity>
     );
   };
 
   doSearchShop = (text: any) => {
-    const formattedQuery = text.toLowerCase();
-    const filteredData = filter(
-      this.state.shops,
-      (item: {name: String; typical: String}) => {
-        return this.contains(item, formattedQuery);
-      },
-    );
+    const valueSearch = text.toLowerCase();    
+    const filteredData = _.filter(this.props.shops, {name: 'Pizza Company'});
+     
     this.setState({shopsSearch: filteredData});
-    this.setState({keySearchShop: formattedQuery});
-  };
-
-  contains = ({name, typical}: {name: String; typical: String}, query: any) => {
-    if (name.includes(query) || typical.includes(query)) {
-      return true;
-    }
-    return false;
+    this.setState({keySearchShop: valueSearch});
   };
 
   SearchShop = () => {
-    const {isLoading, keySearchShop} = this.state;
+    const {keySearchShop, shopsSearch} = this.state;
 
     return (
       <View style={styles.searchResult}>
@@ -116,16 +104,12 @@ export default class SearchComponent extends Component<Props, State> {
           placeholder="Input shop..."
           style={styles.search}
         />
-        {isLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <FlatList
-            data={this.state.shopsSearch}
-            numColumns={numColumns}
-            renderItem={item => this.renderItem(item, 0)}
-            style={styles.flatlist}
-          />
-        )}
+        <FlatList
+          data={shopsSearch}
+          numColumns={numColumns}
+          renderItem={item => this.renderItem(item, 0)}
+          style={styles.flatlist}
+        />
       </View>
     );
   };
@@ -199,7 +183,9 @@ export default class SearchComponent extends Component<Props, State> {
           />
           <Text>Search direction</Text>
         </View>
-        {/* {isSearchPath ? this.SearchShop : this.SearchPath} */}
+        <View>
+          {isSearchPath ? this.SearchPath() : this.SearchShop()}
+        </View>
       </View>
     );
   }
@@ -225,7 +211,6 @@ const styles = StyleSheet.create({
     margin: 2,
     borderRadius: 10,
     height: 50,
-    backgroundColor: '#fff',
   },
   flatlist: {
     margin: 10,
@@ -236,10 +221,12 @@ const styles = StyleSheet.create({
     margin: 15,
   },
   formSelect: {
-    marginLeft: 300,
+    margin: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
   },
   searchResult: {
     position: 'absolute',
-    width: '80',
+    width: '100%'
   },
 });

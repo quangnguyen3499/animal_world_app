@@ -5,3 +5,4 @@ export * from './navigation';
 export * from './floorlist';
 export * from './imageslider';
 export * from './popupmenu';
+export * from './searchbar';
