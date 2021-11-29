@@ -3,12 +3,13 @@ import {SafeAreaView, FlatList, StyleSheet, Text} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const FloorList = ({data, activeTab, onPress}: any) => {
+   
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
         disableScrollViewPanResponder
         data={data}
-        keyExtractor={item => item.floor_id}
+        keyExtractor={(item, index) => item.floor_id}
         extraData={activeTab}
         contentContainerStyle={{alignItems: 'center'}}
         renderItem={({item}) => (

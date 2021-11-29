@@ -1,6 +1,6 @@
 import axios from 'axios';
 import storage from '@react-native-firebase/storage';
-const API_URL = 'http://192.168.1.169:3000/api/v1';
+const API_URL = 'http://192.168.56.1:3000/api/v1';
 
 class UserService {
   static login(email: string, password: string) {    

@@ -76,7 +76,6 @@ export class IndoorMapComponent extends Component<Props, State> {
                 key={index}
                 top={data.coordinate.longitude}
                 left={data.coordinate.latitude}
-                title={data.name}
                 logoUrl={data.logo_url}
               />
             );
@@ -125,7 +124,7 @@ export class IndoorMapComponent extends Component<Props, State> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#dddddd',
+    backgroundColor: '#fff',
     position: 'absolute',
     top: 0,
     bottom: 0,
