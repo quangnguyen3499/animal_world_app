@@ -3,11 +3,12 @@ import {View, StyleSheet, ImageBackground, Text} from 'react-native';
 import {ButtonCircle, FloorList, Marker} from '@shared-view';
 import {Svg, Polyline} from 'react-native-svg';
 import { DEFAULT_MAP } from '@assets';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 interface State {
   isLoading: boolean;
-  place_id: string;
   floor_id: any;
+  zoomable: boolean;
 }
 
 interface Props {
@@ -33,89 +34,99 @@ export class IndoorMapComponent extends Component<Props, State> {
     super(props);
     this.state = {
       isLoading: false,
-      place_id: '1',
       floor_id: 1,
+      zoomable: false,
     };
   }
 
   componentDidMount() {
-    const {route, doGetListShop} = this.props;
-    let {place_id, floor_id} = this.state;
-    this.setState({place_id: JSON.stringify(route.params.place_id)});    
-    doGetListShop(place_id, floor_id);
+    const {doGetListShop, placeDetail} = this.props;
+    let {floor_id} = this.state;    
+    doGetListShop(placeDetail.detail.id, floor_id);
   }
 
   getPath = () => {
-    const {place_id, floor_id} = this.state;
-    const {source_id, target_id, doGetPath} = this.props;
+    const {floor_id} = this.state;
+    const {source_id, target_id, doGetPath, placeDetail} = this.props;
 
-    doGetPath(place_id, floor_id, source_id, target_id);
+    doGetPath(placeDetail.detail.id, floor_id, source_id, target_id);
   };
 
   onChangeFloor = (value: any) => {
-    let {place_id} = this.state;
-    const {doGetListShop} = this.props;          
-    this.setState({floor_id: value}, () => doGetListShop(place_id, this.state.floor_id))        
+    const {doGetListShop, placeDetail} = this.props;          
+    this.setState({floor_id: value}, () => doGetListShop(placeDetail.detail.id, this.state.floor_id))        
+  }
+
+  changeToZoomable = () => {
+    const {zoomable} = this.state;
+    this.setState({zoomable: !zoomable});
   }
 
   render() {
     const {navigation, shops, path, distance, placeDetail} = this.props;
-    const {floor_id} = this.state;
+    const {floor_id, zoomable} = this.state;
     const imgMap = placeDetail.floormap[floor_id-1];    
     
     return (
       <View style={styles.container}>
-        <ImageBackground
-          style={{flex: 1, width: 440, height: 640}}
-          source={imgMap ? {uri: imgMap} : DEFAULT_MAP}
-          resizeMode={'contain'}
-        >
-          {shops.map((data: any, index: any) => {
-            return (
+        <ImageViewer
+          imageUrls={[{url: imgMap ? imgMap : DEFAULT_MAP}]}
+          backgroundColor={'#fff'}
+          enableImageZoom={zoomable}
+          renderIndicator={(currentIndex, allSize) => <Text></Text>}
+        />
+        {shops.map((data: any, index: any) => {
+          return (
+            !zoomable ? (
               <Marker
                 key={index}
                 top={data.coordinate.longitude}
                 left={data.coordinate.latitude}
                 logoUrl={data.logo_url}
               />
-            );
-          })}
-          <View style={{marginTop: 20, marginLeft: 20, position: 'absolute'}}>
-            <ButtonCircle
-              onPress={() =>
-                navigation.navigate('Detail', {place_id: placeDetail.id})
-              }
-              name={'long-arrow-alt-left'}
-              size={20}
+            ) : []
+          );
+        })}
+        {path && !zoomable ? (
+          <Svg style={{position: 'absolute'}}>
+            <Polyline
+              points={path}
+              stroke="blue"
+              strokeWidth="3"
             />
-            <ButtonCircle
-              onPress={() => navigation.navigate('ListPlace')}
-              name={'bars'}
-              size={18}
-              style={{backgroundColor: 'orange', marginLeft: 2, borderColor: 'white', borderWidth: 1}}
-            />
-            <FloorList
-              data={placeDetail.detail.floor_list}
-              onPress={(value: any) => this.onChangeFloor(value)}
-              activeTab={floor_id}
-            />
-            <ButtonCircle
-              onPress={() => navigation.navigate('Search')}
-              name={'search'}
-              size={20}
-            />
-            <Text style={styles.distance}>Distance: {distance || 0}</Text>
-          </View>
-          {path ? (
-            <Svg style={{position: 'absolute'}}>
-              <Polyline
-                points={path}
-                stroke="blue"
-                strokeWidth="3"
-              />
-            </Svg>) : null
-          }
-        </ImageBackground>
+          </Svg>) : null
+        }
+        <View style={{top: 50, marginLeft: 20, position: 'absolute'}}>
+          <ButtonCircle
+            onPress={() =>
+              navigation.navigate('Detail', {place_id: placeDetail.detail.id})
+            }
+            name={'long-arrow-alt-left'}
+            size={20}
+          />
+          <ButtonCircle
+            onPress={() => navigation.navigate('ListPlace')}
+            name={'bars'}
+            size={18}
+            style={{backgroundColor: 'orange', marginLeft: 2, borderColor: 'white', borderWidth: 1}}
+          />
+          <FloorList
+            data={placeDetail.detail.floor_list}
+            onPress={(value: any) => this.onChangeFloor(value)}
+            activeTab={floor_id}
+          />
+          <ButtonCircle
+            onPress={() => navigation.navigate('Search')}
+            name={'search'}
+            size={20}
+          />
+          <Text style={styles.distance}>Distance: {distance || 0}</Text>
+          <ButtonCircle
+            onPress={() => this.changeToZoomable()}
+            name={'search-plus'}
+            size={20}
+          />
+        </View>
       </View>
     );
   }

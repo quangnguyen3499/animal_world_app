@@ -5,6 +5,7 @@ import {doGetPlaceDetail} from '@shared-state';
 export const DetailContainer = connect(
   (state: any) => {
     return {
+      isLoading: state.placeDetail.isLoading,
       placeDetail: state.placeDetail.placeDetail,
     };
   },

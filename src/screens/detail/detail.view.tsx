@@ -7,6 +7,7 @@ interface Props {
   navigation?: any;
   placeDetail?: any;
   route?: any;
+  isLoading?: boolean;
   doGetPlaceDetail: (place_id: string) => void;
 }
 
@@ -17,14 +18,14 @@ export default class DetailComponent extends Component<Props, {}> {
 
   componentDidMount() {
     const {route, doGetPlaceDetail} = this.props;
-    const place_id = JSON.stringify(route.params.place_id);
+    const place_id = JSON.stringify(route.params.place_id);    
     doGetPlaceDetail(place_id);
   }
 
   render() {
-    const {navigation, placeDetail} = this.props;
+    const {navigation, placeDetail, isLoading} = this.props;
     
-    if(Object.keys(placeDetail).length === 0)
+    if(Object.keys(placeDetail).length === 0 || isLoading)
       return (
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <ActivityIndicator size={60} color="blue" />

@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 32,
     top: -40,
-    left: -32,
+    left: -26,
     padding: 2,
   },
   image: {
@@ -50,9 +50,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   marker: {
-    height: 8,
-    width: 8,
-    borderRadius: 4,
+    height: 20,
+    width: 20,
+    borderRadius: 10,
     backgroundColor: 'red',
     position: 'absolute',
   },
