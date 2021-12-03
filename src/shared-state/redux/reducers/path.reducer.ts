@@ -12,13 +12,11 @@ export const pathReducer = (state = INITIAL_STATE, action: any) => {
       return Object.assign({}, state, {
         isLoading: true,
       });
-    case DO_GET_PATH_SUCCESS:
-      console.log("direction: " + action);
-
+    case DO_GET_PATH_SUCCESS:      
       return Object.assign({}, state, {
         isLoading: false,
-        direction: action.path,
-        distance: action.distance,
+        direction: action.data.path,
+        distance: action.data.distance,
       });
     case DO_GET_PATH_FAIL:
       return Object.assign({}, state, {

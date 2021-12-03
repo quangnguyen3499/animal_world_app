@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {DEFAULT_AVATAR} from '@assets';
 import { User } from '@core';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import { PopUpMenu } from '@shared-view';
+import { NormalButton, PopUpMenu } from '@shared-view';
 // import ImageResizer from 'react-native-image-resizer';
 
 interface State {
@@ -23,6 +23,7 @@ interface Props {
   navigation?: any;
   isLoading?: any;
   avatarNew?: any;
+  doLogout: () => void;
   doUpdateAccount: (user_id?: string, username?: any, media?: any) => void;
 }
 
@@ -54,7 +55,7 @@ export default class AccountComponent extends Component<Props, State> {
   componentDidMount() {
     AsyncStorage.getItem('user_data').then((val: any) => {
       this.setState({user_data: JSON.parse(val)});      
-    });    
+    });
   }
 
   onTakePhoto = () => launchCamera({mediaType: 'photo'}, this.onMediaSelect);
@@ -80,6 +81,14 @@ export default class AccountComponent extends Component<Props, State> {
       default: return
     }    
   }
+
+  handleLogout = () => {
+    const {navigation, doLogout} = this.props;    
+    doLogout();    
+    AsyncStorage.getItem('user_data').then((val: any) => {          
+      JSON.parse(val).token ? null : navigation.navigate('Splash');
+    });
+  };
 
   render() {
     const {user_data, isShowPopupMenu} = this.state;
@@ -114,18 +123,22 @@ export default class AccountComponent extends Component<Props, State> {
         <View>
           <TextInput
             style={styles.username}
-            placeholder="New username"
+            placeholder="Username"
             onChangeText={value => setUsername(value)}
             value={user_data.username}
           />
         </View>
-        <View>
-          <TouchableOpacity
-            style={styles.btnSave}
-            onPress={() => this.updateAccount()}>
-            <Text style={styles.btnSaveText}>Update</Text>
-          </TouchableOpacity>
-        </View>
+        <NormalButton 
+          name={"Update"}
+          width={'normal'}
+          onPress={() => this.updateAccount()}
+        />
+        <NormalButton 
+          name={"Log Out"}
+          width={'verylarge'}
+          onPress={() => this.handleLogout()}
+          style={{backgroundColor: '#FF6347', marginTop: 200}}
+        />
         <PopUpMenu
           isOpen={isShowPopupMenu} 
           listchoice={listchoice}
@@ -157,18 +170,5 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 26,
     color: '#313131',
-  },
-  btnSave: {
-    backgroundColor: '#F96060',
-    height: 40,
-    borderRadius: 6,
-    marginTop: 10,
-    justifyContent: 'center',
-    width: 200,
-  },
-  btnSaveText: {
-    color: '#FFFFFF',
-    fontSize: 20,
-    textAlign: 'center',
   },
 });

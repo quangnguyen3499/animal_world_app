@@ -28,6 +28,9 @@ const NormalButton = ({name, onPress, style, width}: any) => {
   const setWidth = (width: any) => {
     let val;
     switch(width) {
+      case 'verylarge':
+        val = 320;
+        break;
       case 'large':
         val = 240;
         break;
@@ -79,13 +82,15 @@ const RadioButton = ({onPress, size, selected}: any) => {
 
 const styles = StyleSheet.create({
   normalBtn: {
-    backgroundColor: '#DA70D6',
-    height: 40,
-    borderRadius: 6,
+    backgroundColor: '#00CEC9',
+    height: 50,
+    borderRadius: 20,
     fontSize: 20,
     justifyContent: 'center',
     width: 160,
     margin: 20,
+    shadowColor: '#000',
+    elevation: 4
   },
   buttonText: {
     color: '#FFFFFF',

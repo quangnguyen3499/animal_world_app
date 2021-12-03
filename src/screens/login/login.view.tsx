@@ -6,10 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
-  ImageBackground,
 } from 'react-native';
-import {NormalButton, scale, verticalScale} from '@shared-view';
-import {BACKGROUND_LOGIN} from '@assets';
+import {ButtonCircle, NormalButton, scale, verticalScale} from '@shared-view';
 import AsyncStorage from '@react-native-community/async-storage';
 
 interface Props {
@@ -45,10 +43,9 @@ export class LoginComponent extends Component<Props, State> {
   }
   
   backToAuth = () => {
-    const {navigation} = this.props;
+    const {navigation} = this.props;    
     AsyncStorage.getItem('user_data').then((val: any) => {
-      let data = JSON.parse(val);               
-      (data?.token || data) ? navigation.navigate('Home') : null;
+      (JSON.parse(val)?.token) ? navigation.navigate('Home') : null;
     });
   }
 
@@ -57,52 +54,40 @@ export class LoginComponent extends Component<Props, State> {
     this.backToAuth();
     return (
       <View style={styles.container}>
-        <ImageBackground
-          source={BACKGROUND_LOGIN}
-          resizeMode="contain"
-          imageStyle={{borderRadius: 10}}
-          style={[{width: 410, height: 656}, styles.container]}>
-          <View style={styles.form}>
-            <Text style={styles.title}>Welcome Back</Text>
-            <View>
-              <TextInput
-                style={styles.userInput}
-                placeholder="Enter your email"
-                onChangeText={email => this.setState({email})}
-                value={this.state.email}
-              />
-            </View>
-            <View>
-              <TextInput
-                style={styles.userInput}
-                secureTextEntry={true}
-                placeholder="Password"
-                onChangeText={text => this.setState({password: text})}
-                value={this.state.password}
-              />
-              <View style={styles.forgotRight}>
-                <Text style={styles.textForgot}>Forgot Password</Text>
-              </View>
-              <View style={{alignItems: 'center'}}>
-                <View>
-                  <NormalButton 
-                    name={"Log In"}
-                    onPress={() => this.handleLogin()}
-                    width={'large'}
-                  />
-                </View>
-                <View>
-                  <NormalButton
-                    name={"Register"}
-                    onPress={() => navigation.navigate('Register')}
-                    style={{backgroundColor: '#F96060'}}
-                    width={'normal'}
-                  />
-                </View>
-              </View>
-            </View>
-          </View>
-        </ImageBackground>
+        <View>
+          <ButtonCircle
+            onPress={() =>
+              navigation.navigate('Splash')
+            }
+            name={'long-arrow-alt-left'}
+            size={20}
+          />
+          <Text style={styles.title}>Log in</Text>
+        </View>
+        <View style={{justifyContent: 'center', flex: 1, alignSelf: 'center', marginBottom: 50}}>
+          <TextInput
+            style={styles.userInput}
+            placeholder="Email"
+            onChangeText={email => this.setState({email})}
+            value={this.state.email}
+          />
+          <TextInput
+            style={[styles.userInput, {marginVertical: 40}]}
+            secureTextEntry={true}
+            placeholder="Password"
+            onChangeText={text => this.setState({password: text})}
+            value={this.state.password}
+          />
+          <NormalButton 
+            name={"Log In"}
+            onPress={() => this.handleLogin()}
+            width={'verylarge'}
+          /> 
+        </View>
+        <View style={{justifyContent: 'center', flexDirection: 'row'}}>
+          <Text style={{fontSize: 16}}>Don’t have an account yet?</Text>
+          <Text onPress={() => navigation.navigate('Register')} style={{color: '#00CEC9', fontSize: 16}}> Sign up</Text>
+        </View>
       </View>
     );
   }
@@ -111,70 +96,27 @@ export class LoginComponent extends Component<Props, State> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#E5E5E5',
+    padding: 20
   },
   title: {
     width: '100%',
-    fontSize: verticalScale(32),
-    color: '#313131',
+    fontSize: 30,
+    fontWeight: 'bold',
+    margin: 10
   },
   userInput: {
-    color: '#313131',
-    fontSize: verticalScale(18),
-    borderBottomWidth: scale(1 / 2),
-    marginVertical: scale(5),
-  },
-  userText: {
-    width: '100%',
-    fontSize: verticalScale(22),
-    color: '#313131',
-    marginTop: verticalScale(40),
-  },
-  forgotRight: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  textForgot: {
-    color: '#313131',
-    fontSize: verticalScale(20),
-    marginVertical: scale(10),
+    fontSize: 18,
+    borderWidth: 1,
+    borderRadius: 20,
+    borderColor: '#000',
+    padding: 16,
   },
   button: {
     backgroundColor: '#DA70D6',
-    height: verticalScale(48),
-    borderRadius: scale(6),
-    fontSize: verticalScale(20),
+    height: 48,
+    borderRadius: 6,
+    fontSize: 20,
     justifyContent: 'center',
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: verticalScale(20),
-    textAlign: 'center',
-  },
-  buttonRegister: {
-    backgroundColor: '#F96060',
-    height: verticalScale(36),
-    borderRadius: scale(6),
-    fontSize: verticalScale(16),
-    marginTop: scale(10),
-    justifyContent: 'center',
-    width: 100,
-    alignSelf: 'center',
-  },
-  form: {
-    backgroundColor: '#fff',
-    width: '80%',
-    position: 'absolute', //stick form to bottom
-    bottom: 20, //stick form to bottom
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 5,
-      height: 5,
-    },
-    elevation: 10,
-    padding: scale(20),
-    opacity: 0.9,
   },
 });

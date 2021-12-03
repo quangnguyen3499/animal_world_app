@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {Provider} from 'react-redux';
 import {RootNavigator} from '@navigation';
 import {store} from '@shared-state';

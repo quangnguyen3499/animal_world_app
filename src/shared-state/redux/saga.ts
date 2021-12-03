@@ -8,6 +8,7 @@ import {
   watchDoGetPlaceDetail,
   watchDoGetListPlace,
   watchDoUpdateAccount,
+  watchDoGetCity,
 } from './sagas';
 
 export default function* rootSaga() {
@@ -20,5 +21,6 @@ export default function* rootSaga() {
     fork(watchDoGetPlaceDetail),
     fork(watchDoGetListPlace),
     fork(watchDoUpdateAccount),
+    fork(watchDoGetCity),
   ]);
 }

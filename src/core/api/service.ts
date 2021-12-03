@@ -45,6 +45,12 @@ class UserService {
 }
 
 class PlaceService {
+  static getCity() {
+    const url = `${API_URL}/cities`;
+    return axios
+      .get(url).then(res => res.data.data)
+  }
+
   static getPlaces() {
     const url = `${API_URL}/places`;
     return axios

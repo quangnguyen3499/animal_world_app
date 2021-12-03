@@ -1,7 +1,8 @@
 import {Place} from '@core';
-import {ButtonCircle, ImageSlider} from '@shared-view';
+import {ButtonCircle, ImageSlider, NormalButton, TextCustom} from '@shared-view';
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface Props {
   navigation?: any;
@@ -36,25 +37,35 @@ export default class DetailComponent extends Component<Props, {}> {
       <View style={styles.container}>
         <ImageSlider data={placeDetail.images} />
         <ButtonCircle
-          onPress={() => navigation.navigate('ListPlace')}
+          onPress={() => navigation.navigate('Home')}
           name={'long-arrow-alt-left'}
           style={styles.backBtn}
-          color={'black'}
+          color={'#fff'}
           size={24}
         />
+        <NormalButton 
+          name={"Go to Map"}
+          onPress={() => navigation.navigate('IndoorMap', {place_id: placeDetail.detail.id})}
+          width={'normal'}
+          style={styles.mapBtn}
+        />
         <View style={styles.content}>
-          <Text style={styles.name}>{placeDetail.detail.name}</Text>
-          <Text style={styles.normalText}>Url: {placeDetail.detail.url}</Text>
-          <Text style={styles.normalText}>Mô tả: {placeDetail.detail.description}</Text>
-          <View style={styles.bottom}>
-            <Text style={styles.normalText}>IndoorMap</Text>
-            <ButtonCircle
-              onPress={() => navigation.navigate('IndoorMap', {place_id: placeDetail.detail.id})}
-              name={'map'}
-              style={styles.mapBtn}
-              size={30}
-            />
-          </View>
+          <TextCustom 
+            style={styles.name}
+            text={placeDetail.detail.name}
+            size={28}
+            weight={true}
+          />
+          <TextCustom 
+            style={styles.normalText}
+            text={`Mô tả: ${placeDetail.detail.description}`}
+            size={20}
+          />
+          <TextCustom 
+            style={styles.normalText}
+            text={`Url: ${placeDetail.detail.url}`}
+            size={20}
+          />
         </View>
       </View>
     );
@@ -65,23 +76,37 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 5,
+    alignItems: 'center'
   },
   content: {
-    top: 250,
-    padding: 10,
+    backgroundColor: '#fff',
+    top: 400,
+    width: 360,
     position: 'absolute',
-    backgroundColor: '#CCD0D1',
-    alignItems: 'center',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 10,
+      height: 5,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 5,
+    padding: 5,
   },
   backBtn: {
     position: 'absolute',
+    left: 10,
   },
   mapBtn: {
-    backgroundColor: 'blue',
-    margin: 10,
+    backgroundColor: '#00CEC9',
+    position: 'absolute',
+    top: 320,
+    left: 0,
+    borderRadius: 20,
   },
   name: {
-    fontSize: 30,
+    textAlign: 'center'
   },
   normalText: {
     fontSize: 20,

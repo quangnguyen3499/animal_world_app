@@ -1,26 +1,26 @@
 import {
-  DO_GET_SHOP,
-  DO_GET_SHOP_SUCCESS,
-  DO_GET_SHOP_FAIL,
+  DO_GET_CITY,
+  DO_GET_CITY_SUCCESS,
+  DO_GET_CITY_FAIL,
 } from '../actions';
 
 const INITIAL_STATE = {
   isLoading: false,
-  shops: [],
+  city: {},
 };
 
-export const shopReducer = (state = INITIAL_STATE, action: any) => {
+export const cityReducer = (state = INITIAL_STATE, action: any) => {  
   switch (action.type) {
-    case DO_GET_SHOP:
+    case DO_GET_CITY:
       return Object.assign({}, state, {
         isLoading: true,
       });
-    case DO_GET_SHOP_SUCCESS:            
+    case DO_GET_CITY_SUCCESS:                           
       return Object.assign({}, state, {
         isLoading: false,
-        shops: action.data,
+        data: action.data,
       });
-    case DO_GET_SHOP_FAIL:
+    case DO_GET_CITY_FAIL:
       return Object.assign({}, state, {
         isLoading: false,
         error: action.error,

@@ -1,4 +1,4 @@
-import { doUpdateAccount } from '@shared-state';
+import { doLogout, doUpdateAccount } from '@shared-state';
 import {connect} from 'react-redux';
 import AccountComponent from './account.view';
 
@@ -13,6 +13,9 @@ export const AccountContainer = connect(
     return {
       doUpdateAccount: (user_id: string, username: string, media: string) => {        
         dispatch(doUpdateAccount(user_id, username, media));
+      },
+      doLogout: () => {
+        dispatch(doLogout());
       },
     };
   },

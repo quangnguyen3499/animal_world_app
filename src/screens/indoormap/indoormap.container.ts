@@ -3,10 +3,10 @@ import {IndoorMapComponent} from './indoormap.view';
 import {doGetListShop, doGetPath} from '@shared-state';
 
 export const IndoorMapContainer = connect(
-  (state: any) => {    
+  (state: any) => {                                    
     return {
       shops: state.shops.shops,
-      path: state.direction,
+      path: state.path.direction,
       distance: state.path.distance,
       placeDetail: state.placeDetail.placeDetail,
     };

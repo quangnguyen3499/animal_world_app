@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import {
   Image,
+  ImageBackground,
   StyleSheet,
   Text,
   View
 } from 'react-native';
-import { ICON_LOGO_APP } from '@assets';
+import { BACKGROUND_SPLASH, LOGO_APP } from '@assets';
+import AsyncStorage from '@react-native-community/async-storage';
+import { NormalButton } from '@shared-view';
 
 interface Props {
   navigation?: any;
@@ -17,49 +20,59 @@ export class SplashComponent extends Component<Props> {
     super(props);
   }
 
-  performTimeConsumingTask = async () => {
-    return new Promise((resolve) =>
-      setTimeout(() => {
-        resolve('success')
-      }, 3000)
-    )
+  backToAuth = () => {
+    const {navigation} = this.props;    
+    AsyncStorage.getItem('user_data').then((val: any) => {
+      (JSON.parse(val)?.token) ? navigation.navigate('Home') : null;
+    });
   }
-
-  async componentDidMount() {    
-    const {navigation, route} = this.props;
-    const data = await this.performTimeConsumingTask();
-    
-    if (data !== null) {
-      navigation.navigate("Register");
-    }
-  }
-
+  
   render() {
+    const {navigation} = this.props;
+    this.backToAuth();
+
     return (
-      <View style={styles.container}>
-        <Image
-          style={styles.image}
-          source={ICON_LOGO_APP}
-          resizeMode={'contain'}
+      <ImageBackground
+        style={styles.image}
+        source={BACKGROUND_SPLASH}
+      >
+        <Image 
+          source={LOGO_APP}
+          style={styles.logo}
         />
-        <Text style={styles.text}>Welcome to Indoor Map!</Text>
-      </View>
+        <Text style={styles.logoName}>Indoor Map</Text>
+        <NormalButton 
+          name={"Let's Start"}
+          onPress={() => navigation.navigate('Register')}
+          width={'verylarge'}
+          style={styles.buttonStart}
+        />
+        <Text style={styles.continueText}>Click to continue</Text>
+      </ImageBackground>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
   image: {
-    width: 200,
-    height: 300
+    flex: 1
   },
-  text: {
+  buttonStart: {
+    backgroundColor: '#00CEC9', 
+    borderRadius: 20,
+    marginTop: 340,
+    alignSelf: 'center'
+  },
+  logo: {
+    alignSelf: 'center',
+    marginTop: 70
+  },
+  logoName: {
     fontSize: 30,
-    color: '#010101'
+    fontWeight: 'bold',
+    alignSelf: 'center'
+  },
+  continueText: {
+    alignSelf: 'center'
   }
 });

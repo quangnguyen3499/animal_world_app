@@ -42,7 +42,7 @@ export default class SearchComponent extends Component<Props, State> {
       keySearchSource: '',
       keySearchTarget: '',
       flag: 0,
-      isSearchPath: false,
+      isSearchPath: true,
     };
   }
 
@@ -90,32 +90,7 @@ export default class SearchComponent extends Component<Props, State> {
     this.setState({keySearchShop: valueSearch});
   };
 
-  SearchShop = () => {
-    const {keySearchShop, shopsSearch} = this.state;
-
-    return (
-      <View style={styles.searchResult}>
-        <TextInput
-          autoCapitalize="none"
-          autoCorrect={false}
-          clearButtonMode="always"
-          value={keySearchShop}
-          onChangeText={search => this.doSearchShop(search)}
-          placeholder="Input shop..."
-          style={styles.search}
-        />
-        <FlatList
-          data={shopsSearch}
-          numColumns={numColumns}
-          renderItem={item => this.renderItem(item, 0)}
-          style={styles.flatlist}
-        />
-      </View>
-    );
-  };
-
   SearchPath = () => {
-    const {keySearchSource, keySearchTarget} = this.state;
     const {navigation} = this.props;
 
     return (
@@ -124,41 +99,40 @@ export default class SearchComponent extends Component<Props, State> {
           autoCapitalize="none"
           autoCorrect={false}
           clearButtonMode="always"
-          value={keySearchSource}
+          value={this.state.keySearchSource}
           onChangeText={value => this.doSearchShop(value)}
           placeholder="From..."
           style={styles.search}
         />
-        <FlatList
+        {/* <FlatList
           data={this.state.shopsSearch}
           numColumns={numColumns}
           renderItem={item => this.renderItem(item, 1)}
           style={styles.flatlist}
-        />
+        /> */}
         <TextInput
           autoCapitalize="none"
           autoCorrect={false}
           clearButtonMode="always"
-          value={keySearchTarget}
+          value={this.state.keySearchTarget}
           onChangeText={value => this.doSearchShop(value)}
           placeholder="To..."
           style={styles.search}
         />
-        <FlatList
+        {/* <FlatList
           data={this.state.shopsSearch}
           numColumns={numColumns}
           renderItem={item => this.renderItem(item, 2)}
           style={styles.flatlist}
-        />
+        /> */}
         <ButtonCircle
           onPress={() =>
             navigation.navigate('IndoorMap', {
-              source_id: keySearchSource,
-              target_id: keySearchTarget,
+              // path
             })
           }
+          size={20}
           name={'search'}
-          style={{backgroundColor: 'blue'}}
         />
       </View>
     );
@@ -171,12 +145,6 @@ export default class SearchComponent extends Component<Props, State> {
       <View style={styles.container}>
         <View style={styles.formSelect}>
           <RadioButton
-            onPress={() => this.setState({isSearchPath: false})}
-            size={18}
-            selected={!isSearchPath}
-          />
-          <Text>Search shop</Text>
-          <RadioButton
             onPress={() => this.setState({isSearchPath: true})}
             size={18}
             selected={isSearchPath}
@@ -184,7 +152,7 @@ export default class SearchComponent extends Component<Props, State> {
           <Text>Search direction</Text>
         </View>
         <View>
-          {isSearchPath ? this.SearchPath() : this.SearchShop()}
+          {this.SearchPath()}
         </View>
       </View>
     );
