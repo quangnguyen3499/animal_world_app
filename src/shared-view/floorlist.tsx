@@ -43,7 +43,7 @@ const FloorList = ({data, activeTab, onPress}: any) => {
 
 const styles = StyleSheet.create({
   container: {
-    top: 180,
+    top: 300,
     width: 46,
     borderRadius: 20,
     left: 4

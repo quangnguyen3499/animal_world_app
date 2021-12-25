@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, ImageBackground, Text} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import {ButtonCircle, Direction, FloorList, Marker, MultiModal, SingleModal} from '@shared-view';
-import {Svg, Polyline} from 'react-native-svg';
 import { DEFAULT_MAP } from '@assets';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import { Pointer } from '@core';
@@ -142,7 +141,7 @@ export class IndoorMapComponent extends Component<Props, State> {
             }
             name={'long-arrow-alt-left'}
             size={20}
-          /> 
+          />
           <ButtonCircle
             onPress={() => this.setState({showSearchModal: 1})}
             name={'search-location'}
