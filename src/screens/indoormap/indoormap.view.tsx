@@ -36,7 +36,7 @@ export class IndoorMapComponent extends Component<Props, State> {
     super(props);
     this.state = {
       isLoading: false,
-      floor_id: 1,
+      floor_id: 3,
       zoomable: false,
       showSearchModal: 0,
       marker: {
