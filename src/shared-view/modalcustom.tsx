@@ -55,12 +55,7 @@ const SingleModal = ({data, onSearch, onVisible, onClose}: any) => {
           <TouchableOpacity 
             onPress={() => onClose()}
           >
-            <Icon
-              name="compress-alt"
-              color="black"
-              size={20}
-              style={{marginLeft: 70}}
-            />
+            <Text style={[styles.closeText, {marginLeft: 60}]}>X</Text>
           </TouchableOpacity>
         </View>
         <FlatList
@@ -114,12 +109,7 @@ const MultiModal = ({data, onSearch, onVisible, onClose}: any) => {
           <TouchableOpacity 
             onPress={() => onClose()}
           >
-            <Icon
-              name="compress-alt"
-              color="black"
-              size={20}
-              style={{marginLeft: 94}}
-            />
+            <Text style={styles.closeText}>X</Text>
           </TouchableOpacity>
         </View>
         <FlatList
@@ -210,6 +200,17 @@ const styles = StyleSheet.create({
   },
   nameItem: {
     fontSize: 20,
+  },
+  closeText: {
+    color: '#fff', 
+    marginLeft: 120, 
+    width: 24, 
+    fontWeight: 'bold', 
+    fontSize: 16, 
+    backgroundColor: 'lightgray', 
+    paddingLeft: 7, 
+    padding: 2, 
+    borderRadius: 14
   }
 })
 

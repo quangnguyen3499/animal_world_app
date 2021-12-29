@@ -1,6 +1,6 @@
 import { ButtonCircle } from '@shared-view';
 import React, { useState } from 'react';
-import {SafeAreaView, FlatList, StyleSheet, Text} from 'react-native';
+import {View, FlatList, StyleSheet, Text} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const FloorList = ({data, activeTab, onPress}: any) => {
@@ -10,7 +10,7 @@ const FloorList = ({data, activeTab, onPress}: any) => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {listVisible ? (
         <FlatList
           disableScrollViewPanResponder
@@ -34,19 +34,22 @@ const FloorList = ({data, activeTab, onPress}: any) => {
         onPress={() => changeListVisible()}
         name={'bars'}
         size={18}
-        style={{position: 'absolute', top: 200, left: 5}}
         // style={{transform: [{rotateZ: changeDeg()}]}}
+        style={{margin: 6}}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    top: 300,
-    width: 46,
+    width: 50,
     borderRadius: 20,
-    left: 4
+    backgroundColor: '#fff', 
+    elevation: 10,
+    marginTop: 100,
+    borderColor: 'lightgrey',
+    borderWidth: 2
   },
   item: {
     borderRadius: 21,
@@ -54,9 +57,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 16,
     marginVertical: 4,
-    shadowColor: '#000',
-    elevation: 3,
-    borderWidth: 0.1,
+    elevation: 5,
+    borderColor: 'lightgrey',
+    borderWidth: 2
   },
 });
 

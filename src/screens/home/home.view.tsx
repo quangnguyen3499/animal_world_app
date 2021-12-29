@@ -158,7 +158,8 @@ const styles = StyleSheet.create({
   },
   item: {
     height: 160,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    margin: 4
   },
   itemCity: {
     height: 140,
@@ -167,14 +168,17 @@ const styles = StyleSheet.create({
   },
   itemImage: {
     justifyContent: 'center',
-    height: 160
+    height: 160,
+    borderRadius: 10,
+    overflow: 'hidden'
   },
   itemText: {
     color: '#fff',
     fontSize: 20,
     fontWeight: 'bold',
-    padding: 20,
-    bottom: -50
+    padding: 10,
+    bottom: -56,
+    backgroundColor: 'rgba(139,139,145, 0.5)'
   },
   itemCityName: {
     color: '#fff',
@@ -185,10 +189,13 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 80,
-    backgroundColor: '#fff',
+    backgroundColor: '#388AA4',
     padding: 20,
     flexDirection: 'row',
     alignItems: 'center',
+    borderBottomEndRadius: 10,
+    borderBottomStartRadius: 10,
+    marginBottom: 20
   },
   listplace: {
     fontSize: 20,

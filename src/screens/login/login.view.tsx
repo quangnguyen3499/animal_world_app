@@ -59,7 +59,7 @@ export class LoginComponent extends Component<Props, State> {
             onPress={() =>
               navigation.navigate('Splash')
             }
-            name={'long-arrow-alt-left'}
+            name={'chevron-left'}
             size={20}
           />
           <Text style={styles.title}>Log in</Text>

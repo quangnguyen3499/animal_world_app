@@ -2,15 +2,16 @@ import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-const ButtonCircle = ({name, onPress, size, style, color}: any) => (
+const ButtonCircle = ({name, onPress, size, style, color, title}: any) => (
   <TouchableOpacity
     style={[
       style,
       {
-        width: size+20,
+        width: size+30,
         height: size+20,
         borderRadius: size/2+10,
         opacity: 0.8,
+        flexDirection: 'row'
       },
     ]}>
     <Icon.Button
@@ -21,6 +22,7 @@ const ButtonCircle = ({name, onPress, size, style, color}: any) => (
       backgroundColor={'transparent'}
       color={color || 'black'}
     />
+    <Text style={{alignSelf: 'center', fontSize: 16, color: '#fff'}}>{title}</Text>
   </TouchableOpacity>
 );
 

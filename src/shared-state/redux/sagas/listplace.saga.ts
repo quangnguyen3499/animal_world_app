@@ -15,7 +15,7 @@ function* doGetListPlace() {
     yield PlaceService.getPlaces().then(val => temp = val);
     yield* temp.map(async (e: any) => {
       data.push(Object.assign({
-        thumbnail_url: await FireBaseService.getFileStorage(`/thumbnail/${e.id}.jpg`)}, e)
+        thumbnail_url: await FireBaseService.getFileStorage(`/thumbnail/${e.id}.png`)}, e)
       );
     })
 

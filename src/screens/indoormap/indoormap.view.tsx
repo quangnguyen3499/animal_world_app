@@ -36,7 +36,7 @@ export class IndoorMapComponent extends Component<Props, State> {
     super(props);
     this.state = {
       isLoading: false,
-      floor_id: 3,
+      floor_id: 1,
       zoomable: false,
       showSearchModal: 0,
       marker: {
@@ -69,9 +69,10 @@ export class IndoorMapComponent extends Component<Props, State> {
   doShowShop = (value: any) => {
     const {shops} = this.props;
     var temp = shops.find((e: any) => e.id == value)
-     
+    
     this.setState({showSearchModal: 0})
     this.setState({showMarker: true})
+    // this.setState({showPath: false})
     this.setState(prev => ({
       marker: {
         ...prev.marker,
@@ -87,6 +88,7 @@ export class IndoorMapComponent extends Component<Props, State> {
     const {doGetPath, placeDetail} = this.props
 
     doGetPath(placeDetail.detail.id, floor_id, idFrom, idTo)
+    // this.setState({showMarker: false})
     this.setState({showPath: true})
   }
 
@@ -134,29 +136,34 @@ export class IndoorMapComponent extends Component<Props, State> {
             />
           </>) : null
         }
-        <View style={{top: 20, marginLeft: 20, position: 'absolute'}}>
+        <View style={{top: 20, marginLeft: 14, position: 'absolute'}}>
           <ButtonCircle
             onPress={() =>
               navigation.navigate('Detail', {place_id: placeDetail.detail.id})
             }
-            name={'long-arrow-alt-left'}
+            name={'chevron-left'}
             size={20}
           />
-          <ButtonCircle
-            onPress={() => this.setState({showSearchModal: 1})}
-            name={'search-location'}
-            size={20}
-          />
-          <ButtonCircle
-            onPress={() => this.setState({showSearchModal: 2})}
-            name={'location-arrow'}
-            size={18}
-          />
-          <ButtonCircle
-            onPress={() => this.changeToZoomable()}
-            name={'search-plus'}
-            size={20}
-          />
+          <View style={styles.functionBar}>
+            <ButtonCircle
+              onPress={() => this.setState({showSearchModal: 1})}
+              name={'search-location'}
+              size={20}
+              style={{marginLeft: 2}}
+            />
+            <ButtonCircle
+              onPress={() => this.setState({showSearchModal: 2})}
+              name={'location-arrow'}
+              size={20}
+              style={{marginLeft: 2}}
+            />
+            <ButtonCircle
+              onPress={() => this.changeToZoomable()}
+              name={'search-plus'}
+              size={20}
+              style={{marginLeft: 2}}
+            />
+          </View>
           <FloorList
             data={placeDetail.detail.floor_list}
             onPress={(value: any) => this.onChangeFloor(value)}
@@ -189,6 +196,15 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    justifyContent: 'center',
-  }
+    justifyContent: 'center'
+  },
+  functionBar: {
+    borderRadius: 20,
+    borderColor: 'lightgrey',
+    borderWidth: 1,
+    backgroundColor: '#fff', 
+    elevation: 10,
+    marginTop: 200,
+    width: 46
+  },
 });

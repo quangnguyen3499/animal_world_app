@@ -62,7 +62,7 @@ export class RegisterComponent extends Component<Props, State> {
             onPress={() =>
               navigation.navigate('Splash')
             }
-            name={'long-arrow-alt-left'}
+            name={'chevron-left'}
             size={20}
           />
           <Text style={styles.title}>Register</Text>

@@ -1,8 +1,6 @@
-import {Place} from '@core';
 import {ButtonCircle, ImageSlider, NormalButton, TextCustom} from '@shared-view';
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface Props {
   navigation?: any;
@@ -35,35 +33,37 @@ export default class DetailComponent extends Component<Props, {}> {
 
     return (
       <View style={styles.container}>
-        <ImageSlider data={placeDetail.images} />
         <ButtonCircle
           onPress={() => navigation.navigate('Home')}
-          name={'long-arrow-alt-left'}
+          name={'chevron-left'}
           style={styles.backBtn}
           color={'#fff'}
           size={24}
+          title={'Home'}
         />
-        <NormalButton 
-          name={"Go to Map"}
-          onPress={() => navigation.navigate('IndoorMap', {place_id: placeDetail.detail.id})}
-          width={'normal'}
-          style={styles.mapBtn}
-        />
+        <ImageSlider data={placeDetail.images} style={styles.imageSlider} />
         <View style={styles.content}>
-          <TextCustom 
-            style={styles.name}
-            text={placeDetail.detail.name}
-            size={28}
-            weight={true}
+          <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
+            <TextCustom 
+              text={placeDetail.detail.name}
+              size={24}
+              weight={true}
+            />
+            <NormalButton 
+              name={"Go to Map"}
+              onPress={() => navigation.navigate('IndoorMap', {place_id: placeDetail.detail.id})}
+              width={'normal'}
+              style={styles.mapBtn}
+            />
+          </View>
+          <TextCustom
+            style={styles.normalText}
+            text={placeDetail.detail.url}
+            size={18}
           />
           <TextCustom 
             style={styles.normalText}
-            text={`Mô tả: ${placeDetail.detail.description}`}
-            size={20}
-          />
-          <TextCustom 
-            style={styles.normalText}
-            text={`Url: ${placeDetail.detail.url}`}
+            text={placeDetail.detail.description}
             size={20}
           />
         </View>
@@ -75,42 +75,36 @@ export default class DetailComponent extends Component<Props, {}> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 5,
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#388AA4'
+  },
+  imageSlider: {
+    marginTop: 60,
+    zIndex: 3,
+    elevation: 3
   },
   content: {
     backgroundColor: '#fff',
-    top: 400,
-    width: 360,
+    top: 250,
+    height: '100%',
     position: 'absolute',
     borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 10,
-      height: 5,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    elevation: 5,
-    padding: 5,
+    padding: 20,
+    paddingTop: 40
   },
   backBtn: {
     position: 'absolute',
     left: 10,
+    marginTop: 16
   },
   mapBtn: {
     backgroundColor: '#00CEC9',
-    position: 'absolute',
-    top: 320,
-    left: 0,
     borderRadius: 20,
-  },
-  name: {
-    textAlign: 'center'
+    marginTop: -6
   },
   normalText: {
-    fontSize: 20,
-    margin: 10,
+    fontSize: 12,
+    lineHeight: 28
   },
   bottom: {
     alignItems: 'center'
