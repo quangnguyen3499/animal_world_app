@@ -10,3 +10,4 @@ export * from './textcustom';
 export * from './flatlistcustom';
 export * from './modalcustom';
 export * from './direction';
+export * from './shopbox';

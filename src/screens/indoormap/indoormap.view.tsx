@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import {ButtonCircle, Direction, FloorList, Marker, MultiModal, SingleModal} from '@shared-view';
+import {ButtonCircle, Direction, FloorList, Marker, MultiModal, ShopBox, SingleModal} from '@shared-view';
 import { DEFAULT_MAP } from '@assets';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import { Pointer } from '@core';
@@ -41,7 +41,8 @@ export class IndoorMapComponent extends Component<Props, State> {
       showSearchModal: 0,
       marker: {
         longitude: 0,
-        latitude: 0
+        latitude: 0,
+        name: ''
       },
       showPath: false,
       showMarker: false,
@@ -72,12 +73,13 @@ export class IndoorMapComponent extends Component<Props, State> {
     
     this.setState({showSearchModal: 0})
     this.setState({showMarker: true})
-    // this.setState({showPath: false})
+    this.setState({showPath: false})
     this.setState(prev => ({
       marker: {
         ...prev.marker,
         longitude: temp.coordinate.longitude,
         latitude: temp.coordinate.latitude,
+        name: temp.name
       }
     }))
   }
@@ -88,7 +90,7 @@ export class IndoorMapComponent extends Component<Props, State> {
     const {doGetPath, placeDetail} = this.props
 
     doGetPath(placeDetail.detail.id, floor_id, idFrom, idTo)
-    // this.setState({showMarker: false})
+    this.setState({showMarker: false})
     this.setState({showPath: true})
   }
 
@@ -97,11 +99,11 @@ export class IndoorMapComponent extends Component<Props, State> {
     const {floor_id, zoomable, showPath, showMarker} = this.state
     const imgMap = placeDetail.floormap[floor_id-1]
 
-    let path = this.props.path || '';
-    let start = path?.split(' ')[0] || '0,0';
-    let end = path?.split(' ').pop() || '0,0';
-    let [sLeft, sTop] = start?.split(',').map(e => parseInt(e, 10));
-    let [eLeft, eTop] = end?.split(',').map(e => parseInt(e, 10));
+    let path = this.props.path || ''
+    let start = path?.split(' ')[0] || '0,0'
+    let end = path?.split(' ').pop() || '0,0'
+    let [sLeft, sTop] = start?.split(',').map(e => parseInt(e, 10))
+    let [eLeft, eTop] = end?.split(',').map(e => parseInt(e, 10))
 
     return (
       <View style={styles.container}>
@@ -113,10 +115,17 @@ export class IndoorMapComponent extends Component<Props, State> {
         />
         {showMarker && !zoomable ? 
           <Marker
-            top={this.state.marker.longitude-30}
+            top={this.state.marker.longitude-30}  
             left={this.state.marker.latitude-11}
           /> : null
-        }
+        } 
+        {/* {shops.map((e: any) => (
+          <ShopBox
+            top={e.coordinate.longitude-34}
+            left={e.coordinate.latitude-70}
+            name={e.name}
+          />
+        ))} */}
         {showPath && !zoomable ? (
           <>
             <Marker
@@ -136,6 +145,7 @@ export class IndoorMapComponent extends Component<Props, State> {
             />
           </>) : null
         }
+       
         <View style={{top: 20, marginLeft: 14, position: 'absolute'}}>
           <ButtonCircle
             onPress={() =>
@@ -175,6 +185,7 @@ export class IndoorMapComponent extends Component<Props, State> {
           onSearch={(value: any) => this.doShowShop(value)}
           data={shops}
           onClose={() => this.setState({showSearchModal: 0})}
+          isSearchPath={false}
         />
         <MultiModal 
           onVisible={this.state.showSearchModal == 2}

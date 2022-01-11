@@ -57,9 +57,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 16,
     marginVertical: 4,
-    elevation: 5,
+    elevation: 3,
     borderColor: 'lightgrey',
-    borderWidth: 2
+    borderWidth: 1
   },
 });
 
